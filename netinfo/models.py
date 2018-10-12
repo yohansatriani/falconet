@@ -1,0 +1,37 @@
+from django.db import models
+
+# Create your models here.
+
+class sites(models.Model):
+    id = models.AutoField(primary_key=True)
+    name = models.CharField(max_length=100, null=False)  
+    type = models.CharField(max_length=50, null=False)
+    ipadd = models.CharField(max_length=100, default='0.0.0.0/0')
+    site_code = models.CharField(max_length=3, default='')
+    area_code = models.CharField(max_length=3, default='')
+    address = models.CharField(max_length=300, default='')
+    city = models.CharField(max_length=100, default='')
+    description = models.CharField(max_length=1000, default='')
+
+class contacts(models.Model):
+    id = models.AutoField(primary_key=True)
+    sites = models.ForeignKey(sites, on_delete=models.CASCADE)
+    type = models.CharField(max_length=10, default='')
+    contact_value = models.CharField(max_length=50, default='')
+
+class links(models.Model):
+    id = models.AutoField(primary_key=True)
+    sites1 = models.ForeignKey(sites, on_delete=models.CASCADE, related_name='sites1')
+    sites2 = models.ForeignKey(sites, on_delete=models.CASCADE, related_name='sites2')   
+    ipadd1 = models.CharField(max_length=19, default='0.0.0.0/0')
+    ipadd2 = models.CharField(max_length=19, default='0.0.0.0/0')  
+    isp = models.CharField(max_length=20, default='unknown')
+    bandwidth = models.PositiveIntegerField(default=0)
+    media = models.CharField(max_length=20, default='unknown')
+    services = models.CharField(max_length=10, default='unknown')
+    status = models.BooleanField(max_length=1, default=1)
+    ipadd_others = models.CharField(max_length=19, null=True)
+    vrf_name = models.CharField(max_length=100, null=True)
+    links_name = models.CharField(max_length=100, null=True)
+    isp_link_id = models.CharField(max_length=20, null=True)
+    input_date = models.DateTimeField(auto_now=True)
