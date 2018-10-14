@@ -13,12 +13,30 @@ Including another URLconf
     1. Import the include() function: from django.urls import include, path
     2. Add a URL to urlpatterns:  path('blog/', include('blog.urls'))
 """
+
 from django.contrib import admin
 from django.urls import path
-from falconet.views import home, auth
+from django.contrib.auth import views as auth_views
+
+from falconet import forms
+from falconet.views import login, home, auth
+
 
 urlpatterns = [
+    #ADMIN
     path('admin/', admin.site.urls),
-    path('login/', home),
-    path('authentication/', auth)
+    #HOME
+    path('home/', home),
+    #AUTH_VIEWS.LOGIN
+    path('login/', auth_views.login, {
+        'template_name': 'page-login.html',
+        'authentication_form': forms.LoginForm,
+        'extra_context': {
+                'title': 'Login',
+                'head': 'Login',
+            },
+        },
+    ),
+    #AUTH
+    path('auth/', auth),
 ]
