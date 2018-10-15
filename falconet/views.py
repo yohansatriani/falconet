@@ -21,7 +21,6 @@ def auth(request):
     user = authenticate(request, username=username, password=password)
     if user is not None:
         auth_login(request, user)
-        html = render_to_string('page-home.html', {'title': "Home", 'head': "Home"})
-        return HttpResponse(html)
+        return redirect(home)
     else:
-        return redirect('login')
+        return redirect('../login/')
