@@ -19,7 +19,7 @@ from django.urls import path
 from django.contrib.auth import views as auth_views
 
 from falconet import forms
-from falconet.views import login, home, auth
+from falconet.views import login, home, auth_login, auth_process
 
 
 urlpatterns = [
@@ -27,16 +27,8 @@ urlpatterns = [
     path('admin/', admin.site.urls),
     #HOME
     path('home/', home),
-    #AUTH_VIEWS.LOGIN
-    path('login/', auth_views.login, {
-        'template_name': 'page-login.html',
-        'authentication_form': forms.LoginForm,
-        'extra_context': {
-                'title': 'Login',
-                'head': 'Login',
-            },
-        },
-    ),
+    #LOGIN
+    path('login/', auth_login),
     #AUTH
-    path('auth/', auth),
+    path('auth/', auth_process),
 ]

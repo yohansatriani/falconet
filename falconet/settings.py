@@ -129,3 +129,6 @@ STATIC_URL = '/static/'
 STATICFILES_DIRS = [
     "/venv/web/falconet/static/"
 ]
+
+#LOGIN URL DEFAULT
+LOGIN_URL = '/login/'
