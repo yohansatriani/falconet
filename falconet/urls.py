@@ -19,7 +19,7 @@ from django.urls import path
 from django.contrib.auth import views as auth_views
 
 from falconet import forms
-from falconet.views import login, home, auth_login, auth_process
+from falconet.views import login, home, auth_login, auth_logout, auth_process
 
 
 urlpatterns = [
@@ -29,6 +29,8 @@ urlpatterns = [
     path('home/', home),
     #LOGIN
     path('login/', auth_login),
+    #LOGOUT
+    path('logout/', auth_logout),
     #AUTH
     path('auth/', auth_process),
 ]

@@ -2,7 +2,7 @@ from django.template.loader import get_template, render_to_string
 from django.template import Template, Context
 from django.http import HttpResponse, HttpResponseRedirect
 from django.shortcuts import render, redirect
-from django.contrib.auth import authenticate, login
+from django.contrib.auth import authenticate, login, logout
 from django.contrib.auth.decorators import login_required
 from falconet.forms import LoginForm
 
@@ -18,6 +18,10 @@ def auth_login(request):
     else:
         return redirect(home)
 
+def auth_logout(request):
+    logout(request)
+    return redirect(auth_login)
+
 def auth_process(request):
     if request.method == 'POST':    
         username = request.POST['username']
@@ -32,4 +36,5 @@ def auth_process(request):
         if not request.user.is_authenticated:
             return redirect(auth_login)
         else:
-            return redirect(home)            
+            return redirect(home)
+
