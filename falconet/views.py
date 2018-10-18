@@ -11,6 +11,11 @@ def home(request):
     html = render_to_string('page-home.html', {'title': "Home", 'head': "Home"})
     return HttpResponse(html)
 
+@login_required()
+def sites(request):
+    html = render_to_string('page-sites.html', {'title': "Home", 'head': "Home"})
+    return HttpResponse(html)
+
 def auth_login(request):
     if not request.user.is_authenticated:
         form = LoginForm()
