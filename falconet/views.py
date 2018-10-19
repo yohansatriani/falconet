@@ -13,7 +13,7 @@ def home(request):
 
 @login_required()
 def sites(request):
-    html = render_to_string('page-sites.html', {'title': "Home", 'head': "Home"})
+    html = render_to_string('page-sites.html', {'title': "Sites", 'head': "Sites"})
     return HttpResponse(html)
 
 def auth_login(request):

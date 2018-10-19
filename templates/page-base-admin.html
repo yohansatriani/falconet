@@ -1,0 +1,59 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <!-- REQUIRED META TAGS -->
+        <meta charset="utf-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">       
+        <meta name="description" content="Sufee Admin - HTML5 Admin Template">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <!--FAVICON-->
+        <link rel="apple-touch-icon" href="apple-icon.png">
+        <link rel="shortcut icon" href="{% static 'images/favicon.ico' %}">
+        <!--BOOTSTRAP CSS-->
+        <link rel="stylesheet" href="{% static 'assets/css/bootstrap.min.css' %}">
+        <!--SUFEE-ADMIN-->
+        <link rel="stylesheet" href="{% static 'assets/css/normalize.css' %}">
+        <link rel="stylesheet" href="{% static 'assets/css/font-awesome.min.css' %}">
+        <link rel="stylesheet" href="{% static 'assets/css/themify-icons.css' %}">
+        <link rel="stylesheet" href="{% static 'assets/css/flag-icon.min.css' %}">
+        <link rel="stylesheet" href="{% static 'assets/css/cs-skin-elastic.css' %}">
+        <!--STYLES-->
+        <link rel="stylesheet" href="{% static 'assets/scss/style.css' %}">
+        <!--FONTS-->
+        <link href='https://fonts.googleapis.com/css?family=Open+Sans:400,600,700,800' rel='stylesheet' type='text/css'>
+        <!--PAGE CSS-->
+        {% block css %}{% endblock %}
+        <title>{% block title %}{% endblock %}</title>
+    </head>
+    <body>
+        <!--LEFT-PANEL-->
+        {% block left-panel %}{% endblock %}
+        <!--#LEFT-PANEL-->
+        <!--RIGHT-PANEL-->
+        <div id="right-panel" class="right-panel">
+            <!--HEADER-->
+            <header id="header" class="header">
+                <div class="header-menu">
+                    <!--HEADER-ITEM-->
+                    {% block header-item %}{% endblock %}
+                    <!--#HEADER-ITEM-->
+                    <!--PROFILE-->
+                    {% block profile %}{% endblock %}
+                    <!--#PROFILE-->
+                </div>
+            </header>
+            <!--#HEADER-->
+            <!--BREADCRUMBS-->
+            {% block breadcrumbs %}{% endblock %}
+            <!--#BREADCRUMBS-->
+            <!--CONTENTS-->
+            {% block content %}{% endblock %}
+            <!--#CONTENTS-->
+        </div>
+        <!--#RIGHT-PANEL-->
+        <!--SCRIPTS-->
+        {% block scripts %}{% endblock %}
+        <!--#SCRIPTS-->
+    </body>
+</html>

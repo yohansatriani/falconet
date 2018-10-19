@@ -1,4 +1,4 @@
-{% extends "page-base.html" %}
+{% extends "page-base-admin.html" %}
 {% load static %}
 <!--<!DOCTYPE html>-->
 <!--<html lang="en">-->
@@ -29,10 +29,11 @@
         {% endblock %}
         {% block title %}{{ title }}{% endblock %}
     <!--</head>-->
-    {% block content %}
-    <body>
+    <!--<body>-->
         <!--LEFT-PANEL-->
+        {% block left-panel %}
         {% include 'component-left-panel.html' %}
+        {% endblock %}
         <!--#LEFT-PANEL-->
         <!--RIGHT-PANEL-->
         <div id="right-panel" class="right-panel">
@@ -40,18 +41,25 @@
             <header id="header" class="header">
                 <div class="header-menu">
                     <!--HEADER-ITEM-->
+                    {% block header-item %}
                     {% include 'component-header-item.html' %}
+                    {% endblock %}
                     <!--#HEADER-ITEM-->
                     <!--PROFILE-->
+                    {% block profile %}
                     {% include 'component-profile.html' %}
+                    {% endblock %}
                     <!--#PROFILE-->
                 </div>
             </header>
             <!--#HEADER-->
             <!--BREADCRUMBS-->
+            {% block breadcrumbs %}
             {% include 'component-breadcrumbs.html' %}
+            {% endblock %}
             <!--#BREADCRUMBS-->
             <!--CONTENTS-->
+            {% block content %}
             <div class="content mt-3">
                 <div class="col-sm-6 col-lg-3">
                     <div class="card text-white bg-flat-color-1">
@@ -167,12 +175,14 @@
                     </div>
                 </div>
             </div>
+            {% endblock %}
             <!--#CONTENTS-->
         </div>
         <!--#RIGHT-PANEL-->
         <!--SCRIPTS-->
+        {% block scripts %}
         {% include 'script-home.html' %}
+        {% endblock %}
         <!--#SCRIPTS-->
-    </body>
-    {% endblock %}
+    <!--</body>-->
 <!--</html>-->
