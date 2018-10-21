@@ -10,9 +10,13 @@
                     <div class="page-header float-right">
                         <div class="page-title">
                             <ol class="breadcrumb text-right">
-                                <li><a href="#">Dashboard</a></li>
-                                <li><a href="#">Table</a></li>
-                                <li class="active">Data table</li>
+                                {% for bcitem in bcitems %}
+                                {% if forloop.last %}
+                                <li class="active">{{ bcitem }}</li>
+                                {% else %}
+                                <li><a href="{% url bcitem %}">{{ bcitem }}</a></li>
+                                {% endif %}
+                                {% endfor %}
                             </ol>
                         </div>
                     </div>

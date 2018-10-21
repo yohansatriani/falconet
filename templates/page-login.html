@@ -37,6 +37,10 @@
                         </a>
                     </div>
                     <div class="login-form">
+                        {% for message in messages %}
+                        <p class="text-danger">{{ message }}</p>
+                        {% endfor %}
+                        <p class="text-danger">{{ next }}</p>
                         <form class="form-group" action="{% url 'auth' %}" method="post">
                             {% csrf_token %}
                             <div class="form-group">
@@ -47,6 +51,7 @@
                                 {{ form.password.label_tag }}
                                 {{ form.password }}
                             </div>
+                            <input type="hidden" name="next" value="{{ request.GET.next }}" />
                             <div class="checkbox">
                                 <label>
                                     <input type="checkbox"> Remember Me

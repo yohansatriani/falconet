@@ -61,6 +61,9 @@
             <!--CONTENTS-->
             {% block content %}
             <div class="content mt-3">
+                {% for message in messages %}
+                <p class="text-danger">{{ message }}</p>
+                {% endfor %}
                 <div class="col-sm-6 col-lg-3">
                     <div class="card text-white bg-flat-color-1">
                         <div class="card-body pb-0">
