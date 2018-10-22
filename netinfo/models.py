@@ -15,6 +15,9 @@ class sites(models.Model):
     
     class Meta:
         verbose_name_plural = "sites"
+        
+    def __str__(self):
+        return self.name
 
 class contacts(models.Model):
     id = models.AutoField(primary_key=True)
@@ -24,6 +27,9 @@ class contacts(models.Model):
     
     class Meta:
         verbose_name_plural = "contacts"
+    
+    def __str__(self):
+        return u'%s %s' %(self.sites, self.type)
 
 class links(models.Model):
     id = models.AutoField(primary_key=True)
@@ -44,3 +50,6 @@ class links(models.Model):
     
     class Meta:
         verbose_name_plural = "links"
+    
+    def __str__(self):
+        return u'%s %s' %(self.sites1, self.isp)

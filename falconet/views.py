@@ -6,6 +6,7 @@ from django.contrib.auth import authenticate, login, logout
 from django.contrib.auth.decorators import login_required
 from django.contrib import messages
 from falconet.forms import LoginForm
+from netinfo.models import sites as sites_model
 
 @login_required()
 def home(request):
@@ -14,7 +15,8 @@ def home(request):
 
 @login_required()
 def sites(request):
-    html = render_to_string('page-sites.html', {'title': "Sites", 'head': "Sites", 'bcitems': ['home', 'sites']})
+    sites_data = sites_model.objects.filter(type__in = ['HO', 'KC', 'KCP', 'KK'])
+    html = render_to_string('page-sites.html', {'title': "Sites", 'head': "Sites", 'bcitems': ['home', 'sites'], 'sites_data': sites_data })
     return HttpResponse(html)
 
 def auth_login(request):
