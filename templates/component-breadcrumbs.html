@@ -10,11 +10,11 @@
                     <div class="page-header float-right">
                         <div class="page-title">
                             <ol class="breadcrumb text-right">
-                                {% for bcitem in bcitems %}
+                                {% for bclink, bclabel in bcitems %}
                                 {% if forloop.last %}
-                                <li class="active">{{ bcitem }}</li>
+                                <li class="active">{{ bclabel }}</li>
                                 {% else %}
-                                <li><a href="{% url bcitem %}">{{ bcitem }}</a></li>
+                                <li><a href="{% url bclink %}">{{ bclabel }}</a></li>
                                 {% endif %}
                                 {% endfor %}
                             </ol>

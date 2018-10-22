@@ -10,13 +10,35 @@ from netinfo.models import sites as sites_model
 
 @login_required()
 def home(request):
-    html = render_to_string('page-home.html', {'title': "Home", 'head': "Home", 'bcitems': ['home']})
+    html = render_to_string('page-home.html', {'title': "Home", 'head': "Home", 'bcitems': [['home', 'Home'], ['sites', 'Sites']]})
     return HttpResponse(html)
 
 @login_required()
 def sites(request):
+    sites_data = sites_model.objects.all()
+    html = render_to_string('page-sites.html', {'title': "Sites", 'head': "Sites", 'bcitems': [['home', 'Home'], ['sites', 'Sites']], 'sites_data': sites_data })
+    return HttpResponse(html)
+
+@login_required()
+def site_office(request):
     sites_data = sites_model.objects.filter(type__in = ['HO', 'KC', 'KCP', 'KK'])
-    html = render_to_string('page-sites.html', {'title': "Sites", 'head': "Sites", 'bcitems': ['home', 'sites'], 'sites_data': sites_data })
+    html = render_to_string('page-sites.html', {'title': "Sites", 'head': "Sites", 'bcitems': [['home', 'Home'], ['sites', 'Sites']], 'sites_data': sites_data })
+    return HttpResponse(html)
+
+@login_required()
+def site_isp(request):
+    sites_data = sites_model.objects.filter(type__in = ['ISP', 'POP'])
+    html = render_to_string('page-sites.html', {'title': "Sites", 'head': "Sites", 'bcitems': [['home', 'Home'], ['sites', 'Sites'], ['isp', 'ISP']], 'sites_data': sites_data })
+    return HttpResponse(html)
+
+@login_required()
+def site_detail(request, site_id):
+    try:
+        site_id = int(site_id)
+    except ValueError:
+        raise Http404()
+    sites_data = sites_model.objects.get(id = site_id)
+    html = render_to_string('page-site-detail.html', {'title': "Sites", 'head': "Sites", 'bcitems': [['home', 'Home'], ['sites', 'Sites'], [site_id, sites_data.name]], 'sites_data': sites_data })
     return HttpResponse(html)
 
 def auth_login(request):

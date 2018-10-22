@@ -1,0 +1,139 @@
+{% extends "page-base-admin.html" %}
+{% load static %}
+<!--<!DOCTYPE html>-->
+<!--<html lang="en">-->
+    <!--<head>-->
+        <!-- REQUIRED META TAGS -->
+        <!--<meta charset="utf-8">-->
+        <!--<meta http-equiv="X-UA-Compatible" content="IE=edge">-->
+        <!--<meta name="description" content="Sufee Admin - HTML5 Admin Template">-->
+        <!--<meta name="viewport" content="width=device-width, initial-scale=1">-->
+        <!--FAVICON-->
+        <!--<link rel="apple-touch-icon" href="apple-icon.png">-->
+        <!--<link rel="shortcut icon" href="favicon.ico">-->
+        <!--BOOTSTRAP CSS-->
+        <!--<link rel="stylesheet" href="{% static 'assets/css/bootstrap.min.css' %}">-->
+        <!--SUFEE-ADMIN-->
+        <!--<link rel="stylesheet" href="{% static 'assets/css/normalize.css' %}">-->
+        <!--<link rel="stylesheet" href="{% static 'assets/css/font-awesome.min.css' %}">-->
+        <!--<link rel="stylesheet" href="{% static 'assets/css/themify-icons.css' %}">-->
+        <!--<link rel="stylesheet" href="{% static 'assets/css/flag-icon.min.css' %}">-->
+        <!--<link rel="stylesheet" href="{% static 'assets/css/cs-skin-elastic.css' %}">-->
+        <!--STYLES-->
+        <!--<link rel="stylesheet" href="{% static 'assets/scss/style.css' %}">-->
+        <!--FONTS-->
+        <!--<link href='https://fonts.googleapis.com/css?family=Open+Sans:400,600,700,800' rel='stylesheet' type='text/css'>-->
+        <!--PAGE CSS-->
+        {% block css %}{% endblock %}
+        {% block title %}{{ title }}{% endblock %}
+    <!--</head>-->
+    <!--<body>-->
+        <!--LEFT-PANEL-->
+        {% block left-panel %}
+        {% include 'component-left-panel.html' %}
+        {% endblock %}
+        <!--#LEFT-PANEL-->
+        <!--RIGHT-PANEL-->
+        <div id="right-panel" class="right-panel">
+            <!--HEADER-->
+            <header id="header" class="header">
+                <div class="header-menu">
+                    <!--HEADER-ITEM-->
+                    {% block header-item %}
+                    {% include 'component-header-item.html' %}
+                    {% endblock %}
+                    <!--#HEADER-ITEM-->
+                    <!--PROFILE-->
+                    {% block profile %}
+                    {% include 'component-profile.html' %}
+                    {% endblock %}
+                    <!--#PROFILE-->
+                </div>
+            </header>
+            <!--#HEADER-->
+            <!--BREADCRUMBS-->
+            {% block breadcrumbs %}
+            {% include 'component-breadcrumbs.html' %}
+            {% endblock %}
+            <!--#BREADCRUMBS-->
+            <!--CONTENTS-->
+            {% block content %}
+            <div class="content mt-3">
+                <div class="animated fadeIn">
+                    <div class="row justify-content-md-center">
+                        <div class="col-lg-6">
+                            <div class="card">
+                                <div class="card-header">Example Form</div>
+                                <div class="card-body card-block">
+                                    <form>
+                                        <div class="form-group row">
+                                            <label for="text-input" class="col-sm-3 col-form-label">Name</label>
+                                            <div class="col-sm-9">
+                                                <input type="text" id="text-input" name="text-input" class="form-control" value="{{ sites_data.name }}">
+                                            </div>
+                                        </div>
+                                        <div class="form-group row">
+                                            <label for="text-input" class="col-sm-3 col-form-label">Type</label>
+                                            <div class="col-sm-9">
+                                                <input type="text" id="text-input" name="text-input" class="form-control" value="{{ sites_data.type }}">
+                                            </div>
+                                        </div>
+                                        <div class="form-group row">
+                                            <label for="text-input" class="col-sm-3 col-form-label">Location/Address</label>
+                                            <div class="col-sm-9">
+                                                <input type="text" id="text-input" name="text-input" class="form-control" value="{{ sites_data.location }}">
+                                            </div>
+                                        </div>
+                                        <div class="form-group row">
+                                            <label for="text-input" class="col-sm-3 col-form-label">City</label>
+                                            <div class="col-sm-9">
+                                                <input type="text" id="text-input" name="text-input" class="form-control" value="{{ sites_data.city }}">
+                                            </div>
+                                        </div>
+                                        <div class="form-group row">
+                                            <label for="text-input" class="col-sm-3 col-form-label">Site Code</label>
+                                            <div class="col-sm-9">
+                                                <input type="text" id="text-input" name="text-input" class="form-control"  value="{{ sites_data.site_code }}">
+                                            </div>
+                                        </div>
+                                        <div class="form-group row">
+                                            <label for="text-input" class="col-sm-3 col-form-label">Area Code Code</label>
+                                            <div class="col-sm-9">
+                                                <input type="text" id="text-input" name="text-input" class="form-control" value="{{ sites_data.area_code }}">
+                                            </div>
+                                        </div>
+                                        <div class="form-group row">
+                                            <label for="text-input" class="col-sm-3 col-form-label">IP Address</label>
+                                            <div class="col-sm-9">
+                                                <input type="text" id="text-input" name="text-input" class="form-control" value="{{ sites_data.ipadd }}">
+                                            </div>
+                                        </div>
+                                        <div class="form-group row">
+                                            <div class="col-sm-3"></div>
+                                            <div class="col-sm-9">
+                                                <button type="submit" class="btn btn-primary btn-sm">
+                                                <i class="fa fa-dot-circle-o"></i> Submit
+                                                </button>
+                                                <button type="reset" class="btn btn-danger btn-sm">
+                                                <i class="fa fa-ban"></i> Reset
+                                                </button>
+                                            </div>
+                                        </div>
+                                    </form>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            {% endblock %}
+            <!--#CONTENTS-->
+        </div>
+        <!--#RIGHT-PANEL-->
+        <!--SCRIPTS-->
+        {% block scripts %}
+        {% include 'script-site-detail.html' %}
+        {% endblock %}
+        <!--#SCRIPTS-->
+    <!--</body>-->
+<!--</html>-->
