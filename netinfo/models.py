@@ -22,15 +22,15 @@ class sites(models.Model):
 
 class contacts(models.Model):
     id = models.AutoField(primary_key=True)
-    sites = models.ForeignKey(sites, on_delete=models.CASCADE)
+    site = models.ForeignKey(sites, on_delete=models.CASCADE)
     type = models.CharField(max_length=10, default='')
-    contact_value = models.CharField(max_length=50, default='')
+    contact_number = models.CharField(max_length=50, default='')
     
     class Meta:
         verbose_name_plural = "contacts"
     
     def __str__(self):
-        return u'%s %s' %(self.sites, self.type)
+        return u'%s %s' %(self.site, self.type)
 
 class links(models.Model):
     id = models.AutoField(primary_key=True)

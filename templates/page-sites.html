@@ -77,6 +77,7 @@
                                                 <th>Site Name</th>
                                                 <th>Local IP Address</th>
                                                 <th>Address</th>
+                                                <th style="display:none;">Tagline</th>
                                                 <th></th>
                                             </tr>
                                         </thead>
@@ -88,6 +89,7 @@
                                                 <td>{{ item.name }}</td>
                                                 <td>{{ item.ipadd }}</td>
                                                 <td>{{ item.location }}, {{ item.city }}</td>
+                                                <td style="display:none;">{{ item.tagline }}</td>
                                                 <td><a href="{% url 'site_detail' item.id %}">Detail</a></td>
                                             </tr>
                                             {% endfor %}
