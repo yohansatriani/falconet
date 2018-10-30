@@ -61,18 +61,17 @@
             <div class="content mt-3">
                 <div class="animated fadeIn">
                     <div class="row justify-content-md-center">
-                        <div class="col-lg-8">
+                        <div class="col-lg-6">
                             <div class="card">
                                 <div class="card-body">
                                     <div class="default-tab">
-                                        <a class=small" href="#"><button type="button" class="btn btn-outline-primary btn-sm">Edit</button></a>
                                         <nav>
                                             <div class="nav nav-tabs" id="nav-tab" role="tablist">
                                                 <a class="nav-item nav-link active show" id="nav-home-tab" data-toggle="tab" href="#nav-home" role="tab" aria-controls="nav-home" aria-selected="false">Site Info</a>
                                                 <a class="nav-item nav-link" id="nav-contact-tab" data-toggle="tab" href="#nav-contact" role="tab" aria-controls="nav-contact" aria-selected="false">Contact</a>
                                             </div>
                                         </nav>
-                                        <div class="tab-content pl-0 pt-2" id="nav-tabContent">
+                                        <div class="tab-content pl-3 pt-2 pr-3" id="nav-tabContent">
                                             <div class="tab-pane fade active show" id="nav-home" role="tabpanel" aria-labelledby="nav-home-tab">
                                                 <table class="table">
                                                     <tbody>
@@ -116,6 +115,7 @@
                                                 </table>
                                             </div>
                                             <div class="tab-pane fade" id="nav-contact" role="tabpanel" aria-labelledby="nav-contact-tab">
+                                                {% if contacts_data %}
                                                 <table class="table">
                                                     <tbody>
                                                         {% for contact in contacts_data %}
@@ -123,16 +123,19 @@
                                                             <th style="width: 30%">{{ contact.type|title }}</th>
                                                             <td>{{ contact.contact_number }}</td>
                                                         </tr>
-                                                        {% empty %}
-                                                        <tr>
-                                                            <td><div class="alert alert-dark" role="alert">No contact information.</div></td>
-                                                        <tr>
                                                         {% endfor %}
                                                         </tr>
                                                     </tbody>
                                                 </table>
+                                                {% else %}
+                                                <div class="alert alert-dark" role="alert">No contact information.</div>
+                                                {% endif %}
                                             </div>
                                         </div>
+                                    </div>
+                                    <div class="float-right">
+                                        <a class=small" href="./edit/"><button type="button" class="btn btn-primary btn-sm">Edit</button></a>
+                                        <a class=small" href="#"><button type="button" class="btn btn-danger btn-sm">Delete</button></a>
                                     </div>
                                 </div>
                             </div>    

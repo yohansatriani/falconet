@@ -61,7 +61,7 @@
             <div class="content mt-3">
                 <div class="animated fadeIn">
                     <div class="row justify-content-md-center">
-                        <div class="col-lg-8">
+                        <div class="col-lg-6">
                             <div class="card">
                                 <div class="card-body">
                                     <div class="default-tab">
@@ -71,94 +71,87 @@
                                                 <a class="nav-item nav-link" id="nav-contact-tab" data-toggle="tab" href="#nav-contact" role="tab" aria-controls="nav-contact" aria-selected="false">Contact</a>
                                             </div>
                                         </nav>
-                                        <div class="tab-content pl-3 pt-2" id="nav-tabContent">
+                                        <div class="tab-content pl-3 pt-2 pr-3" id="nav-tabContent">
                                             <div class="tab-pane fade active show" id="nav-home" role="tabpanel" aria-labelledby="nav-home-tab">                    
                                                 <form>
                                                     <div class="form-group row">
-                                                        <label for="text-input" class="col-sm-3 col-form-label">Name</label>
+                                                        <label for="name" class="col-sm-3 col-form-label">Name</label>
                                                         <div class="col-sm-9">
-                                                            <input type="text" id="text-input" name="text-input" class="form-control" value="{{ sites_data.name }}" readonly>
+                                                            <input type="text" id="name" name="text-input" class="form-control" value="{{ sites_data.name }}" >
                                                         </div>
                                                     </div>
                                                     <div class="form-group row">
-                                                        <label for="text-input" class="col-sm-3 col-form-label">Description</label>
+                                                        <label for="desc" class="col-sm-3 col-form-label">Description</label>
                                                         <div class="col-sm-9">
-                                                            <textarea name="textarea-input" id="textarea-input" rows="2" class="form-control" readonly>{{ sites_data.description }}</textarea>
+                                                            <textarea name="textarea-input" id="desc" rows="2" class="form-control" >{{ sites_data.description }}</textarea>
                                                         </div>
                                                     </div>
                                                     <div class="form-group row">
-                                                        <label for="text-input" class="col-sm-3 col-form-label">Type</label>
+                                                        <label for="type" class="col-sm-3 col-form-label">Type</label>
                                                         <div class="col-sm-9">
-                                                            <input type="text" id="text-input" name="text-input" class="form-control" value="{{ sites_data.type }}" readonly>
+                                                            <input type="text" id="type" name="text-input" class="form-control" value="{{ sites_data.type }}" >
                                                         </div>
                                                     </div>
                                                     <div class="form-group row">
-                                                        <label for="text-input" class="col-sm-3 col-form-label">Location / Address</label>
+                                                        <label for="location" class="col-sm-3 col-form-label">Location / Address</label>
                                                         <div class="col-sm-9">
-                                                            <textarea name="textarea-input" id="textarea-input" rows="3" class="form-control" readonly>{{ sites_data.location }}</textarea>
+                                                            <textarea name="textarea-input" id="location" rows="3" class="form-control" >{{ sites_data.location }}</textarea>
                                                         </div>
                                                     </div>
                                                     <div class="form-group row">
-                                                        <label for="text-input" class="col-sm-3 col-form-label">City</label>
+                                                        <label for="city" class="col-sm-3 col-form-label">City</label>
                                                         <div class="col-sm-9">
-                                                            <input type="text" id="text-input" name="text-input" class="form-control" value="{{ sites_data.city }}" readonly>
+                                                            <input type="text" id="city" name="text-input" class="form-control" value="{{ sites_data.city }}" >
                                                         </div>
                                                     </div>
                                                     <div class="form-group row">
-                                                        <label for="text-input" class="col-sm-3 col-form-label">Site Code</label>
+                                                        <label for="site-code" class="col-sm-3 col-form-label">Site Code</label>
                                                         <div class="col-sm-9">
-                                                            <input type="text" id="text-input" name="text-input" class="form-control"  value="{{ sites_data.site_code }}" readonly>
+                                                            <input type="text" id="site-code" name="text-input" class="form-control"  value="{{ sites_data.site_code }}" >
                                                         </div>
                                                     </div>
                                                     <div class="form-group row">
-                                                        <label for="text-input" class="col-sm-3 col-form-label">Area Code</label>
+                                                        <label for="area-code" class="col-sm-3 col-form-label">Area Code</label>
                                                         <div class="col-sm-9">
-                                                            <input type="text" id="text-input" name="text-input" class="form-control" value="{{ sites_data.area_code }}" readonly>
+                                                            <input type="text" id="area-code" name="text-input" class="form-control" value="{{ sites_data.area_code }}" >
                                                         </div>
                                                     </div>
                                                     <div class="form-group row">
-                                                        <label for="text-input" class="col-sm-3 col-form-label">IP Address</label>
+                                                        <label for="ip-addr" class="col-sm-3 col-form-label">IP Address</label>
                                                         <div class="col-sm-9">
-                                                            <input type="text" id="text-input" name="text-input" class="form-control" value="{{ sites_data.ipadd }}" readonly>
+                                                            <input type="text" id="ip-addr" name="text-input" class="form-control" value="{{ sites_data.ipadd }}" >
                                                         </div>
                                                     </div>
                                                     <div class="form-group row">
-                                                        <label for="text-input" class="col-sm-3 col-form-label">Tagline</label>
+                                                        <label for="tagline" class="col-sm-3 col-form-label">Tagline</label>
                                                         <div class="col-sm-9">
-                                                            <textarea name="textarea-input" id="textarea-input" rows="2" class="form-control" readonly>{{ sites_data.tagline }}</textarea>
+                                                            <textarea name="textarea-input" id="tagline" rows="2" class="form-control" >{{ sites_data.tagline }}</textarea>
                                                         </div>
                                                     </div>
                                                 </form>                   
                                             </div>
                                             <div class="tab-pane fade" id="nav-contact" role="tabpanel" aria-labelledby="nav-contact-tab">
+                                                {% if contacts_data %}
                                                 <form>
                                                     {% for contact in contacts_data %}
                                                     <div class="form-group row">
-                                                        <label for="text-input" class="col-sm-3 col-form-label">{{ contact.type|title }}</label>
+                                                        <label for="contact_{{ forloop.counter }}" class="col-sm-3 col-form-label">{{ contact.type|title }}</label>
                                                         <div class="col-sm-9">
-                                                            <input type="text" id="text-input" name="text-input" class="form-control" value="{{ contact.contact_number }}" readonly>
+                                                            <input type="text" id="contact_{{ forloop.counter }}" name="text-input" class="form-control" value="{{ contact.contact_number }}" >
                                                         </div>
-                                                    </div>
-                                                    {% empty %}
-                                                    <div class="form-group row">
-                                                        <div class="alert alert-dark" role="alert">No contact information, please add here.</div>
                                                     </div>
                                                     {% endfor %}
                                                 </form>
-                                            </div>
-                                            <!--TRY-->
-                                            <div class="form-group row">
-                                                <div class="col-sm-3"></div>
-                                                <div class="col-sm-9">
-                                                    <button type="submit" class="btn btn-primary btn-sm">
-                                                    <i class="fa fa-dot-circle-o"></i> Submit
-                                                    </button>
-                                                    <button type="reset" class="btn btn-danger btn-sm">
-                                                    <i class="fa fa-ban"></i> Reset
-                                                    </button>
-                                                </div>
+                                                {% else %}
+                                                <div class="alert alert-dark" role="alert">No contact information.</div>
+                                                {% endif %}
                                             </div>
                                         </div>
+                                    </div>
+                                    <div class="float-right">
+                                        <a class=small" href="#"><button type="button" class="btn btn-primary btn-sm">Submit</button></a>
+                                        <a class=small" href="#"><button type="button" class="btn btn-danger btn-sm">Reset</button></a>
+                                        <a class=small" href=".."><button type="button" class="btn btn-secondary btn-sm">Cancel</button></a>
                                     </div>
                                 </div>
                             </div>    
