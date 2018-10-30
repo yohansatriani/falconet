@@ -1,0 +1,179 @@
+{% extends "page-base-admin.html" %}
+{% load static %}
+<!--<!DOCTYPE html>-->
+<!--<html lang="en">-->
+    <!--<head>-->
+        <!-- REQUIRED META TAGS -->
+        <!--<meta charset="utf-8">-->
+        <!--<meta http-equiv="X-UA-Compatible" content="IE=edge">-->
+        <!--<meta name="description" content="Sufee Admin - HTML5 Admin Template">-->
+        <!--<meta name="viewport" content="width=device-width, initial-scale=1">-->
+        <!--FAVICON-->
+        <!--<link rel="apple-touch-icon" href="apple-icon.png">-->
+        <!--<link rel="shortcut icon" href="favicon.ico">-->
+        <!--BOOTSTRAP CSS-->
+        <!--<link rel="stylesheet" href="{% static 'assets/css/bootstrap.min.css' %}">-->
+        <!--SUFEE-ADMIN-->
+        <!--<link rel="stylesheet" href="{% static 'assets/css/normalize.css' %}">-->
+        <!--<link rel="stylesheet" href="{% static 'assets/css/font-awesome.min.css' %}">-->
+        <!--<link rel="stylesheet" href="{% static 'assets/css/themify-icons.css' %}">-->
+        <!--<link rel="stylesheet" href="{% static 'assets/css/flag-icon.min.css' %}">-->
+        <!--<link rel="stylesheet" href="{% static 'assets/css/cs-skin-elastic.css' %}">-->
+        <!--STYLES-->
+        <!--<link rel="stylesheet" href="{% static 'assets/scss/style.css' %}">-->
+        <!--FONTS-->
+        <!--<link href='https://fonts.googleapis.com/css?family=Open+Sans:400,600,700,800' rel='stylesheet' type='text/css'>-->
+        <!--PAGE CSS-->
+        {% block css %}{% endblock %}
+        {% block title %}{{ title }}{% endblock %}
+    <!--</head>-->
+    <!--<body>-->
+        <!--LEFT-PANEL-->
+        {% block left-panel %}
+        {% include 'component-left-panel.html' %}
+        {% endblock %}
+        <!--#LEFT-PANEL-->
+        <!--RIGHT-PANEL-->
+        <div id="right-panel" class="right-panel">
+            <!--HEADER-->
+            <header id="header" class="header">
+                <div class="header-menu">
+                    <!--HEADER-ITEM-->
+                    {% block header-item %}
+                    {% include 'component-header-item.html' %}
+                    {% endblock %}
+                    <!--#HEADER-ITEM-->
+                    <!--PROFILE-->
+                    {% block profile %}
+                    {% include 'component-profile.html' %}
+                    {% endblock %}
+                    <!--#PROFILE-->
+                </div>
+            </header>
+            <!--#HEADER-->
+            <!--BREADCRUMBS-->
+            {% block breadcrumbs %}
+            {% include 'component-breadcrumbs.html' %}
+            {% endblock %}
+            <!--#BREADCRUMBS-->
+            <!--CONTENTS-->
+            {% block content %}
+            <div class="content mt-3">
+                <div class="animated fadeIn">
+                    <div class="row justify-content-md-center">
+                        <div class="col-lg-8">
+                            <div class="card">
+                                <div class="card-body">
+                                    <div class="default-tab">
+                                        <nav>
+                                            <div class="nav nav-tabs" id="nav-tab" role="tablist">
+                                                <a class="nav-item nav-link active show" id="nav-home-tab" data-toggle="tab" href="#nav-home" role="tab" aria-controls="nav-home" aria-selected="false">Site Info</a>
+                                                <a class="nav-item nav-link" id="nav-contact-tab" data-toggle="tab" href="#nav-contact" role="tab" aria-controls="nav-contact" aria-selected="false">Contact</a>
+                                            </div>
+                                        </nav>
+                                        <div class="tab-content pl-3 pt-2" id="nav-tabContent">
+                                            <div class="tab-pane fade active show" id="nav-home" role="tabpanel" aria-labelledby="nav-home-tab">                    
+                                                <form>
+                                                    <div class="form-group row">
+                                                        <label for="text-input" class="col-sm-3 col-form-label">Name</label>
+                                                        <div class="col-sm-9">
+                                                            <input type="text" id="text-input" name="text-input" class="form-control" value="{{ sites_data.name }}" readonly>
+                                                        </div>
+                                                    </div>
+                                                    <div class="form-group row">
+                                                        <label for="text-input" class="col-sm-3 col-form-label">Description</label>
+                                                        <div class="col-sm-9">
+                                                            <textarea name="textarea-input" id="textarea-input" rows="2" class="form-control" readonly>{{ sites_data.description }}</textarea>
+                                                        </div>
+                                                    </div>
+                                                    <div class="form-group row">
+                                                        <label for="text-input" class="col-sm-3 col-form-label">Type</label>
+                                                        <div class="col-sm-9">
+                                                            <input type="text" id="text-input" name="text-input" class="form-control" value="{{ sites_data.type }}" readonly>
+                                                        </div>
+                                                    </div>
+                                                    <div class="form-group row">
+                                                        <label for="text-input" class="col-sm-3 col-form-label">Location / Address</label>
+                                                        <div class="col-sm-9">
+                                                            <textarea name="textarea-input" id="textarea-input" rows="3" class="form-control" readonly>{{ sites_data.location }}</textarea>
+                                                        </div>
+                                                    </div>
+                                                    <div class="form-group row">
+                                                        <label for="text-input" class="col-sm-3 col-form-label">City</label>
+                                                        <div class="col-sm-9">
+                                                            <input type="text" id="text-input" name="text-input" class="form-control" value="{{ sites_data.city }}" readonly>
+                                                        </div>
+                                                    </div>
+                                                    <div class="form-group row">
+                                                        <label for="text-input" class="col-sm-3 col-form-label">Site Code</label>
+                                                        <div class="col-sm-9">
+                                                            <input type="text" id="text-input" name="text-input" class="form-control"  value="{{ sites_data.site_code }}" readonly>
+                                                        </div>
+                                                    </div>
+                                                    <div class="form-group row">
+                                                        <label for="text-input" class="col-sm-3 col-form-label">Area Code</label>
+                                                        <div class="col-sm-9">
+                                                            <input type="text" id="text-input" name="text-input" class="form-control" value="{{ sites_data.area_code }}" readonly>
+                                                        </div>
+                                                    </div>
+                                                    <div class="form-group row">
+                                                        <label for="text-input" class="col-sm-3 col-form-label">IP Address</label>
+                                                        <div class="col-sm-9">
+                                                            <input type="text" id="text-input" name="text-input" class="form-control" value="{{ sites_data.ipadd }}" readonly>
+                                                        </div>
+                                                    </div>
+                                                    <div class="form-group row">
+                                                        <label for="text-input" class="col-sm-3 col-form-label">Tagline</label>
+                                                        <div class="col-sm-9">
+                                                            <textarea name="textarea-input" id="textarea-input" rows="2" class="form-control" readonly>{{ sites_data.tagline }}</textarea>
+                                                        </div>
+                                                    </div>
+                                                </form>                   
+                                            </div>
+                                            <div class="tab-pane fade" id="nav-contact" role="tabpanel" aria-labelledby="nav-contact-tab">
+                                                <form>
+                                                    {% for contact in contacts_data %}
+                                                    <div class="form-group row">
+                                                        <label for="text-input" class="col-sm-3 col-form-label">{{ contact.type|title }}</label>
+                                                        <div class="col-sm-9">
+                                                            <input type="text" id="text-input" name="text-input" class="form-control" value="{{ contact.contact_number }}" readonly>
+                                                        </div>
+                                                    </div>
+                                                    {% empty %}
+                                                    <div class="form-group row">
+                                                        <div class="alert alert-dark" role="alert">No contact information, please add here.</div>
+                                                    </div>
+                                                    {% endfor %}
+                                                </form>
+                                            </div>
+                                            <!--TRY-->
+                                            <div class="form-group row">
+                                                <div class="col-sm-3"></div>
+                                                <div class="col-sm-9">
+                                                    <button type="submit" class="btn btn-primary btn-sm">
+                                                    <i class="fa fa-dot-circle-o"></i> Submit
+                                                    </button>
+                                                    <button type="reset" class="btn btn-danger btn-sm">
+                                                    <i class="fa fa-ban"></i> Reset
+                                                    </button>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>    
+                        </div>
+                    </div>
+                </div>
+            </div>
+            {% endblock %}
+            <!--#CONTENTS-->
+        </div>
+        <!--#RIGHT-PANEL-->
+        <!--SCRIPTS-->
+        {% block scripts %}
+        {% include 'script-site-detail.html' %}
+        {% endblock %}
+        <!--#SCRIPTS-->
+    <!--</body>-->
+<!--</html>-->

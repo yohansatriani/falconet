@@ -61,108 +61,76 @@
             <div class="content mt-3">
                 <div class="animated fadeIn">
                     <div class="row justify-content-md-center">
-                        <div class="col-lg-6">
+                        <div class="col-lg-8">
                             <div class="card">
                                 <div class="card-body">
                                     <div class="default-tab">
+                                        <a class=small" href="#"><button type="button" class="btn btn-outline-primary btn-sm">Edit</button></a>
                                         <nav>
                                             <div class="nav nav-tabs" id="nav-tab" role="tablist">
                                                 <a class="nav-item nav-link active show" id="nav-home-tab" data-toggle="tab" href="#nav-home" role="tab" aria-controls="nav-home" aria-selected="false">Site Info</a>
                                                 <a class="nav-item nav-link" id="nav-contact-tab" data-toggle="tab" href="#nav-contact" role="tab" aria-controls="nav-contact" aria-selected="false">Contact</a>
                                             </div>
                                         </nav>
-                                        <div class="tab-content pl-3 pt-2" id="nav-tabContent">
-                                            <div class="tab-pane fade active show" id="nav-home" role="tabpanel" aria-labelledby="nav-home-tab">                    
-                                                <form>
-                                                    <div class="form-group row">
-                                                        <label for="text-input" class="col-sm-3 col-form-label">Name</label>
-                                                        <div class="col-sm-9">
-                                                            <input type="text" id="text-input" name="text-input" class="form-control" value="{{ sites_data.name }}" readonly>
-                                                        </div>
-                                                    </div>
-                                                    <div class="form-group row">
-                                                        <label for="text-input" class="col-sm-3 col-form-label">Description</label>
-                                                        <div class="col-sm-9">
-                                                            <textarea name="textarea-input" id="textarea-input" rows="2" class="form-control" readonly>{{ sites_data.description }}</textarea>
-                                                        </div>
-                                                    </div>
-                                                    <div class="form-group row">
-                                                        <label for="text-input" class="col-sm-3 col-form-label">Type</label>
-                                                        <div class="col-sm-9">
-                                                            <input type="text" id="text-input" name="text-input" class="form-control" value="{{ sites_data.type }}" readonly>
-                                                        </div>
-                                                    </div>
-                                                    <div class="form-group row">
-                                                        <label for="text-input" class="col-sm-3 col-form-label">Location / Address</label>
-                                                        <div class="col-sm-9">
-                                                            <textarea name="textarea-input" id="textarea-input" rows="3" class="form-control" readonly>{{ sites_data.location }}</textarea>
-                                                        </div>
-                                                    </div>
-                                                    <div class="form-group row">
-                                                        <label for="text-input" class="col-sm-3 col-form-label">City</label>
-                                                        <div class="col-sm-9">
-                                                            <input type="text" id="text-input" name="text-input" class="form-control" value="{{ sites_data.city }}" readonly>
-                                                        </div>
-                                                    </div>
-                                                    <div class="form-group row">
-                                                        <label for="text-input" class="col-sm-3 col-form-label">Site Code</label>
-                                                        <div class="col-sm-9">
-                                                            <input type="text" id="text-input" name="text-input" class="form-control"  value="{{ sites_data.site_code }}" readonly>
-                                                        </div>
-                                                    </div>
-                                                    <div class="form-group row">
-                                                        <label for="text-input" class="col-sm-3 col-form-label">Area Code</label>
-                                                        <div class="col-sm-9">
-                                                            <input type="text" id="text-input" name="text-input" class="form-control" value="{{ sites_data.area_code }}" readonly>
-                                                        </div>
-                                                    </div>
-                                                    <div class="form-group row">
-                                                        <label for="text-input" class="col-sm-3 col-form-label">IP Address</label>
-                                                        <div class="col-sm-9">
-                                                            <input type="text" id="text-input" name="text-input" class="form-control" value="{{ sites_data.ipadd }}" readonly>
-                                                        </div>
-                                                    </div>
-                                                    <div class="form-group row">
-                                                        <label for="text-input" class="col-sm-3 col-form-label">Tagline</label>
-                                                        <div class="col-sm-9">
-                                                            <textarea name="textarea-input" id="textarea-input" rows="2" class="form-control" readonly>{{ sites_data.tagline }}</textarea>
-                                                        </div>
-                                                    </div>
-                                                    <div class="form-group row">
-                                                        <div class="col-sm-3"></div>
-                                                        <div class="col-sm-9">
-                                                            <button type="submit" class="btn btn-primary btn-sm">
-                                                            <i class="fa fa-dot-circle-o"></i> Submit
-                                                            </button>
-                                                            <button type="reset" class="btn btn-danger btn-sm">
-                                                            <i class="fa fa-ban"></i> Reset
-                                                            </button>
-                                                        </div>
-                                                    </div>
-                                                </form>                   
+                                        <div class="tab-content pl-0 pt-2" id="nav-tabContent">
+                                            <div class="tab-pane fade active show" id="nav-home" role="tabpanel" aria-labelledby="nav-home-tab">
+                                                <table class="table">
+                                                    <tbody>
+                                                        <tr>
+                                                            <th style="width: 30%">Name</th>
+                                                            <td>{{ sites_data.name }}</td>
+                                                        </tr>
+                                                        <tr>
+                                                            <th>Description</th>
+                                                            <td>{{ sites_data.description }}</td>
+                                                        </tr>
+                                                        <tr>
+                                                            <th>Type</th>
+                                                            <td>{{ sites_data.type }}</td>
+                                                        </tr>
+                                                        <tr>
+                                                            <th>Location / Address</th>
+                                                            <td>{{ sites_data.location }}</td>
+                                                        </tr>
+                                                        <tr>
+                                                            <th>City</th>
+                                                            <td>{{ sites_data.city }}</td>
+                                                        </tr>
+                                                        <tr>
+                                                            <th>Site Code</th>
+                                                            <td>{{ sites_data.site_code }}</td>
+                                                        </tr>
+                                                        <tr>
+                                                            <th>Area Code</th>
+                                                            <td>{{ sites_data.area_code }}</td>
+                                                        </tr>
+                                                        <tr>
+                                                            <th>IP Address</th>
+                                                            <td>{{ sites_data.ipadd }}</td>
+                                                        </tr>
+                                                        <tr>
+                                                            <th>Tagline</th>
+                                                            <td>{{ sites_data.tagline }}</td>
+                                                        </tr>
+                                                    </tbody>
+                                                </table>
                                             </div>
                                             <div class="tab-pane fade" id="nav-contact" role="tabpanel" aria-labelledby="nav-contact-tab">
-                                                <form>
-                                                    {% for contact in contacts_data %}
-                                                    <div class="form-group row">
-                                                        <label for="text-input" class="col-sm-3 col-form-label">{{ contact.type|title }}</label>
-                                                        <div class="col-sm-9">
-                                                            <input type="text" id="text-input" name="text-input" class="form-control" value="{{ contact.contact_number }}" readonly>
-                                                        </div>
-                                                    </div>
-                                                    {% endfor %}
-                                                    <div class="form-group row">
-                                                        <div class="col-sm-3"></div>
-                                                        <div class="col-sm-9">
-                                                            <button type="submit" class="btn btn-primary btn-sm">
-                                                            <i class="fa fa-dot-circle-o"></i> Submit
-                                                            </button>
-                                                            <button type="reset" class="btn btn-danger btn-sm">
-                                                            <i class="fa fa-ban"></i> Reset
-                                                            </button>
-                                                        </div>
-                                                    </div>
-                                                </form>
+                                                <table class="table">
+                                                    <tbody>
+                                                        {% for contact in contacts_data %}
+                                                        <tr>
+                                                            <th style="width: 30%">{{ contact.type|title }}</th>
+                                                            <td>{{ contact.contact_number }}</td>
+                                                        </tr>
+                                                        {% empty %}
+                                                        <tr>
+                                                            <td><div class="alert alert-dark" role="alert">No contact information.</div></td>
+                                                        <tr>
+                                                        {% endfor %}
+                                                        </tr>
+                                                    </tbody>
+                                                </table>
                                             </div>
                                         </div>
                                     </div>

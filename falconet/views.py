@@ -42,6 +42,17 @@ def site_detail(request, site_id):
     html = render_to_string('page-site-detail.html', {'title': "Sites", 'head': "Sites", 'bcitems': [['home', 'Home'], ['sites', 'Sites'], [site_id, sites_data.name]], 'sites_data': sites_data ,'contacts_data': contacts_data})
     return HttpResponse(html)
 
+@login_required()
+def site_detail_edit(request, site_id):
+    try:
+        site_id = int(site_id)
+    except ValueError:
+        raise Http404()
+    sites_data = sites_model.objects.get(id = site_id)
+    contacts_data = contacts_model.objects.filter(site = site_id)
+    html = render_to_string('page-site-detail-edit.html', {'title': "Sites", 'head': "Sites", 'bcitems': [['home', 'Home'], ['sites', 'Sites'], [site_id, sites_data.name]], 'sites_data': sites_data ,'contacts_data': contacts_data})
+    return HttpResponse(html)
+
 def auth_login(request):
     if not request.user.is_authenticated:
         form = LoginForm()
