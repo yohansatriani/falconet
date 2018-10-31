@@ -1,7 +1,7 @@
 from django.template.loader import get_template, render_to_string
 from django.template import Template, Context
 from django.http import HttpResponse, HttpResponseRedirect
-from django.shortcuts import render, redirect
+from django.shortcuts import render, redirect, get_object_or_404
 from django.contrib.auth import authenticate, login, logout
 from django.contrib.auth.decorators import login_required
 from django.contrib import messages
@@ -37,7 +37,7 @@ def site_detail(request, site_id):
         site_id = int(site_id)
     except ValueError:
         raise Http404()
-    sites_data = sites_model.objects.get(id = site_id)
+    sites_data = get_object_or_404(sites_model, id=site_id)
     contacts_data = contacts_model.objects.filter(site = site_id)
     html = render_to_string('page-site-detail.html', {'title': "Sites", 'head': "Sites", 'bcitems': [['home', 'Home'], ['sites', 'Sites'], [site_id, sites_data.name]], 'sites_data': sites_data ,'contacts_data': contacts_data})
     return HttpResponse(html)
@@ -48,7 +48,7 @@ def site_detail_edit(request, site_id):
         site_id = int(site_id)
     except ValueError:
         raise Http404()
-    sites_data = sites_model.objects.get(id = site_id)
+    sites_data = get_object_or_404(sites_model, id=site_id)
     contacts_data = contacts_model.objects.filter(site = site_id)
     html = render_to_string('page-site-detail-edit.html', {'title': "Sites", 'head': "Sites", 'bcitems': [['home', 'Home'], ['sites', 'Sites'], [site_id, sites_data.name]], 'sites_data': sites_data ,'contacts_data': contacts_data})
     return HttpResponse(html)
