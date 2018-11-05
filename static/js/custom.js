@@ -53,5 +53,8 @@ jQuery(document).ready(function($){
     $('#reset-contact').click(function(){
         $('#site-form').trigger("reset");
         $('#contact-form').trigger("reset");
+        console.log('click');
+        $('.is-deleted').val("0");
+        $('.dynamic-stuff').find('.form-group').show();
     });
 });
