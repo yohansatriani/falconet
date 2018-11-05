@@ -73,11 +73,17 @@
                                         </nav>
                                         <div class="tab-content pl-3 pt-2 pr-3" id="nav-tabContent">
                                             <div class="tab-pane fade active show" id="nav-home" role="tabpanel" aria-labelledby="nav-home-tab">                    
-                                                <form id="site-form">
+                                                <form id="site-form" action="#" method="post">
                                                     <div class="form-group row">
-                                                        <label for="name" class="col-sm-3 col-form-label">Name</label>
+                                                        {% csrf_token %}
+                                                    </div>
+                                                    <div class="form-group row">
+                                                        {{ site_form.name.label_tag }}
+                                                        <!--<label for="name" class="col-sm-3 col-form-label">Name</label>-->
+                                                        <!--<label for="{{ site_form.name.id_for_label }}" class="col-sm-3 col-form-label">{{ site_form.name.id_for_label|title }}</label>-->
                                                         <div class="col-sm-9">
-                                                            <input type="text" id="name" name="text-input" class="form-control" value="{{ sites_data.name }}" />
+                                                            {{ site_form.name }}
+                                                            <!--<input type="text" id="name" name="text-input" class="form-control" value="{{ sites_data.name }}" />-->
                                                         </div>
                                                     </div>
                                                     <div class="form-group row">

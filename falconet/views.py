@@ -7,6 +7,7 @@ from django.contrib.auth.decorators import login_required
 from django.contrib import messages
 from django.core import serializers
 from falconet.forms import LoginForm
+from netinfo.forms import SiteForm
 from netinfo.models import sites as sites_model, contacts as contacts_model
 
 @login_required()
@@ -49,11 +50,11 @@ def site_detail_edit(request, site_id):
         site_id = int(site_id)
     except ValueError:
         raise Http404()
+    site_form = SiteForm()
     sites_data = get_object_or_404(sites_model, id=site_id)
     contacts_type = contacts_model.objects.values('type').distinct()
     contacts_data = contacts_model.objects.filter(site = site_id)
-    html = render_to_string('page-site-detail-edit.html', {'title': "Sites", 'head': "Sites", 'bcitems': [['home', 'Home'], ['sites', 'Sites'], [site_id, sites_data.name]], 'sites_data': sites_data ,'contacts_data': contacts_data, 'contacts_type': contacts_type})
-    return HttpResponse(html)
+    return render(request, 'page-site-detail-edit.html', {'title': "Sites", 'head': "Sites", 'bcitems': [['home', 'Home'], ['sites', 'Sites'], [site_id, sites_data.name]], 'sites_data': sites_data ,'contacts_data': contacts_data, 'contacts_type': contacts_type, 'site_form': site_form})
 
 # AJAX
 def get_contacts_type(request):
