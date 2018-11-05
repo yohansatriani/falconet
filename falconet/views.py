@@ -1,10 +1,11 @@
 from django.template.loader import get_template, render_to_string
 from django.template import Template, Context
-from django.http import HttpResponse, HttpResponseRedirect
+from django.http import HttpResponse, HttpResponseRedirect, JsonResponse
 from django.shortcuts import render, redirect, get_object_or_404
 from django.contrib.auth import authenticate, login, logout
 from django.contrib.auth.decorators import login_required
 from django.contrib import messages
+from django.core import serializers
 from falconet.forms import LoginForm
 from netinfo.models import sites as sites_model, contacts as contacts_model
 
@@ -37,7 +38,7 @@ def site_detail(request, site_id):
         site_id = int(site_id)
     except ValueError:
         raise Http404()
-    sites_data = get_object_or_404(sites_model, id=site_id)
+    sites_data = get_object_or_404(sites_model, id=site_id) 
     contacts_data = contacts_model.objects.filter(site = site_id)
     html = render_to_string('page-site-detail.html', {'title': "Sites", 'head': "Sites", 'bcitems': [['home', 'Home'], ['sites', 'Sites'], [site_id, sites_data.name]], 'sites_data': sites_data ,'contacts_data': contacts_data})
     return HttpResponse(html)
@@ -49,9 +50,18 @@ def site_detail_edit(request, site_id):
     except ValueError:
         raise Http404()
     sites_data = get_object_or_404(sites_model, id=site_id)
+    contacts_type = contacts_model.objects.values('type').distinct()
     contacts_data = contacts_model.objects.filter(site = site_id)
-    html = render_to_string('page-site-detail-edit.html', {'title': "Sites", 'head': "Sites", 'bcitems': [['home', 'Home'], ['sites', 'Sites'], [site_id, sites_data.name]], 'sites_data': sites_data ,'contacts_data': contacts_data})
+    html = render_to_string('page-site-detail-edit.html', {'title': "Sites", 'head': "Sites", 'bcitems': [['home', 'Home'], ['sites', 'Sites'], [site_id, sites_data.name]], 'sites_data': sites_data ,'contacts_data': contacts_data, 'contacts_type': contacts_type})
     return HttpResponse(html)
+
+# AJAX
+def get_contacts_type(request):
+    # contacts_type = contacts_model.objects.filter(site = 0)
+    # contacts_type_xml = serializers.serialize("xml", contacts_type, fields=('type'))
+    contacts_type = {'contacts_type': ['phone','fax']}
+    # contacts_type = [{ "type" : "phone"},{ "type" : "fax"}]
+    return JsonResponse(contacts_type)
 
 def auth_login(request):
     if not request.user.is_authenticated:

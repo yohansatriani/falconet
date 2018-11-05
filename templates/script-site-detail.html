@@ -3,35 +3,3 @@
         <script src="{% static 'assets/js/popper.min.js' %}"></script>
         <script src="{% static 'assets/js/plugins.js' %}"></script>
         <script src="{% static 'assets/js/main.js' %}"></script>
-        
-        <script type="text/javascript">
-        jQuery(document).ready(function($){
-            
-            var dnmcelmn = "<div class='form-group row dynamic-element'>"+
-                        "<input type='text' name='type[]' class='col-sm-3 col-form-label' value='{{ contact.type }}' />"+
-                        "<div class='col-sm-9'><div class='input-group'>"+
-                        "<input type='text' name='contact_number[]' class='form-control' value='{{ contact.contact_number }}' />"+
-                        "<button type='button' class='delete btn btn-danger btn-sm'>"+
-                        "<i class='fa fa-times'></i></button></div></div></div>";
-            
-            $('.add-one').click(function(){
-                $(".dynamic-stuff").append(dnmcelmn);
-                attach_delete();
-            });
-            
-            //$('.add-one').click(function(){
-            //    $('.dynamic-element').first().clone().appendTo('.dynamic-stuff').show();
-            //    attach_delete();
-            //});
-                    
-        //Attach functionality to delete buttons
-            function attach_delete(){
-                $('.delete').off();
-                $('.delete').click(function(){
-                    console.log("click");
-                    $(this).closest('.form-group').remove();
-                });
-            }
-            
-        });
-        </script>

@@ -73,7 +73,7 @@
                                         </nav>
                                         <div class="tab-content pl-3 pt-2 pr-3" id="nav-tabContent">
                                             <div class="tab-pane fade active show" id="nav-home" role="tabpanel" aria-labelledby="nav-home-tab">                    
-                                                <form>
+                                                <form id="site-form">
                                                     <div class="form-group row">
                                                         <label for="name" class="col-sm-3 col-form-label">Name</label>
                                                         <div class="col-sm-9">
@@ -131,16 +131,26 @@
                                                 </form>                   
                                             </div>
                                             <div class="tab-pane fade" id="nav-contact" role="tabpanel" aria-labelledby="nav-contact-tab">
-                                                <form>
+                                                <form id="contact-form">
                                                     <div class="dynamic-stuff">
                                                         {% if contacts_data %}                                            
                                                         {% for contact in contacts_data %}
                                                         <div class="form-group row dynamic-element">
-                                                            <input type="text" name="type[]" class="col-sm-3 col-form-label" value="{{ contact.type }}" />
-                                                            <div class="col-sm-9">
+                                                            <div class="col-sm-12">
                                                                 <div class="input-group">
+                                                                    <input type="hidden" name="contact_id[]" class="form-control" value="{{ contact.id }}" />
+                                                                    <input type="hidden" class="is-deleted" value=0 />
+                                                                    <select name="select" id="select" class="col-sm-3 form-control">
+                                                                        {% for contype in contacts_type %}
+                                                                        {% if contype.type == contact.type %}  
+                                                                        <option value="{{ contype.type }}" selected="selected">{{ contype.type|upper }}</option>
+                                                                        {% else %}
+                                                                        <option value="{{ contype.type }}">{{ contype.type|upper }}</option>
+                                                                        {% endif %}
+                                                                        {% endfor %}
+                                                                    </select>
                                                                     <input type="text" name="contact_number[]" class="form-control" value="{{ contact.contact_number }}" />
-                                                                    <button type="button" class="delete btn btn-danger btn-sm"><i class="fa fa-times"></i></button>
+                                                                    <button type="button" class="btn btn-danger btn-sm delete-contact"><i class="fa fa-times"></i></button>
                                                                 </div>
                                                             </div>
                                                         </div>
@@ -159,7 +169,7 @@
                                     <hr/>
                                     <div class="card-text text-sm-right">
                                         <a class="small" href="#"><button type="button" class="btn btn-primary btn-sm">Submit</button></a>
-                                        <a class="small" href="#"><button type="button" class="btn btn-danger btn-sm">Reset</button></a>
+                                        <a class="small" href="#"><button type="button" class="btn btn-danger btn-sm" id="reset-contact">Reset</button></a>
                                         <a class="small" href=".."><button type="button" class="btn btn-secondary btn-sm">Cancel</button></a>
                                     </div>
                                 </div>
@@ -175,6 +185,7 @@
         <!--SCRIPTS-->
         {% block scripts %}
         {% include 'script-site-detail.html' %}
+        <script src="{% static '/js/custom.js' %}"></script>
         {% endblock %}
         <!--#SCRIPTS-->
     <!--</body>-->
