@@ -50,8 +50,18 @@ def site_detail_edit(request, site_id):
         site_id = int(site_id)
     except ValueError:
         raise Http404()
-    site_form = SiteForm()
     sites_data = get_object_or_404(sites_model, id=site_id)
+    site_form = SiteForm(initial={
+        'name': sites_data.name,
+        'description':sites_data.description,
+        'type': sites_data.type,
+        'location': sites_data.location,
+        'city': sites_data.city,
+        'site_code': sites_data.site_code,
+        'area_code': sites_data.area_code,
+        'ipadd': sites_data.ipadd,
+        'tagline': sites_data.tagline,
+    })
     contacts_type = contacts_model.objects.values('type').distinct()
     contacts_data = contacts_model.objects.filter(site = site_id)
     return render(request, 'page-site-detail-edit.html', {'title': "Sites", 'head': "Sites", 'bcitems': [['home', 'Home'], ['sites', 'Sites'], [site_id, sites_data.name]], 'sites_data': sites_data ,'contacts_data': contacts_data, 'contacts_type': contacts_type, 'site_form': site_form})
