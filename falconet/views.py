@@ -106,3 +106,17 @@ def auth_process(request):
         else:
             return redirect(home)
 
+def site_do_edit(request):
+    if request.method == 'POST':    
+        name = request.POST['name']
+        description = request.POST['description']
+        type = request.POST['type']
+        location = request.POST['location']
+        city = request.POST['city']
+        site_code = request.POST['site_code']
+        area_code = request.POST['area_code']
+        ipadd = request.POST['ipadd']
+        tagline = request.POST['tagline']
+
+        html = render_to_string('page-home.html', {'title': "Home", 'head': "Home", 'bcitems': [['home', 'Home']]})
+    return HttpResponse(html)

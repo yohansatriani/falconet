@@ -50,11 +50,16 @@ jQuery(document).ready(function($){
         //console.log("hide");           
     });
     
-    $('#reset-contact').click(function(){
+    $('#reset-site-contact').click(function(){
         $('#site-form').trigger("reset");
         $('#contact-form').trigger("reset");
         console.log('click');
         $('.is-deleted').val("0");
         $('.dynamic-stuff').find('.form-group').show();
+    });
+    
+    $('#submit-site-contact').click(function(){
+        $('#site-form').submit();
+        //$('#contact-form').trigger("reset");
     });
 });

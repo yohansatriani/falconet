@@ -74,7 +74,7 @@
                                         </nav>
                                         <div class="tab-content pl-3 pt-2 pr-3" id="nav-tabContent">
                                             <div class="tab-pane fade active show" id="nav-home" role="tabpanel" aria-labelledby="nav-home-tab">                    
-                                                <form id="site-form" action="#" method="post">
+                                                <form id="site-form" action="{% url 'site_do_edit' %}" method="post">
                                                     {% csrf_token %}
                                                     {{ site_form.non_field_errors }}
                                                     {% for hidden_field in site_form.hidden_fields %}
@@ -128,8 +128,8 @@
                                     </div>
                                     <hr/>
                                     <div class="card-text text-sm-right">
-                                        <a class="small" href="#"><button type="button" class="btn btn-primary btn-sm">Submit</button></a>
-                                        <a class="small" href="#"><button type="button" class="btn btn-danger btn-sm" id="reset-contact">Reset</button></a>
+                                        <a class="small"><button type="button" class="btn btn-primary btn-sm" id="submit-site-contact">Submit</button></a>
+                                        <a class="small"><button type="button" class="btn btn-danger btn-sm" id="reset-site-contact">Reset</button></a>
                                         <a class="small" href=".."><button type="button" class="btn btn-secondary btn-sm">Cancel</button></a>
                                     </div>
                                 </div>
