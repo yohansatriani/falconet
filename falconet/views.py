@@ -107,7 +107,8 @@ def auth_process(request):
             return redirect(home)
 
 def site_do_edit(request):
-    if request.method == 'POST':    
+    if request.method == 'POST':
+        id = request.POST['id']
         name = request.POST['name']
         description = request.POST['description']
         type = request.POST['type']
@@ -117,6 +118,6 @@ def site_do_edit(request):
         area_code = request.POST['area_code']
         ipadd = request.POST['ipadd']
         tagline = request.POST['tagline']
-
+        
         html = render_to_string('page-home.html', {'title': "Home", 'head': "Home", 'bcitems': [['home', 'Home']]})
     return HttpResponse(html)
