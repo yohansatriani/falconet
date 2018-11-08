@@ -74,7 +74,7 @@
                                         </nav>
                                         <div class="tab-content pl-3 pt-2 pr-3" id="nav-tabContent">
                                             <div class="tab-pane fade active show" id="nav-home" role="tabpanel" aria-labelledby="nav-home-tab">                    
-                                                <form id="site-form" action="{% url 'site_do_edit' %}" method="post">
+                                                <form id="site-form" action="{% url 'edit_process' %}" method="post">
                                                     {% csrf_token %}
                                                     {{ site_form.non_field_errors }}
                                                     {% for hidden_field in site_form.hidden_fields %}

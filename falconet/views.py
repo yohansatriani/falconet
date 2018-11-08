@@ -106,12 +106,12 @@ def auth_process(request):
         else:
             return redirect(home)
 
-def site_do_edit(request):
+def edit_process(request):
     if request.method == 'POST':
-        id = request.POST['id']
+        site_id = request.POST['id']
         name = request.POST['name']
         description = request.POST['description']
-        type = request.POST['type']
+        site_type = request.POST['type']
         location = request.POST['location']
         city = request.POST['city']
         site_code = request.POST['site_code']
@@ -119,5 +119,19 @@ def site_do_edit(request):
         ipadd = request.POST['ipadd']
         tagline = request.POST['tagline']
         
-        html = render_to_string('page-home.html', {'title': "Home", 'head': "Home", 'bcitems': [['home', 'Home']]})
-    return HttpResponse(html)
+        post_data = [name, description, site_type, location, city, site_code, area_code, ipadd, tagline]
+        query_site_data = sites_model.objects.filter(id = site_id)
+        
+        site_data = []
+        for site_record in query_site_data:
+            site_data.append(site_record)
+            
+        form_site_sts = SiteForm(post_data, initial=site_data)
+        
+        if form_site_sts:
+            query_site_data
+            
+        sites_data = get_object_or_404(sites_model, id=site_id) 
+        contacts_data = contacts_model.objects.filter(site = site_id)
+        return redirect(site_detail)
+        
