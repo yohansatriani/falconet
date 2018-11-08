@@ -52,6 +52,7 @@ def site_detail_edit(request, site_id):
         raise Http404()
     sites_data = get_object_or_404(sites_model, id=site_id)
     site_form = SiteForm(initial={
+        'id': sites_data.id,
         'name': sites_data.name,
         'description':sites_data.description,
         'type': sites_data.type,
@@ -64,7 +65,7 @@ def site_detail_edit(request, site_id):
     })
     contacts_type = contacts_model.objects.values('type').distinct()
     contacts_data = contacts_model.objects.filter(site = site_id)
-    return render(request, 'page-site-detail-edit.html', {'title': "Sites", 'head': "Sites", 'bcitems': [['home', 'Home'], ['sites', 'Sites'], [site_id, sites_data.name]], 'sites_data': sites_data ,'contacts_data': contacts_data, 'contacts_type': contacts_type, 'site_form': site_form})
+    return render(request, 'page-site-detail-edit.html', {'title': "Sites", 'head': "Sites", 'bcitems': [['/home/', 'Home'], ['/sites/', 'Sites'], ['/sites/'+str(site_id)+'/', sites_data.name],['edit', 'Edit']], 'contacts_data': contacts_data, 'contacts_type': contacts_type, 'site_form': site_form})
 
 # AJAX
 def get_contacts_type(request):
@@ -108,30 +109,37 @@ def auth_process(request):
 
 def edit_process(request):
     if request.method == 'POST':
-        site_id = request.POST['id']
-        name = request.POST['name']
-        description = request.POST['description']
-        site_type = request.POST['type']
-        location = request.POST['location']
-        city = request.POST['city']
-        site_code = request.POST['site_code']
-        area_code = request.POST['area_code']
-        ipadd = request.POST['ipadd']
-        tagline = request.POST['tagline']
+        site_post_data = {
+            'id': request.POST['id'],
+            'name':request.POST['name'],
+            'description':request.POST['description'],
+            'type':request.POST['type'],
+            'location':request.POST['location'],
+            'city':request.POST['city'],
+            'site_code':request.POST['site_code'],
+            'area_code':request.POST['area_code'],
+            'ipadd':request.POST['ipadd'],
+            'tagline':request.POST['tagline']
+        }
         
-        post_data = [name, description, site_type, location, city, site_code, area_code, ipadd, tagline]
-        query_site_data = sites_model.objects.filter(id = site_id)
+        sites_data = get_object_or_404(sites_model, id=request.POST['id'])
+
+        site_db_data = {
+            'id': sites_data.id,
+            'name': sites_data.name,
+            'description':sites_data.description,
+            'type': sites_data.type,
+            'location': sites_data.location,
+            'city': sites_data.city,
+            'site_code': sites_data.site_code,
+            'area_code': sites_data.area_code,
+            'ipadd': sites_data.ipadd,
+            'tagline': sites_data.tagline,
+        }
         
-        site_data = []
-        for site_record in query_site_data:
-            site_data.append(site_record)
-            
-        form_site_sts = SiteForm(post_data, initial=site_data)
+        site_form = SiteForm(site_post_data, initial=site_db_data)
         
-        if form_site_sts:
-            query_site_data
-            
-        sites_data = get_object_or_404(sites_model, id=site_id) 
-        contacts_data = contacts_model.objects.filter(site = site_id)
-        return redirect(site_detail)
-        
+        if site_form.has_changed():
+            return HttpResponse("The following fields changed: %s" % ", ".join(site_form.changed_data))
+        else:
+            return redirect(sites)

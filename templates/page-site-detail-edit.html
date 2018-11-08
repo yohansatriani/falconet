@@ -81,7 +81,6 @@
                                                         {{ hidden_field.errors }}
                                                         {{ hidden_field }}
                                                     {% endfor %}
-                                                    <input type="hidden" name="site_id[]" value="{{ sites_data.id }}" />
                                                     {% for field in site_form.visible_fields %}
                                                     <div class="form-group row">
                                                         <label for="{{ field.id_for_label }}" class="col-sm-3 col-form-label">{{ field.label }}</label>

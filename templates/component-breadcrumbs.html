@@ -14,7 +14,7 @@
                                 {% if forloop.last %}
                                 <li class="active">{{ bclabel }}</li>
                                 {% else %}
-                                <li><a href="{% url bclink %}">{{ bclabel }}</a></li>
+                                <li><a href="{{ bclink }}">{{ bclabel }}</a></li>
                                 {% endif %}
                                 {% endfor %}
                             </ol>

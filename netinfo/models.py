@@ -18,7 +18,7 @@ class sites(models.Model):
         verbose_name_plural = "sites"
         
     def __str__(self):
-        return self.name
+        return u'%s %s %s %s %s %s %s %s %s %s' %(self.id, self.name, self.type, self.location, self.city, self.description, self.ipadd, self.site_code, self.area_code, self.tagline)
 
 class contacts(models.Model):
     id = models.AutoField(primary_key=True)
