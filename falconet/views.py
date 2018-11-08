@@ -138,8 +138,11 @@ def edit_process(request):
         }
         
         site_form = SiteForm(site_post_data, initial=site_db_data)
-        
         if site_form.has_changed():
-            return HttpResponse("The following fields changed: %s" % ", ".join(site_form.changed_data))
+            for changed_data in site_form.changed_data:
+                setattr(sites_data, changed_data, site_post_data[changed_data])
+                sites_data.save()
+            
+            return redirect('site_detail', site_id=site_post_data['id'])
         else:
-            return redirect(sites)
+            return redirect('site_detail', site_id=site_post_data['id'])
