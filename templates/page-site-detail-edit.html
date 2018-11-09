@@ -63,6 +63,11 @@
                 <div class="animated fadeIn">
                     <div class="row justify-content-md-center">
                         <div class="col-lg-6">
+                            {% for message in messages %}
+                            <div class="sufee-alert alert with-close {{ message.extra_tags }} alert-dismissible fade show">
+                                {{ message }}<button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">×</span></button>
+                            </div>
+                            {% endfor %}
                             <div class="card">
                                 <div class="card-body">
                                     <div class="default-tab">
@@ -74,17 +79,18 @@
                                         </nav>
                                         <div class="tab-content pl-3 pt-2 pr-3" id="nav-tabContent">
                                             <div class="tab-pane fade active show" id="nav-home" role="tabpanel" aria-labelledby="nav-home-tab">                    
-                                                <form id="site-form" action="{% url 'edit_process' %}" method="post">
+                                                <form id="site-form" action="{% url 'site_edit_process' %}" method="post">
                                                     {% csrf_token %}
                                                     {{ site_form.non_field_errors }}
                                                     {% for hidden_field in site_form.hidden_fields %}
-                                                        {{ hidden_field.errors }}
                                                         {{ hidden_field }}
+                                                        {{ hidden_field.errors }}
                                                     {% endfor %}
                                                     {% for field in site_form.visible_fields %}
                                                     <div class="form-group row">
                                                         <label for="{{ field.id_for_label }}" class="col-sm-3 col-form-label">{{ field.label }}</label>
                                                         {% render_field field class="col-sm-9 form-control" %}
+                                                        {{ field.errors }}
                                                     </div>
                                                     {% endfor %}
                                                 </form>                   
