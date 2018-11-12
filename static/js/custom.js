@@ -17,14 +17,13 @@ jQuery(document).ready(function($){
             
             //dmcelmn = dynamic element
             var dmcelmn = "<div class='form-group row dynamic-element'>"+
-                        "<div class='col-sm-12'>"+
                         "<div class='input-group'>"+
                         "<select name='contact_type' id='select' class='col-sm-3 form-control'>"+
                         option+
                         "</select>"+
                         "<input type='text' name='contact_number[]' class='form-control'>"+
                         "<button type='button' class='delete btn btn-danger btn-sm'><i class='fa fa-times'></i></button>"+
-                        "</div></div></div>";
+                        "</div></div>";
             
             $('.add-one').click(function(){
                 $(".dynamic-stuff").append(dmcelmn);
@@ -58,8 +57,8 @@ jQuery(document).ready(function($){
         $('.dynamic-stuff').find('.form-group').show();
     });
     
-    $('#submit-site-contact').click(function(){
-        $('#site-form').submit();
+    //$('#submit-site-contact').click(function(){
+        //$('#site-form').submit();
         //$('#contact-form').trigger("reset");
-    });
+    //});
 });

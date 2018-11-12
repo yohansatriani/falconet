@@ -10,7 +10,7 @@ from falconet.forms import LoginForm
 
 from netinfo.forms import SiteForm
 from netinfo.models import sites as sites_model, contacts as contacts_model
-from netinfo.views import sites, site_isp, site_office, site_detail, site_detail_edit, site_edit_process
+from netinfo.views import sites, site_isp, site_office, site_detail, site_detail_edit
 
 # Create your views here.
 @login_required()

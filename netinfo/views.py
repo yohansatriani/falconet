@@ -51,33 +51,13 @@ def site_detail(request, site_id):
     return render(request, "page-site-detail.html", {'title': "Sites", 'head': "Sites", 'bcitems': bcitems, 'site_data': site_data ,'contacts_data': contacts_data})
 
 @login_required()
-def site_detail_edit(request, site_id):
-    try:
-        site_id = int(site_id)
-    except ValueError:
-        raise Http404()
-    site_data = get_object_or_404(sites_model, id=site_id)
-    site_form = SiteForm(initial={
-        'id': site_data.id,
-        'name': site_data.name,
-        'description':site_data.description,
-        'type': site_data.type,
-        'location': site_data.location,
-        'city': site_data.city,
-        'site_code': site_data.site_code,
-        'area_code': site_data.area_code,
-        'ipadd': site_data.ipadd,
-        'tagline': site_data.tagline,
-    })
-    contacts_type = contacts_model.objects.values('type').distinct()
-    contacts_data = contacts_model.objects.filter(site = site_id)
-    # breadcrumbs
-    bcitems = [['/home/', 'Home'], ['/sites/', 'Sites'], ['/sites/'+str(site_id)+'/', site_data.name],['edit', 'Edit']]
-    return render(request, 'page-site-detail-edit.html', {'title': "Sites", 'head': "Sites", 'bcitems': bcitems, 'contacts_data': contacts_data, 'contacts_type': contacts_type, 'site_form': site_form})
-
-@login_required
-def site_edit_process(request):
+def site_detail_edit(request, site_id):    
     if request.method == 'POST':
+        site_id = int(request.POST['id'])
+        # contact data & type
+        contacts_type = contacts_model.objects.values('type').distinct()
+        contacts_data = contacts_model.objects.filter(site = site_id)
+        
         site_post_data = {
             'id': request.POST['id'],
             'name':request.POST['name'],
@@ -91,32 +71,28 @@ def site_edit_process(request):
             'tagline':request.POST['tagline']
         }
         
-        sites_data = get_object_or_404(sites_model, id=request.POST['id'])
-        # sites_data = sites_model.objects.get(id=int(request.POST['id']))
+        site_data = sites_model.objects.get(id=int(request.POST['id']))
 
         site_db_data = {
-            'id': sites_data.id,
-            'name': sites_data.name,
-            'description':sites_data.description,
-            'type': sites_data.type,
-            'location': sites_data.location,
-            'city': sites_data.city,
-            'site_code': sites_data.site_code,
-            'area_code': sites_data.area_code,
-            'ipadd': sites_data.ipadd,
-            'tagline': sites_data.tagline,
+            'id': site_data.id,
+            'name': site_data.name,
+            'description':site_data.description,
+            'type': site_data.type,
+            'location': site_data.location,
+            'city': site_data.city,
+            'site_code': site_data.site_code,
+            'area_code': site_data.area_code,
+            'ipadd': site_data.ipadd,
+            'tagline': site_data.tagline,
         }
         
-        # site_form = SiteForm(site_post_data)
         site_form = SiteForm(site_post_data, initial=site_db_data)
         
-        # return render(request, 'about.html', {'site_post_data': sites_data})
-
         if site_form.is_valid():
             if site_form.has_changed():
                 for changed_data in site_form.changed_data:
-                    setattr(sites_data, changed_data, site_post_data[changed_data])
-                    sites_data.save()
+                    setattr(site_data, changed_data, site_post_data[changed_data])
+                    site_data.save()
                 
                 messages.success(request, 'Data updated succesfully.', extra_tags='alert-success')
                 return redirect('site_detail', site_id=site_post_data['id'])
@@ -124,7 +100,31 @@ def site_edit_process(request):
                 messages.info(request, 'No data changed.', extra_tags='alert-info')
                 return redirect('site_detail', site_id=site_post_data['id'])
         else:
-            messages.error(request, 'Failed updating data: Invalid form.', extra_tags='alert-danger')
-            return redirect('site_detail', site_id=site_post_data['id'])
+            messages.error(request, 'Failed updating data.', extra_tags='alert-danger')
+            # breadcrumbs
+            bcitems = [['/home/', 'Home'], ['/sites/', 'Sites'], ['/sites/'+str(site_id)+'/', site_data.name],['edit', 'Edit']]
+            return render(request, 'page-site-detail-edit.html', {'title': "Edit Sites", 'head': "Edit Sites", 'bcitems': bcitems, 'contacts_data': contacts_data, 'contacts_type': contacts_type, 'site_form': site_form, 'site_id': site_id})
     else:
-        return redirect(sites)
+        try:
+            site_id = int(site_id)
+        except ValueError:
+            raise Http404()
+        site_data = get_object_or_404(sites_model, id=site_id)
+        site_form = SiteForm(initial={
+            'id': site_data.id,
+            'name': site_data.name,
+            'description':site_data.description,
+            'type': site_data.type,
+            'location': site_data.location,
+            'city': site_data.city,
+            'site_code': site_data.site_code,
+            'area_code': site_data.area_code,
+            'ipadd': site_data.ipadd,
+            'tagline': site_data.tagline,
+        })
+        # contact data & type
+        contacts_type = contacts_model.objects.values('type').distinct()
+        contacts_data = contacts_model.objects.filter(site = site_id)
+        # breadcrumbs
+        bcitems = [['/home/', 'Home'], ['/sites/', 'Sites'], ['/sites/'+str(site_id)+'/', site_data.name],['edit', 'Edit']]
+        return render(request, 'page-site-detail-edit.html', {'title': "Edit Sites", 'head': "Edit Sites", 'bcitems': bcitems, 'contacts_data': contacts_data, 'contacts_type': contacts_type, 'site_form': site_form, 'site_id': site_id})
