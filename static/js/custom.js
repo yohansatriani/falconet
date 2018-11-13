@@ -16,7 +16,7 @@ jQuery(document).ready(function($){
             });
             
             //dmcelmn = dynamic element
-            var dmcelmn = "<div class='form-group row dynamic-element'>"+
+            var dmcelmn = "<div class='form-group dynamic-element'>"+
                         "<div class='input-group'>"+
                         "<select name='contact_type' id='select' class='col-sm-3 form-control'>"+
                         option+
