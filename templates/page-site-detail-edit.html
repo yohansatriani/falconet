@@ -108,23 +108,17 @@
                                                     <hr/>
                                                     <button class="btn btn-secondary btn-sm mb-3" type="button" data-toggle="collapse" data-target="#contact-collapse" aria-expanded="false" aria-controls="contact-collapse">Contacts</button>
                                                     <div class="collapse" id="contact-collapse">
-                                                        <div class="dynamic-stuff">
-                                                            {% if contacts_data %}                                            
-                                                            {% for contact in contacts_data %}
+                                                        <div class="dynamic-stuff">                                                          
+                                                            {% if contacts_form %}
+                                                            {% for data_contacts_form in contacts_form %}
                                                             <div class="form-group dynamic-element">
                                                                 <div class="input-group">
-                                                                    <input type="hidden" name="contact_id[]" class="form-control" value="{{ contact.id }}" />
-                                                                    <input type="hidden" class="is-deleted" value=0 />
-                                                                    <select name="contact_type[]" id="select" class="col-sm-3 form-control">
-                                                                        {% for contype in contacts_type %}
-                                                                        {% if contype.type == contact.type %}  
-                                                                        <option value="{{ contype.type }}" selected="selected">{{ contype.type|upper }}</option>
-                                                                        {% else %}
-                                                                        <option value="{{ contype.type }}">{{ contype.type|upper }}</option>
-                                                                        {% endif %}
-                                                                        {% endfor %}
-                                                                    </select>
-                                                                    <input type="text" name="contact_number[]" class="form-control" value="{{ contact.contact_number }}" />
+                                                                    {% for hidden_field in data_contacts_form.hidden_fields %}
+                                                                    {{ hidden_field }}
+                                                                    {% endfor %}
+                                                                    {% for field in data_contacts_form.visible_fields %}
+                                                                    {% render_field field %}
+                                                                    {% endfor %}
                                                                     <button type="button" class="btn btn-danger btn-sm delete-contact"><i class="fa fa-times"></i></button>
                                                                 </div>
                                                             </div>
@@ -159,7 +153,7 @@
         {% block scripts %}
         {% include 'script-site-detail.html' %}
         <script src="{% static '/assets/js/jquery.validate.min.js' %}"></script>
-        <script src="{% static '/js/custom.js' %}"></script>
+        <script src="{% static '/assets/js/falconet.site.js' %}"></script>
         <script>
             //jQuery(document).ready(function($){
             //    $("#site-form").validate({

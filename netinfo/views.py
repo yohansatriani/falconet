@@ -9,7 +9,7 @@ from django.contrib import messages
 from falconet import views
 from falconet.forms import LoginForm
 
-from netinfo.forms import SiteForm
+from netinfo.forms import SiteForm, ContactForm
 from netinfo.models import sites as sites_model, contacts as contacts_model
 
 
@@ -109,6 +109,7 @@ def site_detail_edit(request, site_id):
             site_id = int(site_id)
         except ValueError:
             raise Http404()
+        # site data
         site_data = get_object_or_404(sites_model, id=site_id)
         site_form = SiteForm(initial={
             'id': site_data.id,
@@ -125,6 +126,17 @@ def site_detail_edit(request, site_id):
         # contact data & type
         contacts_type = contacts_model.objects.values('type').distinct()
         contacts_data = contacts_model.objects.filter(site = site_id)
+        contacts_form = []
+        if contacts_data:
+            for contact in contacts_data:
+                contacts_form.append(ContactForm(initial={
+                    'contact_id': contact.id,
+                    # 'site_id': contact.site,
+                    'contact_type': contact.type,
+                    'contact_number': contact.contact_number
+                }))
+        else:
+            contact_form = False
         # breadcrumbs
         bcitems = [['/home/', 'Home'], ['/sites/', 'Sites'], ['/sites/'+str(site_id)+'/', site_data.name],['edit', 'Edit']]
-        return render(request, 'page-site-detail-edit.html', {'title': "Edit Sites", 'head': "Edit Sites", 'bcitems': bcitems, 'contacts_data': contacts_data, 'contacts_type': contacts_type, 'site_form': site_form, 'site_id': site_id})
+        return render(request, 'page-site-detail-edit.html', {'title': "Edit Sites", 'head': "Edit Sites", 'bcitems': bcitems, 'contacts_form': contacts_form, 'contacts_data': contacts_data, 'contacts_type': contacts_type, 'site_form': site_form, 'site_id': site_id})
