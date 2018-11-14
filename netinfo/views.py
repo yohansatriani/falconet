@@ -53,6 +53,7 @@ def site_detail(request, site_id):
 @login_required()
 def site_detail_edit(request, site_id):    
     if request.method == 'POST':
+        # site post intialization
         site_id = int(request.POST['id'])
         # contact data & type
         contacts_type = contacts_model.objects.values('type').distinct()
@@ -85,9 +86,37 @@ def site_detail_edit(request, site_id):
             'ipadd': site_data.ipadd,
             'tagline': site_data.tagline,
         }
-        
+       
+        # contact post intialization
+        if request.POST['contact_id']:
+            contacts_post_data_raw = {
+                'contact_id': request.POST.getlist('contact_id[]'),
+                'contact_type':request.POST.getlist('contact_type[]'),
+                'contact_number':request.POST.getlist('contact_number[]'),
+            }
+            for contacts_post_data in contacts_post_data_raw:
+                cid = int(contacts_post_data['contact_id'])
+                contact_data = contacts_model.objects.get(id=cid)
+                contact_db_data = {
+                    'id': contact_data.id,
+                    'contact_type': contact_data.contact_type,
+                    'contact_number':contact_data.contact_number,
+                }
+                contact_form = ContactForm(contacts_post_data, initial=contact_db_data)
+                if contact_form.is_valid():
+                    if contact_form.has_changed():
+                        for changed_data in contact_form.changed_data:
+                            setattr(contact_data, changed_data, contacts_post_data[changed_data])
+                            contact_data.save()
+                        
+                        messages.success(request, 'Contact Data updated succesfully.', extra_tags='alert-success')
+                    else:
+                        messages.info(request, 'No data changed.', extra_tags='alert-info')
+                else:
+                    messages.error(request, 'Failed updating data.', extra_tags='alert-danger')
+    
+        # site update process
         site_form = SiteForm(site_post_data, initial=site_db_data)
-        
         if site_form.is_valid():
             if site_form.has_changed():
                 for changed_data in site_form.changed_data:
@@ -104,6 +133,9 @@ def site_detail_edit(request, site_id):
             # breadcrumbs
             bcitems = [['/home/', 'Home'], ['/sites/', 'Sites'], ['/sites/'+str(site_id)+'/', site_data.name],['edit', 'Edit']]
             return render(request, 'page-site-detail-edit.html', {'title': "Edit Sites", 'head': "Edit Sites", 'bcitems': bcitems, 'contacts_data': contacts_data, 'contacts_type': contacts_type, 'site_form': site_form, 'site_id': site_id})
+        
+        
+        
     else:
         try:
             site_id = int(site_id)
@@ -123,13 +155,13 @@ def site_detail_edit(request, site_id):
             'ipadd': site_data.ipadd,
             'tagline': site_data.tagline,
         })
-        # contact data & type
+        # contact type & number
         contacts_type = contacts_model.objects.values('type').distinct()
         contacts_data = contacts_model.objects.filter(site = site_id)
         contacts_form = []
         if contacts_data:
             for contact in contacts_data:
-                contacts_form.append(ContactForm(initial={
+                contacts_form.append(ContactForm(auto_id='%s_'+str(contact.id), initial={
                     'contact_id': contact.id,
                     # 'site_id': contact.site,
                     'contact_type': contact.type,

@@ -42,8 +42,10 @@ jQuery(document).ready(function($){
     });
     
     $('.delete-contact').click(function(){
+        var id = $(this).siblings("input[name*='contact_id']").val();
         //console.log("click");
-        $(this).parents().find('#contact_id').attr('name', 'deleted_contact_id');
+        //console.log(id);
+        $('#contact_id_'+id).attr('name', 'deleted_contact_id');
         //console.log("1");
         $(this).closest('.form-group').hide();
         //console.log("hide");           
@@ -52,8 +54,9 @@ jQuery(document).ready(function($){
     $('#reset-site-contact').click(function(){
         $('#site-form').trigger("reset");
         $('#contact-form').trigger("reset");
-        console.log('click');
-        $('#contact_id').attr('name', 'contact_id');
+        //console.log('click');
+        $("input[name*='deleted_contact_id']").attr('name', 'contact_id');
+        //$('#contact_id').attr('name', 'contact_id');
         $('.dynamic-stuff').find('.form-group').show();
     });
     

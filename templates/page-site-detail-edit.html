@@ -114,10 +114,25 @@
                                                             <div class="form-group dynamic-element">
                                                                 <div class="input-group">
                                                                     {% for hidden_field in data_contacts_form.hidden_fields %}
-                                                                    {% render_field hidden_field id="contact_id_".hidden_field.value %}
+                                                                    {% render_field hidden_field %}
+                                                                    {{ hidden_field.errors }}
                                                                     {% endfor %}
                                                                     {% for field in data_contacts_form.visible_fields %}
+                                                                    {% if site_form.is_bound %}
+                                                                    {% if field.errors %}
                                                                     {% render_field field %}
+                                                                    {% for error in field.errors %}
+                                                                    <span class="offset-sm-3 small text-danger">{{ error }}</span>
+                                                                    {% endfor %}
+                                                                    {% else %}
+                                                                    {% render_field field %}
+                                                                    {% endif %}
+                                                                    {% else %}
+                                                                    {% render_field field %}
+                                                                    {% endif %}
+                                                                    {% if field.help_text %}
+                                                                    <small class="offset-sm-3 form-text text-muted">{{ field.help_text }}</small>
+                                                                    {% endif %}
                                                                     {% endfor %}
                                                                     <button type="button" class="btn btn-danger btn-sm delete-contact"><i class="fa fa-times"></i></button>
                                                                 </div>
