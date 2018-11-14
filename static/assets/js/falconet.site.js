@@ -43,7 +43,7 @@ jQuery(document).ready(function($){
     
     $('.delete-contact').click(function(){
         //console.log("click");
-        $(this).parents().find('.is-deleted').val("1");
+        $(this).parents().find('#contact_id').attr('name', 'deleted_contact_id');
         //console.log("1");
         $(this).closest('.form-group').hide();
         //console.log("hide");           
@@ -53,7 +53,7 @@ jQuery(document).ready(function($){
         $('#site-form').trigger("reset");
         $('#contact-form').trigger("reset");
         console.log('click');
-        $('.is-deleted').val("0");
+        $('#contact_id').attr('name', 'contact_id');
         $('.dynamic-stuff').find('.form-group').show();
     });
     

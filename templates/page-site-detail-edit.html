@@ -114,7 +114,7 @@
                                                             <div class="form-group dynamic-element">
                                                                 <div class="input-group">
                                                                     {% for hidden_field in data_contacts_form.hidden_fields %}
-                                                                    {{ hidden_field }}
+                                                                    {% render_field hidden_field id="contact_id_".hidden_field.value %}
                                                                     {% endfor %}
                                                                     {% for field in data_contacts_form.visible_fields %}
                                                                     {% render_field field %}
