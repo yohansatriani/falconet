@@ -59,16 +59,12 @@ class SiteForm(forms.Form):
         required=False,
         widget=forms.Textarea(attrs={'class': 'form-control', 'id' : 'tagline', 'name':'tagline', 'rows':2})
     )
-    
+
 class ContactForm(forms.Form):
-    CONTACT_TYPE = (('phone', 'PHONE'),('fax', 'FAX'),('email','EMAIL'))
+    CONTACT_TYPE = (('phone', 'PHONE'),('fax', 'FAX'))
     contact_id = forms.IntegerField(
         widget=forms.HiddenInput(attrs={'class': 'form-control', 'name':'contact_id'})
     )
-    # site_id = forms.IntegerField(
-    #     label="Site",
-    #     widget=forms.HiddenInput(attrs={'class': 'form-control', 'id' : 'site_id', 'name':'site_id[]'})
-    # )
     contact_type = forms.ChoiceField(
         label="Type",
         choices=CONTACT_TYPE,
@@ -77,6 +73,5 @@ class ContactForm(forms.Form):
     contact_number = forms.CharField(
         label="Number",
         max_length=50,
-        widget=forms.TextInput(attrs={'class': 'form-control', 'name':'contact_number'})
+        widget=forms.TextInput(attrs={'class': 'form-control', 'name':'contact_number', 'pattern': '^[+]*[(]{0,1}[0-9]{1,4}[)]{0,1}[-\s\./0-9]*$'})
     )
-

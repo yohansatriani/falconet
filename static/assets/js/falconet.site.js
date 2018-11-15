@@ -1,7 +1,7 @@
 jQuery(document).ready(function($){
-            
-    $.ajax({ 
-        type: 'GET', 
+
+    $.ajax({
+        type: 'GET',
         url: '/ajax/get_contacts_type/',
         dataType: 'json',
         success: function (data) {
@@ -14,7 +14,7 @@ jQuery(document).ready(function($){
                 //console.log(element);
                 //console.log(option);
             });
-            
+
             //dmcelmn = dynamic element
             var dmcelmn = "<div class='form-group dynamic-element'>"+
                         "<div class='input-group'>"+
@@ -24,12 +24,12 @@ jQuery(document).ready(function($){
                         "<input type='text' name='contact_number[]' class='form-control'>"+
                         "<button type='button' class='delete btn btn-danger btn-sm'><i class='fa fa-times'></i></button>"+
                         "</div></div>";
-            
+
             $('.add-one').click(function(){
                 $(".dynamic-stuff").append(dmcelmn);
                 attach_delete();
             });
-                    
+
             //Attach functionality to delete buttons
             function attach_delete(){
                 $('.delete').off();
@@ -40,26 +40,30 @@ jQuery(document).ready(function($){
             }
         }
     });
-    
+
     $('.delete-contact').click(function(){
         var id = $(this).siblings("input[name*='contact_id']").val();
         //console.log("click");
         //console.log(id);
-        $('#contact_id_'+id).attr('name', 'deleted_contact_id');
+        $('#contact_id_'+id).attr('name', 'del_contact_id');
+        $('#contact_type_'+id).attr('name', 'del_contact_type');
+        $('#contact_number_'+id).attr('name', 'del_contact_number');
         //console.log("1");
         $(this).closest('.form-group').hide();
-        //console.log("hide");           
+        //console.log("hide");
     });
-    
+
     $('#reset-site-contact').click(function(){
         $('#site-form').trigger("reset");
         $('#contact-form').trigger("reset");
         //console.log('click');
-        $("input[name*='deleted_contact_id']").attr('name', 'contact_id');
+        $("input[name*='del_contact_id']").attr('name', 'contact_id');
+        $("input[name*='del_contact_type']").attr('name', 'contact_type');
+        $("input[name*='del_contact_number']").attr('name', 'contact_number');
         //$('#contact_id').attr('name', 'contact_id');
         $('.dynamic-stuff').find('.form-group').show();
     });
-    
+
     //$('#submit-site-contact').click(function(){
         //$('#site-form').submit();
         //$('#contact-form').trigger("reset");

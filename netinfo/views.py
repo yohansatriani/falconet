@@ -45,21 +45,21 @@ def site_detail(request, site_id):
         site_id = int(site_id)
     except ValueError:
         raise Http404()
-    site_data = get_object_or_404(sites_model, id=site_id) 
+    site_data = get_object_or_404(sites_model, id=site_id)
     contacts_data = contacts_model.objects.filter(site = site_id)
     # breadcrumbs
     bcitems = [['/home/', 'Home'], ['/sites/', 'Sites'], [site_id, site_data.name]]
     return render(request, "page-site-detail.html", {'title': "Sites", 'head': "Sites", 'bcitems': bcitems, 'site_data': site_data ,'contacts_data': contacts_data})
 
 @login_required()
-def site_detail_edit(request, site_id):    
+def site_detail_edit(request, site_id):
     if request.method == 'POST':
         # site post intialization
         site_id = int(request.POST['id'])
         # contact data & type
         contacts_type = contacts_model.objects.values('type').distinct()
         contacts_data = contacts_model.objects.filter(site = site_id)
-        
+
         site_post_data = {
             'id': request.POST['id'],
             'name':request.POST['name'],
@@ -72,7 +72,7 @@ def site_detail_edit(request, site_id):
             'ipadd':request.POST['ipadd'],
             'tagline':request.POST['tagline']
         }
-        
+
         site_data = sites_model.objects.get(id=int(request.POST['id']))
 
         site_db_data = {
@@ -87,7 +87,7 @@ def site_detail_edit(request, site_id):
             'ipadd': site_data.ipadd,
             'tagline': site_data.tagline,
         }
-       
+
         # contact post intialization
         if request.POST['contact_id']:
             contacts_post_data_raw = [
@@ -95,9 +95,9 @@ def site_detail_edit(request, site_id):
                 request.POST.getlist('contact_type'),
                 request.POST.getlist('contact_number'),
             ]
-            
+            # transpose post data
             contacts_post_data_zip=list(map(list, zip(*contacts_post_data_raw)))
-            
+
             for contacts_post_data_list in contacts_post_data_zip:
                 contacts_data = contacts_model.objects.get(id=contacts_post_data_list[0])
                 contacts_db_data = {
@@ -105,7 +105,7 @@ def site_detail_edit(request, site_id):
                     'contact_type': contacts_data.type,
                     'contact_number':contacts_data.contact_number,
                 }
-                
+
                 contacts_post_data = {
                     'contact_id': contacts_post_data_list[0],
                     'contact_type': contacts_post_data_list[1],
@@ -118,13 +118,12 @@ def site_detail_edit(request, site_id):
                         for changed_data in contact_form.changed_data:
                             setattr(contacts_data, changed_data, contacts_post_data[changed_data])
                             contacts_data.save()
-                        
-                        messages.success(request, 'Contact Data updated succesfully.', extra_tags='alert-success')
+                        messages.success(request, "Contact: "+contacts_post_data['contact_type'].title()+":"+contacts_post_data['contact_number']+" updated succesfully.", extra_tags='alert-success')
                     else:
-                        messages.info(request, 'No data changed.', extra_tags='alert-info')
+                        messages.info(request, "Contact: "+contacts_post_data['contact_type'].title()+":"+contacts_post_data['contact_number']+" not changed.", extra_tags='alert-info')
                 else:
-                    messages.error(request, 'Failed updating contact data.', extra_tags='alert-danger')
-    
+                    messages.error(request, 'Failed updating contact'+contacts_post_data['contact_type'].title()+":"+contacts_post_data['contact_number'], extra_tags='alert-danger')
+
         # site update process
         site_form = SiteForm(site_post_data, initial=site_db_data)
         if site_form.is_valid():
@@ -132,20 +131,19 @@ def site_detail_edit(request, site_id):
                 for changed_data in site_form.changed_data:
                     setattr(site_data, changed_data, site_post_data[changed_data])
                     site_data.save()
-                
-                messages.success(request, 'Data updated succesfully.', extra_tags='alert-success')
+                messages.success(request, 'Site Information updated succesfully.', extra_tags='alert-success')
                 return redirect('site_detail', site_id=site_post_data['id'])
             else:
-                messages.info(request, 'No data changed.', extra_tags='alert-info')
+                messages.info(request, 'Site Information not changed.', extra_tags='alert-info')
                 return redirect('site_detail', site_id=site_post_data['id'])
         else:
-            messages.error(request, 'Failed updating data.', extra_tags='alert-danger')
+            messages.error(request, 'Failed updating Site Information.', extra_tags='alert-danger')
             # breadcrumbs
             bcitems = [['/home/', 'Home'], ['/sites/', 'Sites'], ['/sites/'+str(site_id)+'/', site_data.name],['edit', 'Edit']]
             return render(request, 'page-site-detail-edit.html', {'title': "Edit Sites", 'head': "Edit Sites", 'bcitems': bcitems, 'contacts_data': contacts_data, 'contacts_type': contacts_type, 'site_form': site_form, 'site_id': site_id})
-        
-        
-        
+
+
+
     else:
         try:
             site_id = int(site_id)
