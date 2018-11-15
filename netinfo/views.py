@@ -12,6 +12,7 @@ from falconet.forms import LoginForm
 from netinfo.forms import SiteForm, ContactForm
 from netinfo.models import sites as sites_model, contacts as contacts_model
 
+from pprint import pprint
 
 # Create your views here.
 @login_required()
@@ -89,31 +90,40 @@ def site_detail_edit(request, site_id):
        
         # contact post intialization
         if request.POST['contact_id']:
-            contacts_post_data_raw = {
-                'contact_id': request.POST.getlist('contact_id[]'),
-                'contact_type':request.POST.getlist('contact_type[]'),
-                'contact_number':request.POST.getlist('contact_number[]'),
-            }
-            for contacts_post_data in contacts_post_data_raw:
-                cid = int(contacts_post_data['contact_id'])
-                contact_data = contacts_model.objects.get(id=cid)
-                contact_db_data = {
-                    'id': contact_data.id,
-                    'contact_type': contact_data.contact_type,
-                    'contact_number':contact_data.contact_number,
+            contacts_post_data_raw = [
+                request.POST.getlist('contact_id'),
+                request.POST.getlist('contact_type'),
+                request.POST.getlist('contact_number'),
+            ]
+            
+            contacts_post_data_zip=list(map(list, zip(*contacts_post_data_raw)))
+            
+            for contacts_post_data_list in contacts_post_data_zip:
+                contacts_data = contacts_model.objects.get(id=contacts_post_data_list[0])
+                contacts_db_data = {
+                    'contact_id': contacts_data.id,
+                    'contact_type': contacts_data.type,
+                    'contact_number':contacts_data.contact_number,
                 }
-                contact_form = ContactForm(contacts_post_data, initial=contact_db_data)
+                
+                contacts_post_data = {
+                    'contact_id': contacts_post_data_list[0],
+                    'contact_type': contacts_post_data_list[1],
+                    'contact_number': contacts_post_data_list[2],
+                }
+
+                contact_form = ContactForm(contacts_post_data, initial=contacts_db_data)
                 if contact_form.is_valid():
                     if contact_form.has_changed():
                         for changed_data in contact_form.changed_data:
-                            setattr(contact_data, changed_data, contacts_post_data[changed_data])
-                            contact_data.save()
+                            setattr(contacts_data, changed_data, contacts_post_data[changed_data])
+                            contacts_data.save()
                         
                         messages.success(request, 'Contact Data updated succesfully.', extra_tags='alert-success')
                     else:
                         messages.info(request, 'No data changed.', extra_tags='alert-info')
                 else:
-                    messages.error(request, 'Failed updating data.', extra_tags='alert-danger')
+                    messages.error(request, 'Failed updating contact data.', extra_tags='alert-danger')
     
         # site update process
         site_form = SiteForm(site_post_data, initial=site_db_data)
