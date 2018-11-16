@@ -197,3 +197,11 @@ def site_detail_edit(request, site_id):
         # breadcrumbs
         bcitems = [['/home/', 'Home'], ['/sites/', 'Sites'], ['/sites/'+str(site_id)+'/', site_data.name],['edit', 'Edit']]
         return render(request, 'page-site-detail-edit.html', {'title': "Edit Sites", 'head': "Edit Sites", 'bcitems': bcitems, 'contacts_form': contacts_form, 'contacts_data': contacts_data, 'contacts_type': contacts_type, 'site_form': site_form, 'site_id': site_id})
+
+@login_required()
+def netadmin_addsite(request):
+    site_form = SiteForm()
+
+    # breadcrumbs
+    bcitems = [['/home/', 'Home'], ['/sites/', 'Netadmin'],['/netadmin/addsite/', 'Add Site']]
+    return render(request, 'page-admin-addsite.html', {'title': "Add Site", 'head': "Add Site", 'bcitems': bcitems, 'site_form': site_form})

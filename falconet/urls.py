@@ -21,7 +21,7 @@ from django.contrib.auth import views as auth_views
 from falconet import forms
 from falconet.views import login, home, auth_login, auth_logout, auth_process, get_contacts_type
 
-from netinfo.views import sites, site_isp, site_office, site_detail, site_detail_edit
+from netinfo.views import sites, site_isp, site_office, site_detail, site_detail_edit, netadmin_addsite
 
 urlpatterns = [
     #BLANK
@@ -40,6 +40,8 @@ urlpatterns = [
     path('sites/<int:site_id>/', site_detail, name='site_detail'),
     #SITES-DETAIL-EDIT
     path('sites/<int:site_id>/edit/', site_detail_edit, name='site_detail_edit'),
+    #ADMIN-ADD-SITE
+    path('netadmin/addsite/', netadmin_addsite, name='netadmin_addsite'),
     #LOGIN
     path('login/', auth_login, name='login'),
     #LOGOUT
