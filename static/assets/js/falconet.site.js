@@ -17,11 +17,12 @@ jQuery(document).ready(function($){
 
             //dmcelmn = dynamic element
             var dmcelmn = "<div class='form-group dynamic-element'>"+
+                        "<input type='hidden' name='add_contact_id' value='1' class='form-control'>"+
                         "<div class='input-group'>"+
-                        "<select name='contact_type' id='select' class='col-sm-3 form-control'>"+
+                        "<select name='add_contact_type' class='col-sm-3 form-control'>"+
                         option+
                         "</select>"+
-                        "<input type='text' name='contact_number[]' class='form-control'>"+
+                        "<input type='text' name='add_contact_number' class='form-control' required pattern='^[+]*[(]{0,1}[0-9]{1,4}[)]{0,1}[-\s\./0-9]*$'>"+
                         "<button type='button' class='delete btn btn-danger btn-sm'><i class='fa fa-times'></i></button>"+
                         "</div></div>";
 

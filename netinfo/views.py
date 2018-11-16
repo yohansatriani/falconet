@@ -88,8 +88,8 @@ def site_detail_edit(request, site_id):
             'tagline': site_data.tagline,
         }
 
-        # contact post intialization
-        if request.POST['contact_id']:
+        # contact post update process
+        if 'contact_id' in request.POST:
             contacts_post_data_raw = [
                 request.POST.getlist('contact_id'),
                 request.POST.getlist('contact_type'),
@@ -105,13 +105,11 @@ def site_detail_edit(request, site_id):
                     'contact_type': contacts_data.type,
                     'contact_number':contacts_data.contact_number,
                 }
-
                 contacts_post_data = {
                     'contact_id': contacts_post_data_list[0],
                     'contact_type': contacts_post_data_list[1],
                     'contact_number': contacts_post_data_list[2],
                 }
-
                 contact_form = ContactForm(contacts_post_data, initial=contacts_db_data)
                 if contact_form.is_valid():
                     if contact_form.has_changed():
@@ -123,6 +121,28 @@ def site_detail_edit(request, site_id):
                         messages.info(request, "Contact: "+contacts_post_data['contact_type'].title()+":"+contacts_post_data['contact_number']+" not changed.", extra_tags='alert-info')
                 else:
                     messages.error(request, 'Failed updating contact'+contacts_post_data['contact_type'].title()+":"+contacts_post_data['contact_number'], extra_tags='alert-danger')
+
+        # contact post delete process
+        if 'del_contact_id' in request.POST:
+            contacts_post_del_id = request.POST.getlist('del_contact_id')
+
+            for del_id in contacts_post_del_id:
+                contacts_data = contacts_model.objects.get(id=del_id)
+                messages.success(request, "Contact: "+contacts_data.type+":"+contacts_data.contact_number+" deleted succesfully.", extra_tags='alert-success')
+                contacts_data.delete()
+
+        # contact post add process
+        if 'add_contact_id' in request.POST:
+            contacts_post_add_dataraw = [
+                request.POST.getlist('add_contact_type'),
+                request.POST.getlist('add_contact_number'),
+            ]
+
+            contacts_post_add_data=list(map(list, zip(*contacts_post_add_dataraw)))
+
+            for contacts_post_add in contacts_post_add_data:
+                contacts_model(site=sites_model.objects.get(id=site_id), type=contacts_post_add[0], contact_number=contacts_post_add[1]).save()
+                messages.success(request, "Contact: "+contacts_post_add[0]+":"+contacts_post_add[1]+" added succesfully.", extra_tags='alert-success')
 
         # site update process
         site_form = SiteForm(site_post_data, initial=site_db_data)
@@ -141,9 +161,6 @@ def site_detail_edit(request, site_id):
             # breadcrumbs
             bcitems = [['/home/', 'Home'], ['/sites/', 'Sites'], ['/sites/'+str(site_id)+'/', site_data.name],['edit', 'Edit']]
             return render(request, 'page-site-detail-edit.html', {'title': "Edit Sites", 'head': "Edit Sites", 'bcitems': bcitems, 'contacts_data': contacts_data, 'contacts_type': contacts_type, 'site_form': site_form, 'site_id': site_id})
-
-
-
     else:
         try:
             site_id = int(site_id)
