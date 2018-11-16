@@ -1280,7 +1280,7 @@ header .form-inline {
   position: relative; }
   .user-area .user-menu {
     background: #fff;
-    border: none;
+    /* border: none; */
     font-family: 'Open Sans';
     left: inherit !important;
     right: 0;
