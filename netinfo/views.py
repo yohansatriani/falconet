@@ -199,7 +199,7 @@ def site_detail_edit(request, site_id):
         return render(request, 'page-site-detail-edit.html', {'title': "Edit Sites", 'head': "Edit Sites", 'bcitems': bcitems, 'contacts_form': contacts_form, 'contacts_data': contacts_data, 'contacts_type': contacts_type, 'site_form': site_form, 'site_id': site_id})
 
 @login_required()
-def netadmin_addsite(request):
+def site_add(request):
     site_form = SiteForm()
 
     # breadcrumbs
