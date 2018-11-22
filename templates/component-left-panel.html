@@ -15,23 +15,27 @@
                         </li>
                         <h3 class="menu-title">Network Data</h3>
                         <li class="menu-item-has-children dropdown">
-                            <a href="#" class="dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><i class="menu-icon fa fa-table"></i>Sites</a>
+                            <a href="#" class="dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><i class="menu-icon fa fa-building"></i>Sites</a>
                             <ul class="sub-menu children dropdown-menu">
-                                <li><i class="fa fa-table"></i><a href="{% url 'sites' %}">All Sites</a></li>
-                                <li><i class="fa fa-table"></i><a href="{% url 'site_office' %}">Office</a></li>
-                                <li><i class="fa fa-table"></i><a href="{% url 'sites' %}">Partner</a></li>
-                                <li><i class="fa fa-table"></i><a href="{% url 'site_isp' %}">ISP</a></li>
-                                <li><i class="fa fa-table"></i><a href="{% url 'site_add' %}">Add Site</a></li>
+                                <li><i class="fa fa-building"></i><a href="{% url 'sites' %}">All Sites</a></li>
+                                <li><i class="fa fa-building"></i><a href="{% url 'site_office' %}">Office</a></li>
+                                <li><i class="fa fa-building"></i><a href="{% url 'sites' %}">Partner</a></li>
+                                <li><i class="fa fa-building"></i><a href="{% url 'site_isp' %}">ISP</a></li>
+                                <li><i class="fa fa-building"></i><a href="{% url 'site_add' %}">Add Site</a></li>
                             </ul>
                         </li>
-                        <li class="active">
-                            <a href="../links/"><i class="menu-icon fa fa-dashboard"></i>Links</a>
+                        <li class="menu-item-has-children dropdown">
+                            <a href="#" class="dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><i class="menu-icon fa fa-chain"></i>Links</a>
+                            <ul class="sub-menu children dropdown-menu">
+                                <li><i class="fa fa-chain"></i><a href="{% url 'links' %}">All Links</a></li>
+                                <li><i class="fa fa-chain"></i><a href="{% url 'link_add' %}">Add Link</a></li>
+                            </ul>
                         </li>
                         <li class="menu-item-has-children dropdown">
-                            <a href="#" class="dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><i class="menu-icon fa fa-table"></i>Network Admin</a>
+                            <a href="#" class="dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><i class="menu-icon fa fa-cogs"></i>Network Admin</a>
                             <ul class="sub-menu children dropdown-menu">
-                                <li><i class="fa fa-table"></i><a href="{% url 'sites' %}">Netadmin Dashboard</a></li>
-                                <li><i class="fa fa-table"></i><a href="{% url 'site_add' %}">Add Site</a></li>
+                                <li><i class="fa fa-cogs"></i><a href="{% url 'sites' %}">Control Center</a></li>
+                                <li><i class="fa fa-cogs"></i><a href="{% url 'site_add' %}">Add Site</a></li>
                             </ul>
                         </li>
                     </ul>

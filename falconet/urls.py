@@ -21,7 +21,7 @@ from django.contrib.auth import views as auth_views
 from falconet import forms
 from falconet.views import login, home, auth_login, auth_logout, auth_process, get_contacts_type
 
-from netinfo.views import sites, site_isp, site_office, site_detail, site_detail_edit, site_add
+from netinfo.views import sites, site_isp, site_office, site_detail, site_detail_edit, site_add, site_del
 
 urlpatterns = [
     #BLANK
@@ -30,6 +30,14 @@ urlpatterns = [
     path('admin/', admin.site.urls),
     #HOME
     path('home/', home, name='home'),
+    #LOGIN
+    path('login/', auth_login, name='login'),
+    #LOGOUT
+    path('logout/', auth_logout, name='logout'),
+    #AUTH
+    path('auth/', auth_process, name='auth'),
+    #AJAX
+    path('ajax/get_contacts_type/', get_contacts_type, name='get_contacts_type'),
     #SITES
     path('sites/', sites, name='sites'),
     #SITES-OFFICE
@@ -40,14 +48,10 @@ urlpatterns = [
     path('sites/<int:site_id>/', site_detail, name='site_detail'),
     #SITES-DETAIL-EDIT
     path('sites/<int:site_id>/edit/', site_detail_edit, name='site_detail_edit'),
-    #ADMIN-ADD-SITE
+    #SITES-ADD
     path('sites/add/', site_add, name='site_add'),
-    #LOGIN
-    path('login/', auth_login, name='login'),
-    #LOGOUT
-    path('logout/', auth_logout, name='logout'),
-    #AUTH
-    path('auth/', auth_process, name='auth'),
-    #AJAX
-    path('ajax/get_contacts_type/', get_contacts_type, name='get_contacts_type'),
+    #SITES-DEL
+    path('links/', sites, name='links'),
+    #SITES-DEL
+    path('link/add/', site_add, name='link_add'),
 ]
