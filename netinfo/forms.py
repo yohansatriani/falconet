@@ -9,10 +9,11 @@ class SiteForm(forms.Form):
         max_length=100,
         widget=forms.TextInput(attrs={'class': 'form-control', 'id' : 'name', 'name':'name'})
     )
-    type = forms.CharField(
+    SITE_TYPE = (('PP', 'PP'),('KK', 'KK'),('KCP', 'KCP'),('KC', 'KC'),('ISP', 'ISP'),('PARTNER', 'PARTNER'))
+    type = forms.ChoiceField(
         label="Type",
-        max_length=50,
-        widget=forms.TextInput(attrs={'class': 'form-control', 'id' : 'type', 'name':'type'})
+        choices=SITE_TYPE,
+        widget=forms.Select(attrs={'class': 'form-control', 'id' : 'type', 'name':'type'})
     )
     location = forms.CharField(
         label="Location",
@@ -20,11 +21,11 @@ class SiteForm(forms.Form):
         required=False,
         widget=forms.Textarea(attrs={'class': 'form-control', 'id' : 'location', 'name':'location', 'rows':3})
     )
-    city = forms.CharField(
+    SITE_CITY = (('All City', 'All City'),('Yogyakarta', 'Yogyakarta'),('Gunungkidul', 'Gunungkidul'),('Kulon Progo', 'Kulon Progo'),('Bantul', 'Bantul'),('Sleman', 'Sleman'))
+    city = forms.ChoiceField(
         label="City",
-        max_length=100,
-        required=False,
-        widget=forms.TextInput(attrs={'class': 'form-control', 'id' : 'city', 'name':'city'})
+        choices=SITE_CITY,
+        widget=forms.Select(attrs={'class': 'form-control', 'id' : 'city', 'name':'city'})
     )
     description = forms.CharField(
         label="Description",
@@ -61,10 +62,10 @@ class SiteForm(forms.Form):
     )
 
 class ContactForm(forms.Form):
-    CONTACT_TYPE = (('phone', 'PHONE'),('fax', 'FAX'))
     contact_id = forms.IntegerField(
         widget=forms.HiddenInput(attrs={'class': 'form-control', 'name':'contact_id'})
     )
+    CONTACT_TYPE = (('phone', 'PHONE'),('fax', 'FAX'))
     contact_type = forms.ChoiceField(
         label="Type",
         choices=CONTACT_TYPE,
