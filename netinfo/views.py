@@ -9,7 +9,7 @@ from django.contrib import messages
 from falconet import views
 from falconet.forms import LoginForm
 
-from netinfo.forms import SiteForm, ContactForm
+from netinfo.forms import SiteForm, ContactForm, LinkForm
 from netinfo.models import sites as sites_model, contacts as contacts_model
 
 from pprint import pprint
@@ -274,3 +274,70 @@ def site_del(request):
         return redirect('sites')
     else:
         return redirect('sites')
+
+@login_required()
+def link_add(request):
+    if request.method == 'POST':
+        site_post_data = {
+            'id':1000,
+            'name':request.POST['name'],
+            'description':request.POST['description'],
+            'type':request.POST['type'],
+            'location':request.POST['location'],
+            'city':request.POST['city'],
+            'site_code':request.POST['site_code'],
+            'area_code':request.POST['area_code'],
+            'ipadd':request.POST['ipadd'],
+            'tagline':request.POST['tagline']
+        }
+        #
+        # site_form = SiteForm(site_post_data)
+        #
+        # if site_form.is_valid():
+        #     name = site_form.cleaned_data['name']
+        #     type = site_form.cleaned_data['type']
+        #     location = site_form.cleaned_data['location']
+        #     city = site_form.cleaned_data['city']
+        #     description = site_form.cleaned_data['description']
+        #     ipadd = site_form.cleaned_data['ipadd']
+        #     site_code = site_form.cleaned_data['site_code']
+        #     area_code = site_form.cleaned_data['area_code']
+        #     tagline = site_form.cleaned_data['tagline']
+        #
+        #     site_add = sites_model(
+        #         name=name,
+        #         type=type,
+        #         location=location,
+        #         city=city,
+        #         description=description,
+        #         ipadd=ipadd,
+        #         site_code=site_code,
+        #         area_code=area_code,
+        #         tagline=tagline,
+        #     )
+        #     site_add.save()
+        #     site_id = site_add.id;
+        #     messages.success(request, "Site added succesfully.", extra_tags='alert-success')
+        #
+        #     if 'add_contact_id' in request.POST:
+        #         contacts_post_add_dataraw = [
+        #             request.POST.getlist('add_contact_type'),
+        #             request.POST.getlist('add_contact_number'),
+        #         ]
+        #         contacts_post_add_data=list(map(list, zip(*contacts_post_add_dataraw)))
+        #         for contacts_post_add in contacts_post_add_data:
+        #             contacts_model(site=sites_model.objects.get(id=int(site_id)), type=contacts_post_add[0], contact_number=contacts_post_add[1]).save()
+        #             messages.success(request, "Contact: "+contacts_post_add[0]+":"+contacts_post_add[1]+" added succesfully." , extra_tags='alert-success')
+        #
+        #     return redirect('site_detail', site_id=site_id)
+        #
+        # else:
+        #     messages.error(request, 'Failed add Site.', extra_tags='alert-danger')
+        #     bcitems = [['/home/', 'Home'], ['/sites/', 'Netadmin'],['/site/add/', 'Add Site']]
+        #     return render(request, 'page-site-add.html', {'title': "Add Site", 'head': "Add Site", 'bcitems': bcitems, 'site_form': site_form})
+    else:
+        link_form = LinkForm()
+
+        # breadcrumbs
+        bcitems = [['/home/', 'Home'], ['/links/', 'Links'],['/links/add/', 'Add Link']]
+        return render(request, 'page-link-add.html', {'title': "Add Link", 'head': "Add Link", 'bcitems': bcitems, 'link_form': link_form})
