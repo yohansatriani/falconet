@@ -14,6 +14,24 @@ from netinfo.models import sites as sites_model, contacts as contacts_model
 
 from pprint import pprint
 
+# FUNCTION ONLY
+def edit_data(site_post_data, site_db_data):
+    site_form = SiteForm(site_post_data, initial=site_db_data)
+    if site_form.is_valid():
+        if site_form.has_changed():
+            for changed_data in site_form.changed_data:
+                setattr(site_data, changed_data, site_post_data[changed_data])
+                site_data.save()
+            messages.success(request, 'Site Information updated succesfully.', extra_tags='alert-success')
+            edit_status = 1
+        else:
+            messages.info(request, 'Site Information not changed.', extra_tags='alert-info')
+            edit_status = 1
+    else:
+        messages.error(request, 'Failed updating Site Information.', extra_tags='alert-danger')
+        edit_status = 0
+    return edit_status
+
 # Create your views here.
 @login_required()
 def sites(request):
