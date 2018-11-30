@@ -10,7 +10,7 @@ from falconet import views
 from falconet.forms import LoginForm
 
 from netinfo.forms import SiteForm, ContactForm, LinkForm
-from netinfo.models import sites as sites_model, contacts as contacts_model
+from netinfo.models import sites as sites_model, contacts as contacts_model, links as links_model
 
 from pprint import pprint
 
@@ -294,68 +294,89 @@ def site_del(request):
         return redirect('sites')
 
 @login_required()
+def links(request):
+    link_data = links_model.objects.all()
+    # breadcrumbs
+    bcitems = [['/home/', 'Home'], ['/links/', 'Links']]
+    return render(request, "page-links.html", {'title': "Links", 'head': "Links", 'bcitems': bcitems, 'link_data': link_data})
+
+@login_required()
 def link_add(request):
     if request.method == 'POST':
-        site_post_data = {
+        link_post_data = {
             'id':1000,
-            'name':request.POST['name'],
-            'description':request.POST['description'],
-            'type':request.POST['type'],
-            'location':request.POST['location'],
-            'city':request.POST['city'],
-            'site_code':request.POST['site_code'],
-            'area_code':request.POST['area_code'],
-            'ipadd':request.POST['ipadd'],
-            'tagline':request.POST['tagline']
+            'sites1':request.POST['sites1'],
+            'sites2':request.POST['sites2'],
+            'ipadd1':request.POST['ipadd1'],
+            'ipadd2':request.POST['ipadd2'],
+            'isp':request.POST['isp'],
+            'bandwidth':request.POST['bandwidth'],
+            'media':request.POST['media'],
+            'services':request.POST['services'],
+            'status':request.POST['status'],
+            'ipadd_others':request.POST['ipadd_others'],
+            'vrf_name':request.POST['vrf_name'],
+            'links_name':request.POST['links_name'],
+            'isp_link_id':request.POST['isp_link_id'],
+            'input_date':request.POST['input_date'],
         }
-        #
-        # site_form = SiteForm(site_post_data)
-        #
-        # if site_form.is_valid():
-        #     name = site_form.cleaned_data['name']
-        #     type = site_form.cleaned_data['type']
-        #     location = site_form.cleaned_data['location']
-        #     city = site_form.cleaned_data['city']
-        #     description = site_form.cleaned_data['description']
-        #     ipadd = site_form.cleaned_data['ipadd']
-        #     site_code = site_form.cleaned_data['site_code']
-        #     area_code = site_form.cleaned_data['area_code']
-        #     tagline = site_form.cleaned_data['tagline']
-        #
-        #     site_add = sites_model(
-        #         name=name,
-        #         type=type,
-        #         location=location,
-        #         city=city,
-        #         description=description,
-        #         ipadd=ipadd,
-        #         site_code=site_code,
-        #         area_code=area_code,
-        #         tagline=tagline,
-        #     )
-        #     site_add.save()
-        #     site_id = site_add.id;
-        #     messages.success(request, "Site added succesfully.", extra_tags='alert-success')
-        #
-        #     if 'add_contact_id' in request.POST:
-        #         contacts_post_add_dataraw = [
-        #             request.POST.getlist('add_contact_type'),
-        #             request.POST.getlist('add_contact_number'),
-        #         ]
-        #         contacts_post_add_data=list(map(list, zip(*contacts_post_add_dataraw)))
-        #         for contacts_post_add in contacts_post_add_data:
-        #             contacts_model(site=sites_model.objects.get(id=int(site_id)), type=contacts_post_add[0], contact_number=contacts_post_add[1]).save()
-        #             messages.success(request, "Contact: "+contacts_post_add[0]+":"+contacts_post_add[1]+" added succesfully." , extra_tags='alert-success')
-        #
-        #     return redirect('site_detail', site_id=site_id)
-        #
-        # else:
-        #     messages.error(request, 'Failed add Site.', extra_tags='alert-danger')
-        #     bcitems = [['/home/', 'Home'], ['/sites/', 'Netadmin'],['/site/add/', 'Add Site']]
-        #     return render(request, 'page-site-add.html', {'title': "Add Site", 'head': "Add Site", 'bcitems': bcitems, 'site_form': site_form})
+
+        link_form = LinkForm(link_post_data)
+
+        if link_form.is_valid():
+            sites1 = link_form.cleaned_data['sites1']
+            sites2 = link_form.cleaned_data['sites2']
+            ipadd1 = link_form.cleaned_data['ipadd1']
+            ipadd2 = link_form.cleaned_data['ipadd2']
+            isp = link_form.cleaned_data['isp']
+            bandwidth = link_form.cleaned_data['bandwidth']
+            media = link_form.cleaned_data['media']
+            services = link_form.cleaned_data['services']
+            status = link_form.cleaned_data['status']
+            ipadd_others = link_form.cleaned_data['ipadd_others']
+            vrf_name = link_form.cleaned_data['vrf_name']
+            links_name = link_form.cleaned_data['links_name']
+            isp_link_id = link_form.cleaned_data['isp_link_id']
+            input_date = link_form.cleaned_data['input_date']
+
+            link_add = links_model(
+                sites1 = sites1,
+                sites2 = sites2,
+                ipadd1 = ipadd1,
+                ipadd2 = ipadd2,
+                isp = isp,
+                bandwidth = bandwidth,
+                media = media,
+                services = services,
+                status = status,
+                ipadd_others = ipadd_others,
+                vrf_name = vrf_name,
+                links_name = links_name,
+                isp_link_id = isp_link_id,
+                input_date = input_date,
+            )
+            link_add.save()
+            link_id = link_add.id;
+            messages.success(request, "Link added succesfully.", extra_tags='alert-success')
+            return redirect('link_detail', link_id=link_id)
+        else:
+            messages.error(request, 'Failed add Link.', extra_tags='alert-danger')
+            bcitems = [['/home/', 'Home'], ['/links/', 'Links'],['/links/add/', 'Add Link']]
+            return render(request, 'page-link-add.html', {'title': "Add Link", 'head': "Add Link", 'bcitems': bcitems, 'link_form': link_form})
     else:
         link_form = LinkForm()
 
         # breadcrumbs
         bcitems = [['/home/', 'Home'], ['/links/', 'Links'],['/links/add/', 'Add Link']]
         return render(request, 'page-link-add.html', {'title': "Add Link", 'head': "Add Link", 'bcitems': bcitems, 'link_form': link_form})
+
+@login_required()
+def link_detail(request, link_id):
+    try:
+        link_id = int(link_id)
+    except ValueError:
+        raise Http404()
+    link_data = get_object_or_404(links_model, id=link_id)
+    # breadcrumbs
+    bcitems = [['/home/', 'Home'], ['/links/', 'Links'], [link_id, link_data.links_name]]
+    return render(request, "page-link-detail.html", {'title': "Links", 'head': "Links", 'bcitems': bcitems, 'link_data': link_data})

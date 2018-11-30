@@ -93,18 +93,18 @@ class LinkForm(forms.Form):
         label="Site-1",
         widget=forms.Select(attrs={'class': 'form-control', 'id' : 'sites1', 'name':'sites1'})
     )
-    sites2 = SiteModelChoiceField(
-        queryset=sites.objects.all(),
-        empty_label="--Please-Select--",
-        label="Site-2",
-        widget=forms.Select(attrs={'class': 'form-control', 'id' : 'sites2', 'name':'sites2'})
-    )
     ipadd1 = forms.CharField(
         label="IP WAN-1",
         max_length=19,
         required=False,
         help_text='Example : 192.168.1.1 or 192.168.1.0/24',
         widget=forms.TextInput(attrs={'class': 'form-control', 'id' : 'ipadd1', 'name':'ipadd2', 'pattern': '^(([0-9]|[1-9][0-9]|1[0-9]{2}|[1-2][0-4][0-9]|25[0-5]).){3}([0-9]|[1-9][0-9]|1[0-9]{2}|[1-2][0-4][0-9]|25[0-5])((/[0-9]|/[1-2][0-9]|/[1-3][0-2])?)$'})
+    )
+    sites2 = SiteModelChoiceField(
+        queryset=sites.objects.all(),
+        empty_label="--Please-Select--",
+        label="Site-2",
+        widget=forms.Select(attrs={'class': 'form-control', 'id' : 'sites2', 'name':'sites2'})
     )
     ipadd2 = forms.CharField(
         label="IP WAN-2",
@@ -169,5 +169,5 @@ class LinkForm(forms.Form):
     )
     input_date = forms.DateTimeField(
         label="Date Added",
-        widget=forms.TextInput(attrs={'class': 'form-control', 'id' : 'input_date', 'name':'input_date'})
+        widget=forms.TextInput(attrs={'class': 'form-control', 'id' : 'datepicker', 'name':'input_date'})
     )

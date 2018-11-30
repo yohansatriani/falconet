@@ -1,0 +1,183 @@
+{% extends "page-base-admin.html" %}
+{% load static %}
+<!--<!DOCTYPE html>-->
+<!--<html lang="en">-->
+    <!--<head>-->
+        <!-- REQUIRED META TAGS -->
+        <!--<meta charset="utf-8">-->
+        <!--<meta http-equiv="X-UA-Compatible" content="IE=edge">-->
+        <!--<meta name="description" content="Sufee Admin - HTML5 Admin Template">-->
+        <!--<meta name="viewport" content="width=device-width, initial-scale=1">-->
+        <!--FAVICON-->
+        <!--<link rel="apple-touch-icon" href="apple-icon.png">-->
+        <!--<link rel="shortcut icon" href="favicon.ico">-->
+        <!--BOOTSTRAP CSS-->
+        <!--<link rel="stylesheet" href="{% static 'assets/css/bootstrap.min.css' %}">-->
+        <!--SUFEE-ADMIN-->
+        <!--<link rel="stylesheet" href="{% static 'assets/css/normalize.css' %}">-->
+        <!--<link rel="stylesheet" href="{% static 'assets/css/font-awesome.min.css' %}">-->
+        <!--<link rel="stylesheet" href="{% static 'assets/css/themify-icons.css' %}">-->
+        <!--<link rel="stylesheet" href="{% static 'assets/css/flag-icon.min.css' %}">-->
+        <!--<link rel="stylesheet" href="{% static 'assets/css/cs-skin-elastic.css' %}">-->
+        <!--STYLES-->
+        <!--<link rel="stylesheet" href="{% static 'assets/scss/style.css' %}">-->
+        <!--FONTS-->
+        <!--<link href='https://fonts.googleapis.com/css?family=Open+Sans:400,600,700,800' rel='stylesheet' type='text/css'>-->
+        <!--PAGE CSS-->
+        {% block css %}{% endblock %}
+        {% block title %}{{ title }}{% endblock %}
+    <!--</head>-->
+    <!--<body>-->
+        <!--LEFT-PANEL-->
+        {% block left-panel %}
+        {% include 'component-left-panel.html' %}
+        {% endblock %}
+        <!--#LEFT-PANEL-->
+        <!--RIGHT-PANEL-->
+        <div id="right-panel" class="right-panel">
+            <!--HEADER-->
+            <header id="header" class="header">
+                <div class="header-menu">
+                    <!--HEADER-ITEM-->
+                    {% block header-item %}
+                    {% include 'component-header-item.html' %}
+                    {% endblock %}
+                    <!--#HEADER-ITEM-->
+                    <!--PROFILE-->
+                    {% block profile %}
+                    {% include 'component-profile.html' %}
+                    {% endblock %}
+                    <!--#PROFILE-->
+                </div>
+            </header>
+            <!--#HEADER-->
+            <!--BREADCRUMBS-->
+            {% block breadcrumbs %}
+            {% include 'component-breadcrumbs.html' %}
+            {% endblock %}
+            <!--#BREADCRUMBS-->
+            <!--CONTENTS-->
+            {% block content %}
+            <div class="content mt-3">
+                <div class="animated">
+                    <div class="modal fade" id="staticModal" tabindex="-1" role="dialog" aria-labelledby="staticModalLabel" aria-hidden="true" data-backdrop="static">
+                        <div class="modal-dialog modal-md" role="document">
+                            <div class="modal-content">
+                                <form action="/sites/del/" method="post">
+                                    <div class="modal-header">
+                                        <h5 class="modal-title" id="staticModalLabel">Delete Site</h5>
+                                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                            <span aria-hidden="true">×</span>
+                                        </button>
+                                    </div>
+                                    <div class="modal-body">
+                                        {% csrf_token %}
+                                        <input type="hidden" name="id" value="{{ site_data.id }}" class="form-control" id="id">
+                                        <p>Are you sure want to delete this link and all other data referenced on this link like alert, sla?</p>
+                                    </div>
+                                    <div class="modal-footer">
+                                        <button type="button" class="btn btn-sm btn-secondary" data-dismiss="modal">Cancel</button>
+                                        <button type="submit" class="btn btn-sm btn-primary">Confirm</button>
+                                    </div>
+                                </form>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row justify-content-md-center">
+                        <div class="col-lg-6">
+                            {% for message in messages %}
+                            <div class="sufee-alert alert with-close {{ message.extra_tags }} alert-dismissible fade show">
+                                {{ message }}<button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">×</span></button>
+                            </div>
+                            {% endfor %}
+                            <div class="card">
+                                <div class="card-body">
+                                    <div class="default-tab">
+                                        <nav>
+                                            <div class="nav nav-tabs" id="nav-tab" role="tablist">
+                                                <a class="nav-item nav-link active show" id="nav-home-tab" data-toggle="tab" href="#nav-home" role="tab" aria-controls="nav-home" aria-selected="false">Link Info</a>
+                                            </div>
+                                        </nav>
+                                        <div class="tab-content pl-3 pt-2 pr-3" id="nav-tabContent">
+                                            <div class="tab-pane fade active show" id="nav-home" role="tabpanel" aria-labelledby="nav-home-tab">
+                                                <table class="table">
+                                                    <tbody>
+                                                        <tr>
+                                                            <th style="width: 30%">Name</th>
+                                                            <td>{{ link_data.links_name }}</td>
+                                                        </tr>
+                                                        <tr>
+                                                            <th>Site-1</th>
+                                                            <td><a href="{% url 'site_detail' link_data.sites1.id %}">{{ link_data.sites1.name }}</a> ({{ link_data.ipadd1 }})</td>
+                                                        </tr>
+                                                        <tr>
+                                                            <th>Site-2</th>
+                                                            <td><a href="{% url 'site_detail' link_data.sites2.id %}">{{ link_data.sites2.name }}</a> ({{ link_data.ipadd2 }})</td>
+                                                        </tr>
+                                                        <tr>
+                                                            <th>ISP</th>
+                                                            <td>{{ link_data.isp }}</td>
+                                                        </tr>
+                                                        <tr>
+                                                            <th>Bandwidth</th>
+                                                            <td>{{ link_data.bandwidth }} kbps</td>
+                                                        </tr>
+                                                        <tr>
+                                                            <th>Media</th>
+                                                            <td>{{ link_data.media }}</td>
+                                                        </tr>
+                                                        <tr>
+                                                            <th>Services</th>
+                                                            <td>{{ link_data.services }}</td>
+                                                        </tr>
+                                                        <tr>
+                                                            <th>Status</th>
+                                                            {% if link_data.status %}
+                                                            <td>Enabled</td>
+                                                            {% else %}
+                                                            <td>Disabled</td>
+                                                            {% endif %}
+                                                        </tr>
+                                                        <tr>
+                                                            <th>VRF Name</th>
+                                                            <td>{{ link_data.vrf_name }}</td>
+                                                        </tr>
+                                                        <tr>
+                                                            <th>ISP Link ID</th>
+                                                            <td>{{ link_data.isp_link_id }}</td>
+                                                        </tr>
+                                                        <tr>
+                                                            <th>Additional IP</th>
+                                                            <td>{{ link_data.ipadd_others }}</td>
+                                                        </tr>
+                                                        <tr>
+                                                            <th>Date Added</th>
+                                                            <td>{{ link_data.input_date }}</td>
+                                                        </tr>
+                                                    </tbody>
+                                                </table>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <hr/>
+                                    <div class="card-text text-sm-right">
+                                        <a class="small" href="./edit/"><button type="button" class="btn btn-primary btn-sm">Edit</button></a>
+                                        <a class="small" href="#"><button type="button" class="btn btn-danger btn-sm" data-toggle="modal" data-target="#staticModal">Delete</button></a>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            {% endblock %}
+            <!--#CONTENTS-->
+        </div>
+        <!--#RIGHT-PANEL-->
+        <!--SCRIPTS-->
+        {% block scripts %}
+        {% include 'script-site-detail.html' %}
+        {% endblock %}
+        <!--#SCRIPTS-->
+    <!--</body>-->
+<!--</html>-->
