@@ -63,16 +63,16 @@
                     <div class="modal fade" id="staticModal" tabindex="-1" role="dialog" aria-labelledby="staticModalLabel" aria-hidden="true" data-backdrop="static">
                         <div class="modal-dialog modal-md" role="document">
                             <div class="modal-content">
-                                <form action="/sites/del/" method="post">
+                                <form action="/links/del/" method="post">
                                     <div class="modal-header">
-                                        <h5 class="modal-title" id="staticModalLabel">Delete Site</h5>
+                                        <h5 class="modal-title" id="staticModalLabel">Delete Link</h5>
                                         <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                                             <span aria-hidden="true">×</span>
                                         </button>
                                     </div>
                                     <div class="modal-body">
                                         {% csrf_token %}
-                                        <input type="hidden" name="id" value="{{ site_data.id }}" class="form-control" id="id">
+                                        <input type="hidden" name="id" value="{{ link_data.id }}" class="form-control" id="id">
                                         <p>Are you sure want to delete this link and all other data referenced on this link like alert, sla?</p>
                                     </div>
                                     <div class="modal-footer">
@@ -176,7 +176,7 @@
         <!--#RIGHT-PANEL-->
         <!--SCRIPTS-->
         {% block scripts %}
-        {% include 'script-site-detail.html' %}
+        {% include 'script-link-detail.html' %}
         {% endblock %}
         <!--#SCRIPTS-->
     <!--</body>-->

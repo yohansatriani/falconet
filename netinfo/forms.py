@@ -169,5 +169,5 @@ class LinkForm(forms.Form):
     )
     input_date = forms.DateTimeField(
         label="Date Added",
-        widget=forms.TextInput(attrs={'class': 'form-control', 'id' : 'datepicker', 'name':'input_date'})
+        widget=forms.DateInput(format='%m/%d/%Y',attrs={'class': 'form-control', 'id' : 'datepicker', 'name':'input_date'})
     )

@@ -25,7 +25,9 @@
         <!--FONTS-->
         <!--<link href='https://fonts.googleapis.com/css?family=Open+Sans:400,600,700,800' rel='stylesheet' type='text/css'>-->
         <!--PAGE CSS-->
-        {% block css %}{% endblock %}
+        {% block css %}
+        <link rel="stylesheet" href="{% static '/assets/vendor/jqueryui/jquery-ui.min.css' %}">
+        {% endblock %}
         {% block title %}{{ title }}{% endblock %}
     <!--</head>-->
     <!--<body>-->
@@ -73,22 +75,22 @@
                                     <div class="default-tab">
                                         <nav>
                                             <div class="nav nav-tabs" id="nav-tab" role="tablist">
-                                                <a class="nav-item nav-link active show" id="nav-home-tab" data-toggle="tab" href="#nav-home" role="tab" aria-controls="nav-home" aria-selected="false">Site & Contact Edit</a>
+                                                <a class="nav-item nav-link active show" id="nav-home-tab" data-toggle="tab" href="#nav-home" role="tab" aria-controls="nav-home" aria-selected="false">Link Edit</a>
                                             </div>
                                         </nav>
                                         <div class="tab-content pl-3 pt-2 pr-3" id="nav-tabContent">
                                             <div>
-                                                <form id="site-form" action="{% url 'site_detail_edit' site_id %}" method="post">
+                                                <form id="link-form" action="{% url 'link_detail_edit' link_id %}" method="post">
                                                     {% csrf_token %}
-                                                    {{ site_form.non_field_errors }}
-                                                    {% for hidden_field in site_form.hidden_fields %}
+                                                    {{ link_form.non_field_errors }}
+                                                    {% for hidden_field in link_form.hidden_fields %}
                                                         {{ hidden_field }}
                                                         {{ hidden_field.errors }}
                                                     {% endfor %}
-                                                    {% for field in site_form.visible_fields %}
+                                                    {% for field in link_form.visible_fields %}
                                                     <div class="form-group row">
                                                         <label for="{{ field.id_for_label }}" class="col-sm-3 col-form-label">{{ field.label }}</label>
-                                                        {% if site_form.is_bound %}
+                                                        {% if link_form.is_bound %}
                                                         {% if field.errors %}
                                                         {% render_field field class="col-sm-9 form-control" %}
                                                         {% for error in field.errors %}
@@ -106,48 +108,9 @@
                                                     </div>
                                                     {% endfor %}
                                                     <hr/>
-                                                    <button class="btn btn-secondary btn-sm mb-3" type="button" data-toggle="collapse" data-target="#contact-collapse" aria-expanded="false" aria-controls="contact-collapse">Contacts</button>
-                                                    <div class="collapse" id="contact-collapse">
-                                                        <div class="dynamic-stuff">
-                                                            {% if contacts_form %}
-                                                            {% for data_contacts_form in contacts_form %}
-                                                            <div class="form-group dynamic-element">
-                                                                <div class="input-group">
-                                                                    {% for hidden_field in data_contacts_form.hidden_fields %}
-                                                                    {% render_field hidden_field %}
-                                                                    {{ hidden_field.errors }}
-                                                                    {% endfor %}
-                                                                    {% for field in data_contacts_form.visible_fields %}
-                                                                    {% if site_form.is_bound %}
-                                                                    {% if field.errors %}
-                                                                    {% render_field field %}
-                                                                    {% for error in field.errors %}
-                                                                    <span class="offset-sm-3 small text-danger">{{ error }}</span>
-                                                                    {% endfor %}
-                                                                    {% else %}
-                                                                    {% render_field field %}
-                                                                    {% endif %}
-                                                                    {% else %}
-                                                                    {% render_field field %}
-                                                                    {% endif %}
-                                                                    {% if field.help_text %}
-                                                                    <small class="offset-sm-3 form-text text-muted">{{ field.help_text }}</small>
-                                                                    {% endif %}
-                                                                    {% endfor %}
-                                                                    <button type="button" class="btn btn-danger btn-sm delete-contact"><i class="fa fa-times"></i></button>
-                                                                </div>
-                                                            </div>
-                                                            {% endfor %}
-                                                            {% else %}
-                                                            <div class="alert alert-dark" role="alert">No contact information.</div>
-                                                            {% endif %}
-                                                        </div>
-                                                        <div><button type="button" class="btn btn-success btn-sm add-one"><i class="fa fa-plus"></i>&nbsp;Add</button></div>
-                                                    </div>
-                                                    <hr/>
                                                     <div class="card-text text-sm-right">
-                                                        <a class="small"><button type="submit" class="btn btn-primary btn-sm" id="submit-site-contact">Submit</button></a>
-                                                        <a class="small"><button type="reset" class="btn btn-danger btn-sm" id="reset-site-contact">Reset</button></a>
+                                                        <a class="small"><button type="submit" class="btn btn-primary btn-sm" id="submit-link">Submit</button></a>
+                                                        <a class="small"><button type="reset" class="btn btn-danger btn-sm" id="reset-link">Reset</button></a>
                                                         <a class="small" href=".."><button type="button" class="btn btn-secondary btn-sm">Cancel</button></a>
                                                     </div>
                                                 </form>
@@ -166,18 +129,10 @@
         <!--#RIGHT-PANEL-->
         <!--SCRIPTS-->
         {% block scripts %}
-        {% include 'script-site-detail.html' %}
+        {% include 'script-link-detail.html' %}
         <script src="{% static '/assets/js/jquery.validate.min.js' %}"></script>
-        <script src="{% static '/assets/js/falconet.site.js' %}"></script>
-        <script>
-            //jQuery(document).ready(function($){
-            //    $("#site-form").validate({
-            //        errorClass: "invalid-error",
-            //        errorElement: "span",
-            //    });
-            //    $("span.invalid-error" ).addClass( "offset-sm-3 text-danger small" );
-            //});
-        </script>
+        <script src="{% static '/assets/js/falconet.link.js' %}"></script>
+        <script src="{% static '/assets/vendor/jqueryui/jquery-ui.min.js' %}"></script>
         {% endblock %}
         <!--#SCRIPTS-->
     <!--</body>-->
