@@ -97,6 +97,7 @@
                                             <div class="nav nav-tabs" id="nav-tab" role="tablist">
                                                 <a class="nav-item nav-link active show" id="nav-home-tab" data-toggle="tab" href="#nav-home" role="tab" aria-controls="nav-home" aria-selected="false">Site Info</a>
                                                 <a class="nav-item nav-link" id="nav-contact-tab" data-toggle="tab" href="#nav-contact" role="tab" aria-controls="nav-contact" aria-selected="false">Contact</a>
+                                                <a class="nav-item nav-link" id="nav-link-tab" data-toggle="tab" href="#nav-link" role="tab" aria-controls="nav-link" aria-selected="false">Links</a>
                                             </div>
                                         </nav>
                                         <div class="tab-content pl-3 pt-2 pr-3" id="nav-tabContent">
@@ -157,6 +158,25 @@
                                                 </table>
                                                 {% else %}
                                                 <div class="alert alert-dark" role="alert">No contact information.</div>
+                                                {% endif %}
+                                            </div>
+                                            <div class="tab-pane fade" id="nav-link" role="tabpanel" aria-labelledby="nav-link-tab">
+                                                {% if links_data %}
+                                                <table class="table">
+                                                    <tbody>
+                                                        {% for link in links_data %}
+                                                        <tr>
+                                                            <td>{{ forloop.counter }}</td>
+                                                            <td><a href="/links/{{ link.id }}/">{{ link.links_name }}</a></td>
+                                                            <td>{{ link.media }}</td>
+                                                            <td>{{ link.bandwidth }}</td>
+                                                        </tr>
+                                                        {% endfor %}
+                                                        </tr>
+                                                    </tbody>
+                                                </table>
+                                                {% else %}
+                                                <div class="alert alert-dark" role="alert">No link information.</div>
                                                 {% endif %}
                                             </div>
                                         </div>
