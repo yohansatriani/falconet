@@ -21,7 +21,7 @@ from django.contrib.auth import views as auth_views
 from falconet import forms
 from falconet.views import login, home, auth_login, auth_logout, auth_process, get_contacts_type
 
-from netinfo.views import sites, site_isp, site_office, site_detail, site_detail_edit, site_add, site_del, links, link_detail, link_detail_edit, link_add, link_del
+from netinfo.views import sites, site_isp, site_office, site_detail, site_detail_edit, site_add, site_del, links, link_detail, link_detail_edit, link_add, link_del, devices, dev_routers, dev_switches
 
 urlpatterns = [
     #BLANK
@@ -62,4 +62,10 @@ urlpatterns = [
     path('links/add/', link_add, name='link_add'),
     #LINKS-DEL
     path('links/del/', link_del, name='link_del'),
+    #DEVICES
+    path('devices/', devices, name='devices'),
+    #DEVICES-ROUTERS
+    path('devices/routers/', dev_routers, name='dev_routers'),
+    #DEVICES-SWITCHES
+    path('devices/switches/', dev_switches, name='dev_switches'),
 ]

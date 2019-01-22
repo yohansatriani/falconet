@@ -11,7 +11,7 @@ from falconet import views
 from falconet.forms import LoginForm
 
 from netinfo.forms import SiteForm, ContactForm, LinkForm
-from netinfo.models import sites as sites_model, contacts as contacts_model, links as links_model
+from netinfo.models import sites as sites_model, contacts as contacts_model, links as links_model, devices as devices_model
 
 from pprint import pprint
 
@@ -34,19 +34,20 @@ def edit_data(site_post_data, site_db_data):
     return edit_status
 
 # Create your views here.
+###########################################################################################################################################################################################################################################################################
 @login_required()
 def sites(request):
     site_data = sites_model.objects.all()
 
-    link_count = []
-    for site in site_data:
-        link_count.append(links_model.objects.filter(Q(sites1=site.id)|Q(sites2=site.id)).count())
+    # link_count = []
+    # for site in site_data:
+    #     link_count.append(links_model.objects.filter(Q(sites1=site.id)|Q(sites2=site.id)).count())
 
-    pprint(site_data)
-    pprint(link_count)
+    # pprint(site_data)
+    # pprint(link_count)
     # breadcrumbs
     bcitems = [['/home/', 'Home'], ['/sites/', 'Sites']]
-    return render(request, "page-sites.html", {'title': "Sites", 'head': "Sites", 'bcitems': bcitems, 'site_data': site_data, 'link_count': link_count})
+    return render(request, "page-sites.html", {'title': "Sites", 'head': "Sites", 'bcitems': bcitems, 'site_data': site_data})
 
 @login_required()
 def site_office(request):
@@ -304,7 +305,7 @@ def site_del(request):
         return redirect('sites')
     else:
         return redirect('sites')
-
+###########################################################################################################################################################################################################################################################################
 @login_required()
 def links(request):
     link_data = links_model.objects.all()
@@ -494,3 +495,25 @@ def link_del(request):
         return redirect('links')
     else:
         return redirect('links')
+
+###########################################################################################################################################################################################################################################################################
+@login_required()
+def devices(request):
+    dev_data = devices_model.objects.all()
+    # breadcrumbs
+    bcitems = [['/home/', 'Home'], ['/devices/', 'Devices']]
+    return render(request, "page-devices.html", {'title': "Devices", 'head': "Devices", 'bcitems': bcitems, 'dev_data': dev_data})
+
+@login_required()
+def dev_routers(request):
+    dev_data = links_model.objects.all()
+    # breadcrumbs
+    bcitems = [['/home/', 'Home'], ['/devices/', 'Devices'], ['/devices/routers/', 'Routers']]
+    return render(request, "page-links.html", {'title': "Devices", 'head': "Devices", 'bcitems': bcitems, 'link_data': dev_data})
+
+@login_required()
+def dev_switches(request):
+    dev_data = links_model.objects.all()
+    # breadcrumbs
+    bcitems = [['/home/', 'Home'], ['/devices/', 'Devices'], ['/devices/switches/', 'Switches']]
+    return render(request, "page-links.html", {'title': "Devices", 'head': "Devices", 'bcitems': bcitems, 'link_data': dev_data})

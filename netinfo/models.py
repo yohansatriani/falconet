@@ -56,3 +56,22 @@ class links(models.Model):
 
     def __str__(self):
         return u'%s %s' %(self.sites1, self.isp)
+
+class devices(models.Model):
+    id = models.AutoField(primary_key=True)
+    type = models.CharField(max_length=50, default='other')
+    model = models.CharField(max_length=100, default='unknown')
+    name = models.CharField(max_length=100, default='unnamed')
+    serial_number = models.CharField(max_length=20)
+    status = models.IntegerField(default=1)
+    ipadd = models.CharField(max_length=19, null=True)
+    os = models.CharField(max_length=300, null=True)
+    location = models.ForeignKey(sites, on_delete=models.CASCADE, related_name='site', null=True)
+    tagline = models.CharField(max_length=500, null=True)
+    input_date = models.DateTimeField(auto_now=True)
+
+    class Meta:
+        verbose_name_plural = "devices"
+
+    def __str__(self):
+        return u'%s %s' %(self.model, self.name)

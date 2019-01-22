@@ -32,6 +32,15 @@
                             </ul>
                         </li>
                         <li class="menu-item-has-children dropdown">
+                            <a href="#" class="dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><i class="menu-icon fa fa-sitemap"></i>Devices</a>
+                            <ul class="sub-menu children dropdown-menu">
+                                <li><i class="fa fa-chevron-circle-right"></i><a href="{% url 'devices' %}">All Devices</a></li>
+                                <li><i class="fa fa-chevron-circle-right"></i><a href="{% url 'dev_routers' %}">Routers</a></li>
+                                <li><i class="fa fa-chevron-circle-right"></i><a href="{% url 'dev_switches' %}">Switches</a></li>
+                                <li><i class="fa fa-chevron-circle-right"></i><a href="{% url 'dev_switches' %}">Add Device</a></li>
+                            </ul>
+                        </li>
+                        <li class="menu-item-has-children dropdown">
                             <a href="#" class="dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><i class="menu-icon fa fa-gear"></i>Network Admin</a>
                             <ul class="sub-menu children dropdown-menu">
                                 <li><i class="fa fa-chevron-circle-right"></i><a href="{% url 'sites' %}">Control Center</a></li>
