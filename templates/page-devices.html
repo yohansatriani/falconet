@@ -81,7 +81,6 @@
                                                 <th>Type</th>
                                                 <th>Model</th>
                                                 <th>Name</th>
-                                                <th>SN</th>
                                                 <th>IP Address</th>
                                                 <th>Location</th>
                                                 <th>Status</th>
@@ -95,15 +94,14 @@
                                                 <td>{{ dev.type|title }}</td>
                                                 <td>{{ dev.model }}</td>
                                                 <td>{{ dev.name }}</td>
-                                                <td>{{ dev.serial_number }}</td>
                                                 <td>{{ dev.ipadd }}</td>
-                                                <td>{{ dev.location.name }}</td>
+                                                <td><a href="{% url 'site_detail' dev.location.id %}">{{ dev.location.name }}</a></td>
                                                 {% if dev.status %}
                                                 <td>Active</td>
                                                 {% else %}
                                                 <td>Inactive</td>
                                                 {% endif %}
-                                                <td>Detail</td>
+                                                <td><a href="{% url 'dev_detail' dev.id %}">Detail</a></td>
                                             </tr>
                                             {% endfor %}
                                         </tbody>
