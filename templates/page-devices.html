@@ -101,7 +101,7 @@
                                                 {% else %}
                                                 <td>Inactive</td>
                                                 {% endif %}
-                                                <td>Detail</td>
+                                                <td><a href="{% url 'dev_detail' dev.id %}">Detail</a></td>
                                             </tr>
                                             {% endfor %}
                                         </tbody>

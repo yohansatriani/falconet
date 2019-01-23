@@ -77,9 +77,11 @@ def site_detail(request, site_id):
     contacts_data = contacts_model.objects.filter(site = site_id)
     #link info
     links_data = links_model.objects.filter(Q(sites1=site_id)|Q(sites2=site_id))
+    #device info
+    dev_data = devices_model.objects.filter(location_id = site_id)
     # breadcrumbs
     bcitems = [['/home/', 'Home'], ['/sites/', 'Sites'], [site_id, site_data.name]]
-    return render(request, "page-site-detail.html", {'title': "Sites", 'head': "Sites", 'bcitems': bcitems, 'site_data': site_data , 'contacts_data': contacts_data, 'links_data': links_data})
+    return render(request, "page-site-detail.html", {'title': "Sites", 'head': "Sites", 'bcitems': bcitems, 'site_data': site_data , 'contacts_data': contacts_data, 'links_data': links_data, 'dev_data': dev_data})
 
 @login_required()
 def site_detail_edit(request, site_id):
@@ -517,3 +519,14 @@ def dev_switches(request):
     # breadcrumbs
     bcitems = [['/home/', 'Home'], ['/devices/', 'Devices'], ['/devices/switches/', 'Switches']]
     return render(request, "page-links.html", {'title': "Devices", 'head': "Devices", 'bcitems': bcitems, 'link_data': dev_data})
+
+@login_required()
+def dev_detail(request, dev_id):
+    try:
+        dev_id = int(dev_id)
+    except ValueError:
+        raise Http404()
+    dev_data = get_object_or_404(devices_model, id=dev_id)
+    # breadcrumbs
+    bcitems = [['/home/', 'Home'], ['/devices/', 'Devices'], [dev_id, dev_data.name]]
+    return render(request, "page-device-detail.html", {'title': "Devices", 'head': "Devices", 'bcitems': bcitems, 'dev_data': dev_data})

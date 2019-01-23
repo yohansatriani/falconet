@@ -63,17 +63,17 @@
                     <div class="modal fade" id="staticModal" tabindex="-1" role="dialog" aria-labelledby="staticModalLabel" aria-hidden="true" data-backdrop="static">
                         <div class="modal-dialog modal-md" role="document">
                             <div class="modal-content">
-                                <form action="/sites/del/" method="post">
+                                <form action="/device/del/" method="post">
                                     <div class="modal-header">
-                                        <h5 class="modal-title" id="staticModalLabel">Delete Site</h5>
+                                        <h5 class="modal-title" id="staticModalLabel">Delete Device</h5>
                                         <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                                             <span aria-hidden="true">×</span>
                                         </button>
                                     </div>
                                     <div class="modal-body">
                                         {% csrf_token %}
-                                        <input type="hidden" name="id" value="{{ site_data.id }}" class="form-control" id="id">
-                                        <p>Are you sure want to delete this site and all other data referenced on this site like contacts, links, and asset placement?</p>
+                                        <input type="hidden" name="id" value="{{ dev_data.id }}" class="form-control" id="id">
+                                        <p>Are you sure want to delete this device and all other data referenced on this device?</p>
                                     </div>
                                     <div class="modal-footer">
                                         <button type="button" class="btn btn-sm btn-secondary" data-dismiss="modal">Cancel</button>
@@ -95,10 +95,7 @@
                                     <div class="default-tab">
                                         <nav>
                                             <div class="nav nav-tabs" id="nav-tab" role="tablist">
-                                                <a class="nav-item nav-link active show" id="nav-home-tab" data-toggle="tab" href="#nav-home" role="tab" aria-controls="nav-home" aria-selected="false">Site Info</a>
-                                                <a class="nav-item nav-link" id="nav-contact-tab" data-toggle="tab" href="#nav-contact" role="tab" aria-controls="nav-contact" aria-selected="false">Contact</a>
-                                                <a class="nav-item nav-link" id="nav-link-tab" data-toggle="tab" href="#nav-link" role="tab" aria-controls="nav-link" aria-selected="false">Links</a>
-                                                <a class="nav-item nav-link" id="nav-dev-tab" data-toggle="tab" href="#nav-dev" role="tab" aria-controls="nav-dev" aria-selected="false">Devices</a>
+                                                <a class="nav-item nav-link active show" id="nav-home-tab" data-toggle="tab" href="#nav-home" role="tab" aria-controls="nav-home" aria-selected="false">Device Info</a>
                                             </div>
                                         </nav>
                                         <div class="tab-content pl-3 pt-2 pr-3" id="nav-tabContent">
@@ -106,96 +103,51 @@
                                                 <table class="table">
                                                     <tbody>
                                                         <tr>
-                                                            <th style="width: 30%">Name</th>
-                                                            <td>{{ site_data.name }}</td>
-                                                        </tr>
-                                                        <tr>
                                                             <th>Type</th>
-                                                            <td>{{ site_data.type }}</td>
+                                                            <td>{{ dev_data.type|title }}</td>
                                                         </tr>
                                                         <tr>
-                                                            <th>Location</th>
-                                                            <td>{{ site_data.location }}</td>
+                                                            <th>Model</th>
+                                                            <td>{{ dev_data.model }}</td>
                                                         </tr>
                                                         <tr>
-                                                            <th>City</th>
-                                                            <td>{{ site_data.city }}</td>
-                                                        </tr>
-                                                        <tr>
-                                                            <th>Description</th>
-                                                            <td>{{ site_data.description }}</td>
+                                                            <th>Name</th>
+                                                            <td>{{ dev_data.name }}</td>
                                                         </tr>
                                                         <tr>
                                                             <th>IP Address</th>
-                                                            <td>{{ site_data.ipadd }}</td>
+                                                            <td>{{ dev_data.ipadd }}</td>
                                                         </tr>
                                                         <tr>
-                                                            <th>Site Code</th>
-                                                            <td>{{ site_data.site_code }}</td>
+                                                            <th>Location</th>
+                                                            <td><a href="{% url 'site_detail' dev_data.location.id %}">{{ dev_data.location.name }}</a></td>
                                                         </tr>
                                                         <tr>
-                                                            <th>Area Code</th>
-                                                            <td>{{ site_data.area_code }}</td>
+                                                            <th>Status</th>
+                                                            {% if dev_data.status %}
+                                                            <td>Active</td>
+                                                            {% else %}
+                                                            <td>Inactive</td>
+                                                            {% endif %}
+                                                        </tr>
+                                                        <tr>
+                                                            <th>Serial Number</th>
+                                                            <td>{{ dev_data.serial_number }}</td>
+                                                        </tr>
+                                                        <tr>
+                                                            <th>OS/Firmware</th>
+                                                            <td>{{ dev_data.os }}</td>
                                                         </tr>
                                                         <tr>
                                                             <th>Tagline</th>
-                                                            <td>{{ site_data.tagline }}</td>
+                                                            <td>{{ dev_data.tagline }}</td>
                                                         </tr>
-                                                    </tbody>
-                                                </table>
-                                            </div>
-                                            <div class="tab-pane fade" id="nav-contact" role="tabpanel" aria-labelledby="nav-contact-tab">
-                                                {% if contacts_data %}
-                                                <table class="table">
-                                                    <tbody>
-                                                        {% for contact in contacts_data %}
                                                         <tr>
-                                                            <th style="width: 30%">{{ contact.type|title }}</th>
-                                                            <td>{{ contact.contact_number }}</td>
-                                                        </tr>
-                                                        {% endfor %}
+                                                            <th>Date Added</th>
+                                                            <td>{{ dev_data.input_date }}</td>
                                                         </tr>
                                                     </tbody>
                                                 </table>
-                                                {% else %}
-                                                <div class="alert alert-dark" role="alert">No contact information.</div>
-                                                {% endif %}
-                                            </div>
-                                            <div class="tab-pane fade" id="nav-link" role="tabpanel" aria-labelledby="nav-link-tab">
-                                                {% if links_data %}
-                                                <table class="table">
-                                                    <tbody>
-                                                        {% for link in links_data %}
-                                                        <tr>
-                                                            <td>{{ forloop.counter }}</td>
-                                                            <td><a href="/links/{{ link.id }}/">{{ link.links_name }}</a></td>
-                                                            <td>{{ link.media }}</td>
-                                                            <td>{{ link.bandwidth }}</td>
-                                                        </tr>
-                                                        {% endfor %}
-                                                        </tr>
-                                                    </tbody>
-                                                </table>
-                                                {% else %}
-                                                <div class="alert alert-dark" role="alert">No link information.</div>
-                                                {% endif %}
-                                            </div>
-                                            <div class="tab-pane fade" id="nav-dev" role="tabpanel" aria-labelledby="nav-dev-tab">
-                                                {% if dev_data %}
-                                                <table class="table">
-                                                    <tbody>
-                                                        {% for dev in dev_data %}
-                                                        <tr>
-                                                            <td>{{ forloop.counter }}</td>
-                                                            <td><a href="/devices/{{ dev.id }}/">{{ dev.type|title }} {{ dev.model }}</a> ({{ dev.name }})</td>
-                                                        </tr>
-                                                        {% endfor %}
-                                                        </tr>
-                                                    </tbody>
-                                                </table>
-                                                {% else %}
-                                                <div class="alert alert-dark" role="alert">No device information.</div>
-                                                {% endif %}
                                             </div>
                                         </div>
                                     </div>
@@ -216,7 +168,7 @@
         <!--#RIGHT-PANEL-->
         <!--SCRIPTS-->
         {% block scripts %}
-        {% include 'script-site-detail.html' %}
+        {% include 'script-device-detail.html' %}
         {% endblock %}
         <!--#SCRIPTS-->
     <!--</body>-->
