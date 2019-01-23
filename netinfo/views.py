@@ -10,7 +10,7 @@ from django.contrib import messages
 from falconet import views
 from falconet.forms import LoginForm
 
-from netinfo.forms import SiteForm, ContactForm, LinkForm
+from netinfo.forms import SiteForm, ContactForm, LinkForm, DevForm
 from netinfo.models import sites as sites_model, contacts as contacts_model, links as links_model, devices as devices_model
 
 from pprint import pprint
@@ -530,3 +530,73 @@ def dev_detail(request, dev_id):
     # breadcrumbs
     bcitems = [['/home/', 'Home'], ['/devices/', 'Devices'], [dev_id, dev_data.name]]
     return render(request, "page-device-detail.html", {'title': "Devices", 'head': "Devices", 'bcitems': bcitems, 'dev_data': dev_data})
+
+@login_required()
+def dev_add(request):
+    if request.method == 'POST':
+        # link_post_data = {
+        #     'id':1000,
+        #     'sites1':request.POST['sites1'],
+        #     'sites2':request.POST['sites2'],
+        #     'ipadd1':request.POST['ipadd1'],
+        #     'ipadd2':request.POST['ipadd2'],
+        #     'isp':request.POST['isp'],
+        #     'bandwidth':request.POST['bandwidth'],
+        #     'media':request.POST['media'],
+        #     'services':request.POST['services'],
+        #     'status':request.POST['status'],
+        #     'ipadd_others':request.POST['ipadd_others'],
+        #     'vrf_name':request.POST['vrf_name'],
+        #     'links_name':request.POST['links_name'],
+        #     'isp_link_id':request.POST['isp_link_id'],
+        #     'input_date':request.POST['input_date'],
+        # }
+        #
+        dev_form = DevForm()
+        #
+        # if link_form.is_valid():
+        #     sites1 = link_form.cleaned_data['sites1']
+        #     sites2 = link_form.cleaned_data['sites2']
+        #     ipadd1 = link_form.cleaned_data['ipadd1']
+        #     ipadd2 = link_form.cleaned_data['ipadd2']
+        #     isp = link_form.cleaned_data['isp']
+        #     bandwidth = link_form.cleaned_data['bandwidth']
+        #     media = link_form.cleaned_data['media']
+        #     services = link_form.cleaned_data['services']
+        #     status = link_form.cleaned_data['status']
+        #     ipadd_others = link_form.cleaned_data['ipadd_others']
+        #     vrf_name = link_form.cleaned_data['vrf_name']
+        #     links_name = link_form.cleaned_data['links_name']
+        #     isp_link_id = link_form.cleaned_data['isp_link_id']
+        #     input_date = link_form.cleaned_data['input_date']
+        #
+        #     link_add = links_model(
+        #         sites1 = sites1,
+        #         sites2 = sites2,
+        #         ipadd1 = ipadd1,
+        #         ipadd2 = ipadd2,
+        #         isp = isp,
+        #         bandwidth = bandwidth,
+        #         media = media,
+        #         services = services,
+        #         status = status,
+        #         ipadd_others = ipadd_others,
+        #         vrf_name = vrf_name,
+        #         links_name = links_name,
+        #         isp_link_id = isp_link_id,
+        #         input_date = input_date,
+        #     )
+        #     link_add.save()
+        #     link_id = link_add.id;
+        #     messages.success(request, "Link added succesfully.", extra_tags='alert-success')
+        #     return redirect('link_detail', link_id=link_id)
+        # else:
+        #     messages.error(request, 'Failed add Link.', extra_tags='alert-danger')
+        #     bcitems = [['/home/', 'Home'], ['/links/', 'Links'],['/links/add/', 'Add Link']]
+        #     return render(request, 'page-link-add.html', {'title': "Add Link", 'head': "Add Link", 'bcitems': bcitems, 'link_form': link_form})
+    else:
+        dev_form = DevForm()
+
+        # breadcrumbs
+        bcitems = [['/home/', 'Home'], ['/devices/', 'Devices'],['/devices/add/', 'Add Device']]
+        return render(request, 'page-device-add.html', {'title': "Add Device", 'head': "Add Device", 'bcitems': bcitems, 'dev_form': dev_form})

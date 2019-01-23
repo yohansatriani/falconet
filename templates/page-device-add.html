@@ -25,7 +25,9 @@
         <!--FONTS-->
         <!--<link href='https://fonts.googleapis.com/css?family=Open+Sans:400,600,700,800' rel='stylesheet' type='text/css'>-->
         <!--PAGE CSS-->
-        {% block css %}{% endblock %}
+        {% block css %}
+        <link rel="stylesheet" href="{% static '/assets/vendor/jqueryui/jquery-ui.min.css' %}">
+        {% endblock %}
         {% block title %}{{ title }}{% endblock %}
     <!--</head>-->
     <!--<body>-->
@@ -73,15 +75,15 @@
                                     <div class="default-tab">
                                         <nav>
                                             <div class="nav nav-tabs" id="nav-tab" role="tablist">
-                                                <a class="nav-item nav-link active show" id="nav-home-tab" data-toggle="tab" href="#nav-home" role="tab" aria-controls="nav-home" aria-selected="false">Add Site & Contact</a>
+                                                <a class="nav-item nav-link active show" id="nav-home-tab" data-toggle="tab" href="#nav-home" role="tab" aria-controls="nav-home" aria-selected="false">Add Device</a>
                                             </div>
                                         </nav>
                                         <div class="tab-content pl-3 pt-2 pr-3" id="nav-tabContent">
                                             <div>
-                                                <form id="site-form" action="{% url 'site_add' %}" method="post">
+                                                <form id="dev-form" action="{% url 'dev_add' %}" method="post">
                                                     {% csrf_token %}
-                                                    {{ site_form.non_field_errors }}
-                                                    {% for field in site_form.visible_fields %}
+                                                    {{ dev_form.non_field_errors }}
+                                                    {% for field in dev_form.visible_fields %}
                                                     <div class="form-group row">
                                                         <label for="{{ field.id_for_label }}" class="col-sm-3 col-form-label">{{ field.label }}</label>
                                                         {% if site_form.is_bound %}
@@ -101,13 +103,6 @@
                                                         {% endif %}
                                                     </div>
                                                     {% endfor %}
-                                                    <hr/>
-                                                    <button class="btn btn-secondary btn-sm mb-3" type="button" data-toggle="collapse" data-target="#contact-collapse" aria-expanded="false" aria-controls="contact-collapse">Contacts</button>
-                                                    <div class="collapse" id="contact-collapse">
-                                                        <div class="dynamic-stuff">
-                                                        </div>
-                                                        <div><button type="button" class="btn btn-success btn-sm add-one"><i class="fa fa-plus"></i>&nbsp;Add</button></div>
-                                                    </div>
                                                     <hr/>
                                                     <div class="card-text text-sm-right">
                                                         <a class="small"><button type="submit" class="btn btn-primary btn-sm" id="submit-site-contact">Submit</button></a>
@@ -130,18 +125,10 @@
         <!--#RIGHT-PANEL-->
         <!--SCRIPTS-->
         {% block scripts %}
-        {% include 'script-site-detail.html' %}
+        {% include 'script-device-detail.html' %}
         <script src="{% static '/assets/js/jquery.validate.min.js' %}"></script>
-        <script src="{% static '/assets/js/falconet.site.js' %}"></script>
-        <script>
-            //jQuery(document).ready(function($){
-            //    $("#site-form").validate({
-            //        errorClass: "invalid-error",
-            //        errorElement: "span",
-            //    });
-            //    $("span.invalid-error" ).addClass( "offset-sm-3 text-danger small" );
-            //});
-        </script>
+        <script src="{% static '/assets/js/falconet.link.js' %}"></script>
+        <script src="{% static '/assets/vendor/jqueryui/jquery-ui.min.js' %}"></script>
         {% endblock %}
         <!--#SCRIPTS-->
     <!--</body>-->
