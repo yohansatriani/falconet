@@ -11,7 +11,7 @@ from falconet import views
 from falconet.forms import LoginForm
 
 from netinfo.forms import SiteForm, ContactForm, LinkForm, DevForm
-from netinfo.models import sites as sites_model, contacts as contacts_model, links as links_model, devices as devices_model
+from netinfo.models import sites as sites_model, contacts as contacts_model, links as links_model, devices as dev_model
 
 from pprint import pprint
 
@@ -78,7 +78,7 @@ def site_detail(request, site_id):
     #link info
     links_data = links_model.objects.filter(Q(sites1=site_id)|Q(sites2=site_id))
     #device info
-    dev_data = devices_model.objects.filter(location_id = site_id)
+    dev_data = dev_model.objects.filter(location_id = site_id)
     # breadcrumbs
     bcitems = [['/home/', 'Home'], ['/sites/', 'Sites'], [site_id, site_data.name]]
     return render(request, "page-site-detail.html", {'title': "Sites", 'head': "Sites", 'bcitems': bcitems, 'site_data': site_data , 'contacts_data': contacts_data, 'links_data': links_data, 'dev_data': dev_data})
@@ -399,7 +399,7 @@ def link_detail(request, link_id):
 @login_required()
 def link_detail_edit(request, link_id):
     if request.method == 'POST':
-        pprint(request.POST)
+        # pprint(request.POST)
         # site post intialization
         link_id = int(request.POST['id'])
 
@@ -501,7 +501,7 @@ def link_del(request):
 ###########################################################################################################################################################################################################################################################################
 @login_required()
 def devices(request):
-    dev_data = devices_model.objects.all()
+    dev_data = dev_model.objects.all()
     # breadcrumbs
     bcitems = [['/home/', 'Home'], ['/devices/', 'Devices']]
     return render(request, "page-devices.html", {'title': "Devices", 'head': "Devices", 'bcitems': bcitems, 'dev_data': dev_data})
@@ -526,7 +526,7 @@ def dev_detail(request, dev_id):
         dev_id = int(dev_id)
     except ValueError:
         raise Http404()
-    dev_data = get_object_or_404(devices_model, id=dev_id)
+    dev_data = get_object_or_404(dev_model, id=dev_id)
     # breadcrumbs
     bcitems = [['/home/', 'Home'], ['/devices/', 'Devices'], [dev_id, dev_data.name]]
     return render(request, "page-device-detail.html", {'title': "Devices", 'head': "Devices", 'bcitems': bcitems, 'dev_data': dev_data})
@@ -534,66 +534,57 @@ def dev_detail(request, dev_id):
 @login_required()
 def dev_add(request):
     if request.method == 'POST':
-        # link_post_data = {
-        #     'id':1000,
-        #     'sites1':request.POST['sites1'],
-        #     'sites2':request.POST['sites2'],
-        #     'ipadd1':request.POST['ipadd1'],
-        #     'ipadd2':request.POST['ipadd2'],
-        #     'isp':request.POST['isp'],
-        #     'bandwidth':request.POST['bandwidth'],
-        #     'media':request.POST['media'],
-        #     'services':request.POST['services'],
-        #     'status':request.POST['status'],
-        #     'ipadd_others':request.POST['ipadd_others'],
-        #     'vrf_name':request.POST['vrf_name'],
-        #     'links_name':request.POST['links_name'],
-        #     'isp_link_id':request.POST['isp_link_id'],
-        #     'input_date':request.POST['input_date'],
-        # }
-        #
-        dev_form = DevForm()
-        #
-        # if link_form.is_valid():
-        #     sites1 = link_form.cleaned_data['sites1']
-        #     sites2 = link_form.cleaned_data['sites2']
-        #     ipadd1 = link_form.cleaned_data['ipadd1']
-        #     ipadd2 = link_form.cleaned_data['ipadd2']
-        #     isp = link_form.cleaned_data['isp']
-        #     bandwidth = link_form.cleaned_data['bandwidth']
-        #     media = link_form.cleaned_data['media']
-        #     services = link_form.cleaned_data['services']
-        #     status = link_form.cleaned_data['status']
-        #     ipadd_others = link_form.cleaned_data['ipadd_others']
-        #     vrf_name = link_form.cleaned_data['vrf_name']
-        #     links_name = link_form.cleaned_data['links_name']
-        #     isp_link_id = link_form.cleaned_data['isp_link_id']
-        #     input_date = link_form.cleaned_data['input_date']
-        #
-        #     link_add = links_model(
-        #         sites1 = sites1,
-        #         sites2 = sites2,
-        #         ipadd1 = ipadd1,
-        #         ipadd2 = ipadd2,
-        #         isp = isp,
-        #         bandwidth = bandwidth,
-        #         media = media,
-        #         services = services,
-        #         status = status,
-        #         ipadd_others = ipadd_others,
-        #         vrf_name = vrf_name,
-        #         links_name = links_name,
-        #         isp_link_id = isp_link_id,
-        #         input_date = input_date,
-        #     )
-        #     link_add.save()
-        #     link_id = link_add.id;
-        #     messages.success(request, "Link added succesfully.", extra_tags='alert-success')
-        #     return redirect('link_detail', link_id=link_id)
-        # else:
-        #     messages.error(request, 'Failed add Link.', extra_tags='alert-danger')
-        #     bcitems = [['/home/', 'Home'], ['/links/', 'Links'],['/links/add/', 'Add Link']]
-        #     return render(request, 'page-link-add.html', {'title': "Add Link", 'head': "Add Link", 'bcitems': bcitems, 'link_form': link_form})
+        pprint(request.POST)
+        dev_post_data = {
+            'id':1000,
+            'type':request.POST['type'],
+            'model':request.POST['model'],
+            'name':request.POST['name'],
+            'ipadd':request.POST['ipadd'],
+            'location':request.POST['location'],
+            'status':request.POST['status'],
+            'serial_number':request.POST['serial_number'],
+            'os':request.POST['os'],
+            'tagline':request.POST['tagline'],
+            'input_date':request.POST['input_date'],
+        }
+        pprint(dev_post_data)
+
+        dev_form = DevForm(dev_post_data)
+
+        if dev_form.is_valid():
+            type = dev_form.cleaned_data['type']
+            model = dev_form.cleaned_data['model']
+            name = dev_form.cleaned_data['name']
+            ipadd = dev_form.cleaned_data['ipadd']
+            location =dev_form.cleaned_data['location']
+            status = dev_form.cleaned_data['status']
+            serial_number = dev_form.cleaned_data['serial_number']
+            os = dev_form.cleaned_data['os']
+            tagline = dev_form.cleaned_data['tagline']
+            input_date = dev_form.cleaned_data['input_date']
+
+            dev_add = dev_model(
+                type = type,
+                model = model,
+                name = name,
+                ipadd= ipadd,
+                location = location,
+                status = status,
+                serial_number = serial_number,
+                os = os,
+                tagline = tagline,
+                input_date = input_date,
+            )
+            dev_add.save()
+            dev_id = dev_add.id;
+            messages.success(request, "Device added succesfully.", extra_tags='alert-success')
+            return redirect('dev_detail', dev_id=dev_id)
+        else:
+            messages.error(request, 'Failed add Device.', extra_tags='alert-danger')
+            # breadcrumbs
+            bcitems = [['/home/', 'Home'], ['/devices/', 'Devices'],['/devices/add/', 'Add Device']]
+            return render(request, 'page-device-add.html', {'title': "Add Device", 'head': "Add Device", 'bcitems': bcitems, 'dev_form': dev_form})
     else:
         dev_form = DevForm()
 

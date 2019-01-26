@@ -15,7 +15,7 @@ class SiteForm(forms.Form):
         max_length=100,
         widget=forms.TextInput(attrs={'class': 'form-control', 'id' : 'name', 'name':'name'})
     )
-    SITE_TYPE = (('PP', 'PP'),('KK', 'KK'),('KCP', 'KCP'),('KC', 'KC'),('ISP', 'ISP'),('PARTNER', 'PARTNER'))
+    SITE_TYPE = (('PP', 'PP'),('KK', 'KK'),('KCP', 'KCP'),('KC', 'KC'),('HO', 'HO'),('DRC', 'DRC'),('ISP', 'ISP'),('PARTNER', 'PARTNER'))
     type = forms.ChoiceField(
         label="Type",
         choices=SITE_TYPE,
@@ -171,6 +171,7 @@ class LinkForm(forms.Form):
         label="Date Added",
         widget=forms.DateInput(format='%m/%d/%Y',attrs={'class': 'form-control', 'id' : 'datepicker', 'name':'input_date'})
     )
+
 class DevForm(forms.Form):
     id = forms.IntegerField(
         widget=forms.HiddenInput(attrs={'class': 'form-control', 'id': 'id', 'name':'id'})
@@ -219,7 +220,7 @@ class DevForm(forms.Form):
         widget=forms.TextInput(attrs={'class': 'form-control', 'id' : 'serial_number', 'name':'serial_number'})
     )
     os = forms.CharField(
-        label="OS/Firmware",
+        label="Firmware",
         max_length=300,
         required=False,
         widget=forms.TextInput(attrs={'class': 'form-control', 'id' : 'os', 'name':'os'})
