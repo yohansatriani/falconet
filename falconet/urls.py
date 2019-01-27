@@ -21,7 +21,7 @@ from django.contrib.auth import views as auth_views
 from falconet import forms
 from falconet.views import login, home, auth_login, auth_logout, auth_process, get_contacts_type
 
-from netinfo.views import sites, site_isp, site_office, site_detail, site_detail_edit, site_add, site_del, links, link_detail, link_detail_edit, link_add, link_del, devices, dev_routers, dev_switches, dev_detail, dev_add
+from netinfo.views import sites, site_isp, site_office, site_detail, site_detail_edit, site_add, site_del, links, link_detail, link_detail_edit, link_add, link_del, devices, dev_routers, dev_switches, dev_detail, dev_detail_edit, dev_add
 
 urlpatterns = [
     #BLANK
@@ -36,8 +36,10 @@ urlpatterns = [
     path('logout/', auth_logout, name='logout'),
     #AUTH
     path('auth/', auth_process, name='auth'),
+    #######################################################################################
     #AJAX
     path('ajax/get_contacts_type/', get_contacts_type, name='get_contacts_type'),
+    #######################################################################################
     #SITES
     path('sites/', sites, name='sites'),
     #SITES-OFFICE
@@ -52,6 +54,7 @@ urlpatterns = [
     path('sites/add/', site_add, name='site_add'),
     #SITES-DEL
     path('sites/del/', site_del, name='site_del'),
+    #######################################################################################
     #LINKS
     path('links/', links, name='links'),
     #LINKS-DETAIL
@@ -62,6 +65,7 @@ urlpatterns = [
     path('links/add/', link_add, name='link_add'),
     #LINKS-DEL
     path('links/del/', link_del, name='link_del'),
+    #######################################################################################
     #DEVICES
     path('devices/', devices, name='devices'),
     #DEVICES-ROUTERS
@@ -70,6 +74,8 @@ urlpatterns = [
     path('devices/switches/', dev_switches, name='dev_switches'),
     #DEVICES-DETAIL
     path('devices/<int:dev_id>/', dev_detail, name='dev_detail'),
+    #DEVICES-DETAIL-EDIT
+    path('devices/<int:dev_id>/edit/', dev_detail_edit, name='dev_detail_edit'),
     #DEVICES-ADD
     path('devices/add/', dev_add, name='dev_add'),
 ]

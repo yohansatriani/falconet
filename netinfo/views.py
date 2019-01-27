@@ -458,7 +458,7 @@ def link_detail_edit(request, link_id):
             messages.error(request, 'Failed updating link data.', extra_tags='alert-danger')
             # breadcrumbs
             bcitems = [['/home/', 'Home'], ['/links/', 'Links'], ['/links/'+str(link_id)+'/', link_data.links_name], ['edit', 'Edit']]
-            return render(request, 'page-site-detail-edit.html', {'title': "Edit Sites", 'head': "Edit Sites", 'bcitems': bcitems, 'contacts_data': contacts_data, 'contacts_type': contacts_type, 'site_form': site_form, 'site_id': site_id})
+            return render(request, 'page-link-detail-edit.html', {'title': "Edit Links", 'head': "Edit Links", 'bcitems': bcitems, 'link_data': link_data, 'link_form': link_form, 'link_id': link_id})
     else:
         try:
             link_id = int(link_id)
@@ -508,33 +508,22 @@ def devices(request):
 
 @login_required()
 def dev_routers(request):
-    dev_data = links_model.objects.all()
+    dev_data = dev_model.objects.filter(type= 'router')
     # breadcrumbs
     bcitems = [['/home/', 'Home'], ['/devices/', 'Devices'], ['/devices/routers/', 'Routers']]
-    return render(request, "page-links.html", {'title': "Devices", 'head': "Devices", 'bcitems': bcitems, 'link_data': dev_data})
+    return render(request, "page-devices.html", {'title': "Devices", 'head': "Devices", 'bcitems': bcitems, 'dev_data': dev_data})
 
 @login_required()
 def dev_switches(request):
-    dev_data = links_model.objects.all()
+    dev_data = dev_model.objects.filter(type= 'switch')
     # breadcrumbs
     bcitems = [['/home/', 'Home'], ['/devices/', 'Devices'], ['/devices/switches/', 'Switches']]
-    return render(request, "page-links.html", {'title': "Devices", 'head': "Devices", 'bcitems': bcitems, 'link_data': dev_data})
-
-@login_required()
-def dev_detail(request, dev_id):
-    try:
-        dev_id = int(dev_id)
-    except ValueError:
-        raise Http404()
-    dev_data = get_object_or_404(dev_model, id=dev_id)
-    # breadcrumbs
-    bcitems = [['/home/', 'Home'], ['/devices/', 'Devices'], [dev_id, dev_data.name]]
-    return render(request, "page-device-detail.html", {'title': "Devices", 'head': "Devices", 'bcitems': bcitems, 'dev_data': dev_data})
+    return render(request, "page-devices.html", {'title': "Devices", 'head': "Devices", 'bcitems': bcitems, 'dev_data': dev_data})
 
 @login_required()
 def dev_add(request):
     if request.method == 'POST':
-        pprint(request.POST)
+        # pprint(request.POST)
         dev_post_data = {
             'id':1000,
             'type':request.POST['type'],
@@ -548,7 +537,7 @@ def dev_add(request):
             'tagline':request.POST['tagline'],
             'input_date':request.POST['input_date'],
         }
-        pprint(dev_post_data)
+        # pprint(dev_post_data)
 
         dev_form = DevForm(dev_post_data)
 
@@ -591,3 +580,95 @@ def dev_add(request):
         # breadcrumbs
         bcitems = [['/home/', 'Home'], ['/devices/', 'Devices'],['/devices/add/', 'Add Device']]
         return render(request, 'page-device-add.html', {'title': "Add Device", 'head': "Add Device", 'bcitems': bcitems, 'dev_form': dev_form})
+
+@login_required()
+def dev_detail(request, dev_id):
+    try:
+        dev_id = int(dev_id)
+    except ValueError:
+        raise Http404()
+    dev_data = get_object_or_404(dev_model, id=dev_id)
+    # breadcrumbs
+    bcitems = [['/home/', 'Home'], ['/devices/', 'Devices'], [dev_id, dev_data.name]]
+    return render(request, "page-device-detail.html", {'title': "Devices", 'head': "Devices", 'bcitems': bcitems, 'dev_data': dev_data})
+
+@login_required()
+def dev_detail_edit(request, dev_id):
+    if request.method == 'POST':
+        # pprint(request.POST)
+        # site post intialization
+        dev_id = int(request.POST['id'])
+
+        dev_post_data = {
+            'id':request.POST['id'],
+            'type':request.POST['type'],
+            'model':request.POST['model'],
+            'name':request.POST['name'],
+            'ipadd':request.POST['ipadd'],
+            'location':request.POST['location'],
+            'status':request.POST['status'],
+            'serial_number':request.POST['serial_number'],
+            'os':request.POST['os'],
+            'tagline':request.POST['tagline'],
+            'input_date':request.POST['input_date'],
+        }
+
+        dev_data = dev_model.objects.get(id=dev_id)
+
+        dev_db_data = {
+            'id':dev_data.id,
+            'type':dev_data.type,
+            'model':dev_data.model,
+            'name':dev_data.name,
+            'ipadd':dev_data.ipadd,
+            'location':dev_data.location,
+            'status':dev_data.status,
+            'serial_number':dev_data.serial_number,
+            'os':dev_data.os,
+            'tagline':dev_data.tagline,
+            'input_date':dev_data.input_date,
+        }
+
+        pprint(dev_post_data)
+        pprint(dev_db_data)
+        # link update process
+        dev_form = DevForm(dev_post_data, initial=dev_db_data)
+        if dev_form.is_valid():
+            if dev_form.has_changed():
+                for changed_data in dev_form.changed_data:
+                    setattr(dev_data, changed_data, dev_post_data[changed_data])
+                    dev_data.save()
+                messages.success(request, 'Device data updated succesfully.', extra_tags='alert-success')
+                return redirect('dev_detail', dev_id=dev_post_data['id'])
+            else:
+                messages.info(request, 'Device data not changed.', extra_tags='alert-info')
+                return redirect('dev_detail', dev_id=dev_post_data['id'])
+        else:
+            messages.error(request, 'Failed updating device data.', extra_tags='alert-danger')
+            # breadcrumbs
+            bcitems = [['/home/', 'Home'], ['/devices/', 'Devices'], ['/devices/'+str(dev_id)+'/', dev_data.name], ['edit', 'Edit']]
+            return render(request, 'page-device-detail-edit.html', {'title': "Edit Device", 'head': "Edit Device", 'bcitems': bcitems, 'dev_data': dev_data, 'dev_form': dev_form, 'dev_id': dev_id})
+    else:
+        try:
+            dev_id = int(dev_id)
+        except ValueError:
+            raise Http404()
+        # dev data
+        dev_data = get_object_or_404(dev_model, id=dev_id)
+        # pprint(dev_data)
+        dev_form = DevForm(initial={
+            'id':dev_data.id,
+            'type':dev_data.type,
+            'model':dev_data.model,
+            'name':dev_data.name,
+            'ipadd':dev_data.ipadd,
+            'location':dev_data.location,
+            'status':dev_data.status,
+            'serial_number':dev_data.serial_number,
+            'os':dev_data.os,
+            'tagline':dev_data.tagline,
+            'input_date':dev_data.input_date,
+        })
+        # breadcrumbs
+        bcitems = [['/home/', 'Home'], ['/devices/', 'Devices'], ['/devices/'+str(dev_id)+'/', dev_data.name], ['edit', 'Edit']]
+        return render(request, 'page-device-detail-edit.html', {'title': "Edit Device", 'head': "Edit Device", 'bcitems': bcitems, 'dev_data': dev_data, 'dev_form': dev_form, 'dev_id': dev_id})
