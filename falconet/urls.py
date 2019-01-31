@@ -79,5 +79,5 @@ urlpatterns = [
     #DEVICES-ADD
     path('devices/add/', dev_add, name='dev_add'),
     #DEVICES-DEL
-    path('devices/del/', dev_del, name='dev_add'),
+    path('devices/del/', dev_del, name='dev_del'),
 ]
