@@ -500,7 +500,7 @@ def link_del(request):
 
 ###########################################################################################################################################################################################################################################################################
 @login_required()
-def devices(request):
+def dev(request):
     dev_data = dev_model.objects.all()
     # breadcrumbs
     bcitems = [['/home/', 'Home'], ['/devices/', 'Devices']]
@@ -672,3 +672,14 @@ def dev_detail_edit(request, dev_id):
         # breadcrumbs
         bcitems = [['/home/', 'Home'], ['/devices/', 'Devices'], ['/devices/'+str(dev_id)+'/', dev_data.name], ['edit', 'Edit']]
         return render(request, 'page-device-detail-edit.html', {'title': "Edit Device", 'head': "Edit Device", 'bcitems': bcitems, 'dev_data': dev_data, 'dev_form': dev_form, 'dev_id': dev_id})
+
+@login_required()
+def dev_del(request):
+    if request.method == 'POST':
+        dev_id = request.POST['id']
+        dev_del = get_object_or_404(dev_model, id=dev_id)
+        dev_del.delete()
+        messages.success(request, "Device deleted succesfully.", extra_tags='alert-success')
+        return redirect('dev')
+    else:
+        return redirect('dev')
