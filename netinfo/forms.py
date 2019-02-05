@@ -113,7 +113,7 @@ class LinkForm(forms.Form):
         help_text='Example : 192.168.1.1 or 192.168.1.0/24',
         widget=forms.TextInput(attrs={'class': 'form-control', 'id' : 'ipadd1', 'name':'ipadd2', 'pattern': '^(([0-9]|[1-9][0-9]|1[0-9]{2}|[1-2][0-4][0-9]|25[0-5]).){3}([0-9]|[1-9][0-9]|1[0-9]{2}|[1-2][0-4][0-9]|25[0-5])((/[0-9]|/[1-2][0-9]|/[1-3][0-2])?)$'})
     )
-    ISP_LIST = (('Telkom', 'Telkom'),('Lintasarta', 'Lintasarta'),('ICON+', 'ICON+'))
+    ISP_LIST = (('Telkom', 'Telkom'),('Lintasarta', 'Lintasarta'),('ICON', 'ICON'))
     isp = forms.ChoiceField(
         label="ISP",
         choices=ISP_LIST,
