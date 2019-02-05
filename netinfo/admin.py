@@ -1,7 +1,7 @@
 from django.contrib import admin
+from .models import sites, contacts, links, devices
 
 # Register your models here.
-from .models import sites, contacts, links, devices
 
 admin.site.register(sites)
 admin.site.register(contacts)

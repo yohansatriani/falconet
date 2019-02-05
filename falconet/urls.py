@@ -21,7 +21,12 @@ from django.contrib.auth import views as auth_views
 from falconet import forms
 from falconet.views import login, home, auth_login, auth_logout, auth_process, get_contacts_type
 
-from netinfo.views import sites, site_isp, site_office, site_detail, site_detail_edit, site_add, site_del, links, link_detail, link_detail_edit, link_add, link_del, dev, dev_routers, dev_switches, dev_detail, dev_detail_edit, dev_add, dev_del
+from netinfo.views import (
+sites, site_isp, site_office, site_detail, site_detail_edit, site_add, site_del,
+links, link_detail, link_detail_edit, link_add, link_del,
+dev, dev_routers, dev_switches, dev_detail, dev_detail_edit, dev_add, dev_del)
+
+from sla.views import (trouble_post)
 
 urlpatterns = [
     #BLANK
@@ -80,4 +85,8 @@ urlpatterns = [
     path('devices/add/', dev_add, name='dev_add'),
     #DEVICES-DEL
     path('devices/del/', dev_del, name='dev_del'),
+    #######################################################################################
+    #SLA
+    #TROUBLE-ADD
+    path('troubles/post/', trouble_post, name='trouble_post'),
 ]
