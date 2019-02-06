@@ -27,6 +27,7 @@
         <!--PAGE CSS-->
         {% block css %}
         <link rel="stylesheet" href="{% static '/assets/vendor/jqueryui/jquery-ui.min.css' %}">
+        <link rel="stylesheet" href="{% static '/assets/vendor/jqueryui/jquery-ui-timepicker-addon.css' %}">
         {% endblock %}
         {% block title %}{{ title }}{% endblock %}
     <!--</head>-->
@@ -75,22 +76,18 @@
                                     <div class="default-tab">
                                         <nav>
                                             <div class="nav nav-tabs" id="nav-tab" role="tablist">
-                                                <a class="nav-item nav-link active show" id="nav-home-tab" data-toggle="tab" href="#nav-home" role="tab" aria-controls="nav-home" aria-selected="false">Device Edit</a>
+                                                <a class="nav-item nav-link active show" id="nav-home-tab" data-toggle="tab" href="#nav-home" role="tab" aria-controls="nav-home" aria-selected="false">Post Link Troubles</a>
                                             </div>
                                         </nav>
                                         <div class="tab-content pl-3 pt-2 pr-3" id="nav-tabContent">
                                             <div>
-                                                <form id="dev-form" action="{% url 'dev_detail_edit' dev_id %}" method="post">
+                                                <form id="trouble-form" action="{% url 'trouble_post' %}" method="post">
                                                     {% csrf_token %}
-                                                    {{ dev_form.non_field_errors }}
-                                                    {% for hidden_field in dev_form.hidden_fields %}
-                                                        {{ hidden_field }}
-                                                        {{ hidden_field.errors }}
-                                                    {% endfor %}
-                                                    {% for field in dev_form.visible_fields %}
+                                                    {{ trouble_form.non_field_errors }}
+                                                    {% for field in trouble_form.visible_fields %}
                                                     <div class="form-group row">
                                                         <label for="{{ field.id_for_label }}" class="col-sm-3 col-form-label">{{ field.label }}</label>
-                                                        {% if dev_form.is_bound %}
+                                                        {% if trouble_form.is_bound %}
                                                         {% if field.errors %}
                                                         {% render_field field class="col-sm-9 form-control" %}
                                                         {% for error in field.errors %}
@@ -109,8 +106,8 @@
                                                     {% endfor %}
                                                     <hr/>
                                                     <div class="card-text text-sm-right">
-                                                        <a class="small"><button type="submit" class="btn btn-primary btn-sm" id="submit-link">Submit</button></a>
-                                                        <a class="small"><button type="reset" class="btn btn-danger btn-sm" id="reset-link">Reset</button></a>
+                                                        <a class="small"><button type="submit" class="btn btn-primary btn-sm" id="submit-site-contact">Submit</button></a>
+                                                        <a class="small"><button type="reset" class="btn btn-danger btn-sm" id="reset-site-contact">Reset</button></a>
                                                         <a class="small" href=".."><button type="button" class="btn btn-secondary btn-sm">Cancel</button></a>
                                                     </div>
                                                 </form>
@@ -129,10 +126,11 @@
         <!--#RIGHT-PANEL-->
         <!--SCRIPTS-->
         {% block scripts %}
-        {% include 'script-device-detail.html' %}
+        {% include 'script-trouble-detail.html' %}
         <script src="{% static '/assets/js/jquery.validate.min.js' %}"></script>
-        <script src="{% static '/assets/js/falconet.device.js' %}"></script>
+        <script src="{% static '/assets/js/falconet.trouble.js' %}"></script>
         <script src="{% static '/assets/vendor/jqueryui/jquery-ui.min.js' %}"></script>
+        <script src="{% static '/assets/vendor/jqueryui/jquery-ui-timepicker-addon.js' %}"></script>
         {% endblock %}
         <!--#SCRIPTS-->
     <!--</body>-->
