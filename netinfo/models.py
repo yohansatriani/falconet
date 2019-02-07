@@ -1,3 +1,5 @@
+import datetime
+
 from django.db import models
 
 # Create your models here.
@@ -49,7 +51,7 @@ class links(models.Model):
     vrf_name = models.CharField(max_length=100, null=True)
     links_name = models.CharField(max_length=100, null=True)
     isp_link_id = models.CharField(max_length=20, null=True)
-    input_date = models.DateTimeField(auto_now=True)
+    input_date = models.DateTimeField(default=datetime.datetime.now)
 
     class Meta:
         verbose_name_plural = "links"
@@ -68,7 +70,7 @@ class devices(models.Model):
     os = models.CharField(max_length=300, null=True)
     location = models.ForeignKey(sites, on_delete=models.CASCADE, related_name='site', null=True)
     tagline = models.CharField(max_length=500, null=True)
-    input_date = models.DateTimeField(auto_now=True)
+    input_date = models.DateTimeField(default=datetime.datetime.now)
 
     class Meta:
         verbose_name_plural = "devices"

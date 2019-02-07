@@ -10,68 +10,93 @@ from django.contrib import messages
 from falconet import views
 from falconet.forms import LoginForm
 
-# from netinfo.forms import SiteForm, ContactForm, LinkForm, DevForm
-# from netinfo.models import sites as sites_model, contacts as contacts_model, links as links_model, devices as dev_model
-
 from sla.forms import TroubleForm
+from sla.models import troubles as troubles_model
 
 from pprint import pprint
 # Create your views here.
 
 @login_required()
+def trouble_active(request):
+    trouble_data = troubles_model.objects.filter(status = 1)
+    # breadcrumbs
+    bcitems = [['/home/', 'Home'], ['/troubles/', 'Troubles']]
+    return render(request, "page-troubles.html", {'title': "Troubles", 'head': "Troubles", 'bcitems': bcitems, 'trouble_data': trouble_data})
+
+@login_required()
+def trouble_inactive(request):
+    trouble_data = troubles_model.objects.filter(status = 0)
+    # breadcrumbs
+    bcitems = [['/home/', 'Home'], ['/troubles/', 'Troubles']]
+    return render(request, "page-troubles.html", {'title': "Troubles", 'head': "Troubles", 'bcitems': bcitems, 'trouble_data': trouble_data})
+
+@login_required()
+def trouble_detail(request, trouble_id):
+    try:
+        trouble_id = int(trouble_id)
+    except ValueError:
+        raise Http404()
+    trouble_data = get_object_or_404(troubles_model, id=trouble_id)
+    # breadcrumbs
+    bcitems = [['/home/', 'Home'], ['/troubles/', 'Troubles'], [trouble_id, trouble_data.link_id.links_name]]
+    return render(request, "page-trouble-detail.html", {'title': "Troubles", 'head': "Troubles", 'bcitems': bcitems, 'trouble_data': trouble_data})
+
+@login_required()
 def trouble_post(request):
     if request.method == 'POST':
         pprint(request.POST)
-    #     dev_post_data = {
-    #         'id':1000,
-    #         'type':request.POST['type'],
-    #         'model':request.POST['model'],
-    #         'name':request.POST['name'],
-    #         'ipadd':request.POST['ipadd'],
-    #         'location':request.POST['location'],
-    #         'status':request.POST['status'],
-    #         'serial_number':request.POST['serial_number'],
-    #         'os':request.POST['os'],
-    #         'tagline':request.POST['tagline'],
-    #         'input_date':request.POST['input_date'],
-    #     }
-    #     pprint("Post Trouble")
-    #
-    #     dev_form = DevForm(dev_post_data)
-    #
-    #     if dev_form.is_valid():
-    #         type = dev_form.cleaned_data['type']
-    #         model = dev_form.cleaned_data['model']
-    #         name = dev_form.cleaned_data['name']
-    #         ipadd = dev_form.cleaned_data['ipadd']
-    #         location =dev_form.cleaned_data['location']
-    #         status = dev_form.cleaned_data['status']
-    #         serial_number = dev_form.cleaned_data['serial_number']
-    #         os = dev_form.cleaned_data['os']
-    #         tagline = dev_form.cleaned_data['tagline']
-    #         input_date = dev_form.cleaned_data['input_date']
-    #
-    #         dev_add = dev_model(
-    #             type = type,
-    #             model = model,
-    #             name = name,
-    #             ipadd= ipadd,
-    #             location = location,
-    #             status = status,
-    #             serial_number = serial_number,
-    #             os = os,
-    #             tagline = tagline,
-    #             input_date = input_date,
-    #         )
-    #         dev_add.save()
-    #         dev_id = dev_add.id;
-    #         messages.success(request, "Device added succesfully.", extra_tags='alert-success')
-    #         return redirect('dev_detail', dev_id=dev_id)
-    #     else:
-    #         messages.error(request, 'Failed add Device.', extra_tags='alert-danger')
-    #         # breadcrumbs
-    #         bcitems = [['/home/', 'Home'], ['/devices/', 'Devices'],['/devices/add/', 'Add Device']]
-    #         return render(request, 'page-device-add.html', {'title': "Add Device", 'head': "Add Device", 'bcitems': bcitems, 'dev_form': dev_form})
+
+        if request.POST['end_time'] == '':
+            trouble_status = 1
+        else:
+            trouble_status = 0
+
+        trouble_post_data = {
+            'id':1000,
+            'link_id':request.POST['link_id'],
+            'cause_type':request.POST['cause_type'],
+            'start_time':request.POST['start_time'],
+            'end_time':request.POST['end_time'],
+            'status':trouble_status,
+            'description':request.POST['description'],
+            'user': request.user,
+            'isp_ticket':request.POST['isp_ticket'],
+        }
+
+        pprint(trouble_status)
+
+        trouble_form = TroubleForm(trouble_post_data)
+
+        if trouble_form.is_valid():
+            link_id = trouble_form.cleaned_data['link_id']
+            cause_type = trouble_form.cleaned_data['cause_type']
+            start_time = trouble_form.cleaned_data['start_time']
+            end_time = trouble_form.cleaned_data['end_time']
+            status = trouble_status
+            description = trouble_form.cleaned_data['description']
+            user = request.user
+            isp_ticket = trouble_form.cleaned_data['isp_ticket']
+
+            trouble_post = troubles_model(
+                link_id = link_id,
+                cause_type = cause_type,
+                start_time = start_time,
+                end_time = end_time,
+                status = status,
+                description = description,
+                user = user,
+                isp_ticket = isp_ticket,
+            )
+
+            trouble_post.save()
+            trouble_id = trouble_post.id;
+            messages.success(request, "Link trouble added succesfully.", extra_tags='alert-success')
+            return redirect('trouble_detail', trouble_id=trouble_id)
+        else:
+            messages.error(request, 'Failed post link trouble.', extra_tags='alert-danger')
+            # breadcrumbs
+            bcitems = [['/home/', 'Home'], ['/troubles/', 'Troubles'],['/troubles/post/', 'Post Link Troubles']]
+            return render(request, 'page-trouble-post.html', {'title': "Post Link Troubles", 'head': "Post Link Troubles", 'bcitems': bcitems, 'trouble_form': trouble_form})
     else:
         trouble_form = TroubleForm()
 

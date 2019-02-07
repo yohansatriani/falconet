@@ -71,7 +71,7 @@
                         <div class="col-md-12">
                             <div class="card">
                                 <div class="card-header">
-                                    <strong class="card-title">Link Trouble Data</strong>
+                                    <strong class="card-title">Link Troubles Data</strong>
                                 </div>
                                 <div class="card-body">
                                     <table id="bootstrap-data-table" class="table table-striped table-bordered">
@@ -80,10 +80,9 @@
                                                 <th>No</th>
                                                 <th>Link Name</th>
                                                 <th>Cause Type</th>
-                                                <th>Posted By</th>
+                                                <th>Posted by</th>
                                                 <th>Start Time</th>
                                                 <th>End Time</th>
-                                                <th>Status</th>
                                                 <th></th>
                                             </tr>
                                         </thead>
@@ -91,11 +90,11 @@
                                             {% for trouble in trouble_data %}
                                             <tr>
                                                 <td>{{ forloop.counter }}</td>
-                                                <td>{{ trouble.link_id.links_name|title }}</td>
+                                                <td>{{ trouble.link_id.links_name }}</td>
                                                 <td>{{ trouble.cause_type }}</td>
                                                 <td>{{ trouble.user }}</td>
-                                                <td>{{ trouble.start_time }}</td>
-                                                <td>{{ trouble.end_time }}</td>
+                                                <td>{{ trouble.start_time|date:'Y M d H:i' }}</td>
+                                                <td>{{ trouble.end_time|date:'Y M d H:i' }}</td>
                                                 <td><a href="{% url 'trouble_detail' trouble.id %}">Detail</a></td>
                                             </tr>
                                             {% endfor %}
@@ -113,7 +112,7 @@
         <!--#RIGHT-PANEL-->
         <!--SCRIPTS-->
         {% block scripts %}
-        {% include 'script-devices.html' %}
+        {% include 'script-troubles.html' %}
         {% endblock %}
         <!--#SCRIPTS-->
     <!--</body>-->

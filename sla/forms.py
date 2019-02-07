@@ -25,12 +25,12 @@ class TroubleForm(forms.Form):
     )
     start_time = forms.DateTimeField(
         label="Start Time",
-        widget=forms.DateInput(format='%m/%d/%Y %H:%M',attrs={'class': 'form-control', 'id' : 'start_datetimepicker', 'name':'start_time'})
+        widget=forms.DateInput(format='%Y-%m-%d %H:%M',attrs={'class': 'form-control', 'id' : 'start_datetimepicker', 'name':'start_time'})
     )
     end_time = forms.DateTimeField(
         label="End Time",
         required=False,
-        widget=forms.DateInput(format='%m/%d/%Y %H:%M',attrs={'class': 'form-control', 'id' : 'end_datetimepicker', 'name':'end_time'})
+        widget=forms.DateInput(format='%Y-%m-%d %H:%M',attrs={'class': 'form-control', 'id' : 'end_datetimepicker', 'name':'end_time'})
     )
     description = forms.CharField(
         label="Description",
