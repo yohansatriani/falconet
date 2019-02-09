@@ -26,7 +26,7 @@ sites, site_isp, site_office, site_detail, site_detail_edit, site_add, site_del,
 links, link_detail, link_detail_edit, link_add, link_del,
 dev, dev_routers, dev_switches, dev_detail, dev_detail_edit, dev_add, dev_del)
 
-from sla.views import (trouble_post, trouble_detail, trouble_active, trouble_inactive)
+from sla.views import (troubles, trouble_active, trouble_inactive, trouble_detail, trouble_detail_edit, trouble_post)
 
 urlpatterns = [
     #BLANK
@@ -88,6 +88,8 @@ urlpatterns = [
     #######################################################################################
     #SLA
     #TROUBLE-ACTIVE
+    path('troubles/', troubles, name='troubles'),
+    #TROUBLE-ACTIVE
     path('troubles/active/', trouble_active, name='trouble_active'),
     #TROUBLE-INACTIVE
     path('troubles/inactive/', trouble_inactive, name='trouble_inactive'),
@@ -95,4 +97,6 @@ urlpatterns = [
     path('troubles/post/', trouble_post, name='trouble_post'),
     #TROUBLE-DETAIL
     path('troubles/<int:trouble_id>/', trouble_detail, name='trouble_detail'),
+    #TROUBLE-DETAIL-EDIT
+    path('troubles/<int:trouble_id>/edit/', trouble_detail_edit, name='trouble_detail_edit'),
 ]

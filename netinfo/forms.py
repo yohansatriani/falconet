@@ -169,7 +169,7 @@ class LinkForm(forms.Form):
     )
     input_date = forms.DateTimeField(
         label="Date Added",
-        widget=forms.DateInput(format='%m/%d/%Y',attrs={'class': 'form-control', 'id' : 'datepicker', 'name':'input_date'})
+        widget=forms.DateInput(format='%Y-%m-%d', attrs={'class': 'form-control', 'id' : 'datepicker', 'name':'input_date'})
     )
 
 class DevForm(forms.Form):
@@ -233,5 +233,5 @@ class DevForm(forms.Form):
     )
     input_date = forms.DateTimeField(
         label="Date Added",
-        widget=forms.DateInput(format='%m/%d/%Y',attrs={'class': 'form-control', 'id' : 'datepicker', 'name':'input_date'})
+        widget=forms.DateInput(format='%Y-%m-%d', attrs={'class': 'form-control', 'id' : 'datepicker', 'name':'input_date'})
     )

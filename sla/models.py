@@ -8,11 +8,11 @@ from netinfo.models import links
 
 class troubles(models.Model):
     id = models.AutoField(primary_key=True)
-    link_id = models.ForeignKey(links, on_delete=models.CASCADE, null=False)
+    link = models.ForeignKey(links, on_delete=models.CASCADE, null=False)
     cause_type = models.CharField(max_length=50, null=False)
     start_time = models.DateTimeField(default=datetime.datetime.now, null=False)
     end_time = models.DateTimeField(null=True)
-    status = status = models.IntegerField(default=1)
+    status = models.IntegerField(default=1)
     description = models.CharField(max_length=1000, default='')
     user = models.ForeignKey(User, on_delete=models.CASCADE)
     isp_ticket = models.CharField(max_length=50)

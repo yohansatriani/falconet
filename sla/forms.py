@@ -11,7 +11,7 @@ class TroubleForm(forms.Form):
     id = forms.IntegerField(
         widget=forms.HiddenInput(attrs={'class': 'form-control', 'id': 'id', 'name':'id'})
     )
-    link_id = LinksModelChoiceField(
+    link = LinksModelChoiceField(
         queryset=links.objects.all(),
         empty_label="--Please-Select--",
         label="Link",
@@ -31,6 +31,9 @@ class TroubleForm(forms.Form):
         label="End Time",
         required=False,
         widget=forms.DateInput(format='%Y-%m-%d %H:%M',attrs={'class': 'form-control', 'id' : 'end_datetimepicker', 'name':'end_time'})
+    )
+    status = forms.IntegerField(
+        widget=forms.HiddenInput(attrs={'class': 'form-control', 'id': 'status', 'name':'status'})
     )
     description = forms.CharField(
         label="Description",

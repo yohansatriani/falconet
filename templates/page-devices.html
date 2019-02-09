@@ -71,32 +71,31 @@
                         <div class="col-md-12">
                             <div class="card">
                                 <div class="card-header">
-                                    <strong class="card-title">Link Trouble Data</strong>
+                                    <strong class="card-title">Devices Data</strong>
                                 </div>
                                 <div class="card-body">
                                     <table id="bootstrap-data-table" class="table table-striped table-bordered">
                                         <thead>
                                             <tr>
                                                 <th>No</th>
-                                                <th>Link Name</th>
-                                                <th>Cause Type</th>
-                                                <th>Posted By</th>
-                                                <th>Start Time</th>
-                                                <th>End Time</th>
-                                                <th>Status</th>
+                                                <th>Type</th>
+                                                <th>Model</th>
+                                                <th>Name</th>
+                                                <th>Location</th>
+                                                <th>Serial Number</th>
                                                 <th></th>
                                             </tr>
                                         </thead>
                                         <tbody>
-                                            {% for trouble in trouble_data %}
+                                            {% for dev in dev_data %}
                                             <tr>
                                                 <td>{{ forloop.counter }}</td>
-                                                <td>{{ trouble.link_id.links_name|title }}</td>
-                                                <td>{{ trouble.cause_type }}</td>
-                                                <td>{{ trouble.user }}</td>
-                                                <td>{{ trouble.start_time }}</td>
-                                                <td>{{ trouble.end_time }}</td>
-                                                <td><a href="{% url 'trouble_detail' trouble.id %}">Detail</a></td>
+                                                <td>{{ dev.type|title }}</td>
+                                                <td>{{ dev.model }}</td>
+                                                <td>{{ dev.name }}</td>
+                                                <td><a href="{% url 'site_detail' dev.location.id %}">{{ dev.location.name }}</td>
+                                                <td>{{ dev.serial_number }}</td>
+                                                <td><a href="{% url 'dev_detail' dev.id %}">Detail</a></td>
                                             </tr>
                                             {% endfor %}
                                         </tbody>

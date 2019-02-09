@@ -83,19 +83,23 @@
                                                 <th>Posted by</th>
                                                 <th>Start Time</th>
                                                 <th>End Time</th>
-                                                <th></th>
+                                                <th>Status</th>
                                             </tr>
                                         </thead>
                                         <tbody>
                                             {% for trouble in trouble_data %}
                                             <tr>
                                                 <td>{{ forloop.counter }}</td>
-                                                <td>{{ trouble.link_id.links_name }}</td>
+                                                <td>{{ trouble.link.links_name }}</td>
                                                 <td>{{ trouble.cause_type }}</td>
                                                 <td>{{ trouble.user }}</td>
                                                 <td>{{ trouble.start_time|date:'Y M d H:i' }}</td>
                                                 <td>{{ trouble.end_time|date:'Y M d H:i' }}</td>
-                                                <td><a href="{% url 'trouble_detail' trouble.id %}">Detail</a></td>
+                                                {% if trouble.status == 1 %}
+                                                <td><a href="{% url 'trouble_detail' trouble.id %}">Ongoing</a></td>
+                                                {% else %}
+                                                <td><a href="{% url 'trouble_detail' trouble.id %}">Solved</a></td>
+                                                {% endif %}
                                             </tr>
                                             {% endfor %}
                                         </tbody>
