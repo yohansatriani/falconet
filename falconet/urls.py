@@ -24,9 +24,12 @@ from falconet.views import login, home, auth_login, auth_logout, auth_process, g
 from netinfo.views import (
 sites, site_isp, site_office, site_detail, site_detail_edit, site_add, site_del,
 links, link_detail, link_detail_edit, link_add, link_del,
-dev, dev_routers, dev_switches, dev_detail, dev_detail_edit, dev_add, dev_del)
+dev, dev_routers, dev_switches, dev_detail, dev_detail_edit, dev_add, dev_del
+)
 
-from sla.views import (troubles, trouble_active, trouble_inactive, trouble_detail, trouble_detail_edit, trouble_post)
+from sla.views import (
+troubles, trouble_active, trouble_inactive, trouble_detail, trouble_detail_edit, trouble_post, trouble_del
+)
 
 urlpatterns = [
     #BLANK
@@ -99,4 +102,6 @@ urlpatterns = [
     path('troubles/<int:trouble_id>/', trouble_detail, name='trouble_detail'),
     #TROUBLE-DETAIL-EDIT
     path('troubles/<int:trouble_id>/edit/', trouble_detail_edit, name='trouble_detail_edit'),
+    #TROUBLE-DEL
+    path('troubles/del/', trouble_del, name='trouble_del'),
 ]

@@ -195,3 +195,14 @@ def trouble_detail_edit(request, trouble_id):
         # breadcrumbs
         bcitems = [['/home/', 'Home'], ['/troubles/', 'Troubles'],['/troubles/'+str(trouble_id)+'/Edit/', trouble_data.link.links_name+'('+str(trouble_data.id)+')'], ['edit', 'Edit']]
         return render(request, 'page-trouble-detail-edit.html', {'title': "Edit Trouble", 'head': "Edit Trouble", 'bcitems': bcitems, 'trouble_data': trouble_data, 'trouble_form': trouble_form, 'trouble_id': trouble_id})
+
+@login_required()
+def trouble_del(request):
+    if request.method == 'POST':
+        trouble_id = request.POST['id']
+        trouble_del = get_object_or_404(troubles_model, id=trouble_id)
+        trouble_del.delete()
+        messages.success(request, "Trouble post deleted succesfully.", extra_tags='alert-success')
+        return redirect('troubles')
+    else:
+        return redirect('troubles')
